@@ -1,0 +1,206 @@
+﻿@model prjC349WebMVC.Models.remote_visua_inspection
+
+@{
+    ViewBag.Title = "新增";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <div>
+            @Html.ActionLink("回到列表", "Index")
+        </div>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.tdate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.tdate, new { htmlAttributes = new { @class = "form-control", @placeholder = "yyyy/MM/dd" ,@id="tbDate"} })
+                @Html.ValidationMessageFor(model => model.tdate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.carId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.carId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.carId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <br />
+        <div class="row">
+            <div class="form-group col-3">
+                @Html.LabelFor(model => model.coil1, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.coil1, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.coil1, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group col-3">
+                @Html.LabelFor(model => model.coil2, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.coil2, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.coil2, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group col-3">
+                @Html.LabelFor(model => model.coil3, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.coil3, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.coil3, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group col-3">
+                @Html.LabelFor(model => model.coil4, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.coil4, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.coil4, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-3">
+                @Html.LabelFor(model => model.coil5, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.coil5, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.coil5, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group col-3">
+                @Html.LabelFor(model => model.coil6, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.coil6, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.coil6, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group col-3">
+                @Html.LabelFor(model => model.coil7, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.coil7, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.coil7, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group col-3">
+                @Html.LabelFor(model => model.coil8, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.coil8, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.coil8, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="form-group col-3">
+                @Html.LabelFor(model => model.comment1, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @*@Html.EditorFor(model => model.comment1, new { htmlAttributes = new { @class = "form-control" } })*@
+                    <select name="comment1" class="form-select" size="5" aria-label="size 5 select example">
+                        <option>LED看板故障</option>
+                        <option>刷卡異常</option>
+                        <option>條碼槍掃描異常</option>
+                        <option>印表機異常</option>
+                        <option>高聲電話、電話異常</option>
+                    </select>
+                    @Html.ValidationMessageFor(model => model.comment1, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <br />
+            <div class="form-group col-3">
+                @Html.LabelFor(model => model.comment2, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.comment2, new { htmlAttributes = new { @class = "form-control col-4" } })
+                    @Html.ValidationMessageFor(model => model.comment2, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+        <br />
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="新增" class="btn btn-warning" />
+            </div>
+        </div>
+    </div>
+}
+@if (ViewBag.Error == true)
+{
+    <div class="alert alert-danger">
+        <strong>
+            請先登入
+            <a href="https://eip.csc.com.tw/SSO/DSS0/DSAOS0.aspx" target="_blank">EIP</a>
+            !
+        </strong>
+        
+    </div>
+}
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+@section scripts{
+    <link rel="stylesheet" href="~/Scripts/jquery-ui-1.13.1.custom/jquery-ui.css">
+    <script src="~/Scripts/jquery-ui-1.13.1.custom/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery-ui-1.13.1.custom/jquery.mtz.monthpicker.js"></script>
+    <script>
+        $(function () {
+            $("#tbDate").datepicker({ monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'] });
+        });
+        window.onload = function () {
+            if ($("#domestic").is(":checked")) {
+                domesticFlowControl();
+            }
+            else {
+                foreignFlowControl();
+            }
+        };
+
+        //$("#btn_Contacts_toggle_1").on("click", function () {
+        //    $("#Contacts_1").slideToggle();
+        //                })
+
+        function domesticFlowControl() {
+            //$("#horborGroup").slideUp();
+            //$("#shipNumGroup").slideUp();
+            //$("#clientGroup").slideDown();
+
+            $("#horborGroup").hide("slide", { direction: "right" }, 1000);
+            $("#clientGroup").show("slide", { direction: "left" }, 1000);
+
+            //document.getElementById("horborGroup").setAttribute("style", "display: none");
+            //document.getElementById("shipNumGroup").setAttribute("style", "display: none");
+            //document.getElementById("clientGroup").setAttribute("style", "display: block");
+        }
+        function foreignFlowControl() {
+            //$("#horborGroup").slideDown();
+            //$("#shipNumGroup").slideDown();
+            //$("#clientGroup").slideUp();
+
+            $("#horborGroup").show("slide", { direction: "right" }, 1000);
+            $("#clientGroup").hide("slide", { direction: "left" }, 1000);
+
+
+            //document.getElementById("horborGroup").setAttribute("style", "display: block");
+            //document.getElementById("shipNumGroup").setAttribute("style", "display: block");
+            //document.getElementById("clientGroup").setAttribute("style", "display: none");
+        }
+    </script>
+}
+
+
+@*@section Validation{
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+    }*@
+
+

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<prjC349WebMVC.Models.ChartJs1>
+@{
+    ViewBag.Title = "ChartJs1";
+    var jsonMonths = Json.Encode(ViewBag.MonthLabel);
+    var jsonErrDev1 = Json.Encode(Model);
+}
+<canvas id="BarChart1"></canvas>
+
+<script>
+    var jsErrDev = @Html.Raw(jsonErrDev1);
+    var ctx = document.getElementById("BarChart1");
+    var chart = new Chart(ctx,{
+        type: 'line',
+        data: {
+            labels:@Html.Raw(jsonMonths),
+            datasets: [
+                {
+                    fill: false,
+                    lineTension: 0,
+                    label: jsErrDev[0].category,
+                    data: jsErrDev[0].errCount,
+                    backgroundColor: 'rgb(255,235, 205)',
+                    borderColor: 'rgb(255,235, 205)'
+                },
+                {
+                    fill: false,
+                    lineTension: 0,
+                    label: jsErrDev[1].category,
+                    data: jsErrDev[1].errCount,
+                    backgroundColor: 'rgb(118, 238, 198)',
+                    borderColor: 'rgb(118, 238, 198)'
+                },
+                {
+                    fill: false,
+                    lineTension: 0,
+                    label: jsErrDev[2].category,
+                    data: jsErrDev[2].errCount,
+                    backgroundColor: 'rgb(255, 106, 106)',
+                    borderColor: 'rgb(255, 106, 106)'
+                },
+                {
+                    fill: false,
+                    lineTension: 0,
+                    label: jsErrDev[3].category,
+                    data: jsErrDev[3].errCount,
+                    backgroundColor: 'rgb(99, 184, 255)',
+                    borderColor: 'rgb(99, 184, 255)'
+                }
+            ]
+        },
+
+})
+
+</script>

@@ -1,0 +1,174 @@
+﻿@model IPagedList<prjC349WebMVC.Models.remote_visua_inspection>
+@using PagedList
+@using PagedList.Mvc
+@{
+    ViewBag.Title = "遠端檢放管理";
+}
+
+<h1>@ViewBag.Cookie</h1>
+
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+
+<h2>遠端檢放管理</h2>
+
+<br />
+<br />
+<form method="get" action="~/RVI/Index">
+    <input type="text" name="queryMonth" id="tbMonth" value="@ViewBag.queryMonth" />
+    <input type="submit" value="查詢月份" />
+</form>
+@section scripts{
+    <link rel="stylesheet" href="~/Scripts/jquery-ui-1.13.1.custom/jquery-ui.css">
+    <script src="~/Scripts/jquery-ui-1.13.1.custom/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery-ui-1.13.1.custom/jquery.mtz.monthpicker.js"></script>
+    <script>
+        $(function () {
+            $("#tbMonth").monthpicker({ monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'] });
+        });
+    </script>
+}
+
+<br />
+<p>
+    @Html.ActionLink("新增", "Create", "", new { @class = "btn btn-primary" })
+    <input type="button" onclick="location.href='@Url.Action("ExporttoExcel", "RVI")'" value="匯出EXCEL" class="btn btn-success" />
+</p>
+@if (Model.Count() == 0)
+{
+
+    <div class="alert alert-info">
+        <strong>無遠端檢放紀錄</strong>
+    </div>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().tdate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().carId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().comment1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().comment2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().coil1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().coil2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().coil3)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().coil4)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().coil5)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().coil6)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().coil7)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().coil8)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().creator)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().updateTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().ip)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelitem => item.id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.tdate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.carId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.comment1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.comment2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.coil1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.coil2)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.coil3)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.coil4)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.coil5)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.coil6)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.coil7)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.coil8)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.creator)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.updateTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelitem => item.ip)
+                </td>
+
+                <td>
+                    @{
+                        try
+                        {
+                            if (prjC349WebMVC.IPAddress.Get() == "::1" || Request.Cookies["uid"].Value == "224485" || Request.Cookies["uid"].Value == "214585" || Request.Cookies["uid"].Value == "197459")
+                            {
+                                <a href="@Url.Action("Edit")?id=@item.id" class="btn btn-warning">編輯</a>
+                                <a href="@Url.Action("Delete")?id=@item.id" class="btn btn-danger" onclick="return confirm('確定要刪除編號 @item.id 的員工紀錄嗎?');">刪除</a>
+                            }
+                        }
+                        catch
+                        {
+
+                        }
+
+                    }
+
+
+                </td>
+            </tr>
+        }
+
+    </table>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page, queryMonth = ViewBag.queryMonth }))
+}

@@ -1,0 +1,133 @@
+﻿@model IEnumerable<IEnumerable<prjC349WebMVC.Models.ChartJs1>>
+@*@model  IEnumerable<prjC349WebMVC.Models.ChartJsCollection>*@
+
+@{
+    @*<label>@Model.ToList()[1].chartJs1collec[0].category</label>*@
+    <label>@Model.ToList()[0].ToList()[0].category</label>
+    <label>@Model.ToList()[1].ToList()[0].category</label>
+
+    ViewBag.Title = "ChartJs1";
+    var jsonMonths = Json.Encode(ViewBag.MonthLabel);
+
+    var jsonErrDev_1 = Json.Encode(Model.ToList()[0]);
+    var jsonErrDev_2 = Json.Encode(Model.ToList()[1]);
+}
+
+<h2>ChartJs1</h2>
+
+<form method="get" action="~/ChartJS1/ChartJS1">
+    <input type="text" name="queryMonth" id="tbMonth" value="@ViewBag.queryMonth" placeholder="MM/yyyy"/>
+    <input type="submit" value="查詢" />
+</form>
+
+@section scripts{
+    <link rel="stylesheet" href="~/Scripts/jquery-ui-1.13.1.custom/jquery-ui.css">
+    <script src="~/Scripts/jquery-ui-1.13.1.custom/jquery-ui.js"></script>
+    <script src="~/Scripts/jquery-ui-1.13.1.custom/jquery.mtz.monthpicker.js"></script>
+    <script>
+        $(function () {
+            $("#tbMonth").monthpicker({ monthNames: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'] });
+        });
+    </script>
+}
+
+
+<canvas id="Chart_ByCategory"></canvas>
+<canvas id="Chart_ByPort"></canvas>
+<canvas id="Chart_DomesticSales"></canvas>
+
+
+<script src="~/Scripts/Chart.min.js"></script>
+<script>
+    var jsErrDev = @Html.Raw(jsonErrDev_1);
+    var ctx = document.getElementById("Chart_ByCategory");
+    var chart = new Chart(ctx,{
+        type: 'line',
+        data: {
+            labels:@Html.Raw(jsonMonths),
+            datasets: [
+                {
+                    fill: false,
+                    lineTension: 0,
+                    label: jsErrDev[0].category,
+                    data: jsErrDev[0].errCount,
+                    backgroundColor: 'rgb(255,235, 205)',
+                    borderColor: 'rgb(255,235, 205)'
+                },
+                {
+                    fill: false,
+                    lineTension: 0,
+                    label: jsErrDev[1].category,
+                    data: jsErrDev[1].errCount,
+                    backgroundColor: 'rgb(118, 238, 198)',
+                    borderColor: 'rgb(118, 238, 198)'
+                },
+                {
+                    fill: false,
+                    lineTension: 0,
+                    label: jsErrDev[2].category,
+                    data: jsErrDev[2].errCount,
+                    backgroundColor: 'rgb(255, 106, 106)',
+                    borderColor: 'rgb(255, 106, 106)'
+                },
+                {
+                    fill: false,
+                    lineTension: 0,
+                    label: jsErrDev[3].category,
+                    data: jsErrDev[3].errCount,
+                    backgroundColor: 'rgb(99, 184, 255)',
+                    borderColor: 'rgb(99, 184, 255)'
+                }
+            ]
+        },
+
+})
+
+</script>
+
+@*<script>
+        var jsErrDev = @Html.Raw(Chart_ByPort);
+        var ctx = document.getElementById("BarChart2");
+        var chart = new Chart(ctx,{
+            type: 'line',
+            data: {
+                labels:@Html.Raw(jsonMonths),
+                datasets: [
+                    {
+                        fill: false,
+                        lineTension: 0,
+                        label: jsErrDev[0].category,
+                        data: jsErrDev[0].errCount,
+                        backgroundColor: 'rgb(255,235, 205)',
+                        borderColor: 'rgb(255,235, 205)'
+                    },
+                    {
+                        fill: false,
+                        lineTension: 0,
+                        label: jsErrDev[1].category,
+                        data: jsErrDev[1].errCount,
+                        backgroundColor: 'rgb(118, 238, 198)',
+                        borderColor: 'rgb(118, 238, 198)'
+                    },
+                    {
+                        fill: false,
+                        lineTension: 0,
+                        label: jsErrDev[2].category,
+                        data: jsErrDev[2].errCount,
+                        backgroundColor: 'rgb(255, 106, 106)',
+                        borderColor: 'rgb(255, 106, 106)'
+                    },
+                    {
+                        fill: false,
+                        lineTension: 0,
+                        label: jsErrDev[3].category,
+                        data: jsErrDev[3].errCount,
+                        backgroundColor: 'rgb(99, 184, 255)',
+                        borderColor: 'rgb(99, 184, 255)'
+                    }
+                ]
+            },
+
+    })
+
+    </script>*@
