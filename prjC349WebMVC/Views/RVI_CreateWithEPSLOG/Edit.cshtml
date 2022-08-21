@@ -1,0 +1,130 @@
+﻿@model prjC349WebMVC.Models.remote_visual_inspection
+
+@{
+    ViewBag.Title = "編輯";
+}
+
+<h2>@ViewBag.Title</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.tdate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@{ 
+                    var yy = DateTime.Parse(Model.tdate.ToString());
+                    var zz = yy.ToString("u");
+                    var x = 5;
+                }*@
+                @Model.tdate
+                @*<input type="hidden" value="@Model.tdate.Value.ToString("yyyy-MM-dd hh:mm:ss")" name="tdate"/>*@
+                @Html.EditorFor(model => model.tdate, new { htmlAttributes = new { @class = "form-control", @placeholder = "yyyy/MM/dd HH:mm:ss", @id = "tbDate" } })
+                @Html.ValidationMessageFor(model => model.tdate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.carId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.carId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.carId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <br />
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.comment1, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.comment1, new { htmlAttributes = new { @class = "form-control" } })*@
+
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.comment1, new { htmlAttributes = new { @class = "form-control" } })
+
+                    @Html.ValidationMessageFor(model => model.comment1, "", new { @class = "text-danger" })
+                </div>
+
+                @Html.ValidationMessageFor(model => model.comment1, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.comment2, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.comment2, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.comment2, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="儲存" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+@section scripts{
+    <link rel="stylesheet" href="~/Scripts/jquery-ui-1.13.1.custom/jquery-ui.css">
+
+    <script>
+        window.onload = function () {
+            if ($("#domestic").is(":checked")) {
+                domesticFlowControl();
+            }
+            else {
+                foreignFlowControl();
+            }
+        };
+
+        //$("#btn_Contacts_toggle_1").on("click", function () {
+        //    $("#Contacts_1").slideToggle();
+        //                })
+
+        function domesticFlowControl() {
+            //$("#horborGroup").slideUp();
+            //$("#shipNumGroup").slideUp();
+            //$("#clientGroup").slideDown();
+
+            $("#horborGroup").hide("slide", { direction: "right" }, 1000);
+            $("#clientGroup").show("slide", { direction: "left" }, 1000);
+
+            //document.getElementById("horborGroup").setAttribute("style", "display: none");
+            //document.getElementById("shipNumGroup").setAttribute("style", "display: none");
+            //document.getElementById("clientGroup").setAttribute("style", "display: block");
+        }
+        function foreignFlowControl() {
+            //$("#horborGroup").slideDown();
+            //$("#shipNumGroup").slideDown();
+            //$("#clientGroup").slideUp();
+
+            $("#horborGroup").show("slide", { direction: "right" }, 1000);
+            $("#clientGroup").hide("slide", { direction: "left" }, 1000);
+
+
+            //document.getElementById("horborGroup").setAttribute("style", "display: block");
+            //document.getElementById("shipNumGroup").setAttribute("style", "display: block");
+            //document.getElementById("clientGroup").setAttribute("style", "display: none");
+        }
+    </script>
+}

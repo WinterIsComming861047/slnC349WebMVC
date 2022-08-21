@@ -16,8 +16,7 @@ using NPOI.XSSF.UserModel;
 
 namespace prjC349WebMVC.Controllers
 {
-
-    public class RVIController : Controller
+    public class RVI_CreateWithEPSLOGController : Controller
     {
         string connStr = WebConfigurationManager.ConnectionStrings["c349ConnectionString"].ConnectionString;
         int pageSize = 10;
@@ -51,7 +50,7 @@ namespace prjC349WebMVC.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Create(remote_visual_inspection remote_visua_inspection)
+        public ActionResult Create(remote_visual_inspection remote_visual_inspection)
         {
             if (ModelState.IsValid)
             {
@@ -59,22 +58,22 @@ namespace prjC349WebMVC.Controllers
                 try
                 {
                     MySqlCommand cmd = new MySqlCommand();
-                    cmd.CommandText = "INSERT INTO remote_visua_inspection(tdate,carId,comment1,comment2,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator,updateTime,ip)" +
+                    cmd.CommandText = "INSERT INTO remote_visual_inspection_epslog(tdate,carId,comment1,comment2,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator,updateTime,ip)" +
                         "VALUES(@tdate,@carId,@comment1,@comment2,@coil1,@coil2,@coil3,@coil4,@coil5,@coil6,@coil7,@coil8,@creator,@updateTime,@ip)";
                     //cmd.Parameters.Add(new MySqlParameter("@id", MySqlDbType.VarChar)).Value = employee.id;
-                    cmd.Parameters.Add(new MySqlParameter("@tdate", MySqlDbType.DateTime)).Value = DateTime.Parse(remote_visua_inspection.tdate.ToString())
+                    cmd.Parameters.Add(new MySqlParameter("@tdate", MySqlDbType.DateTime)).Value = DateTime.Parse(remote_visual_inspection.tdate.ToString())
                         .AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second);
-                    cmd.Parameters.Add(new MySqlParameter("@carId", MySqlDbType.VarChar)).Value = remote_visua_inspection.carId;
-                    cmd.Parameters.Add(new MySqlParameter("@comment1", MySqlDbType.VarChar)).Value = remote_visua_inspection.comment1;
-                    cmd.Parameters.Add(new MySqlParameter("@comment2", MySqlDbType.VarChar)).Value = remote_visua_inspection.comment2;
-                    cmd.Parameters.Add(new MySqlParameter("@coil1", MySqlDbType.VarChar)).Value = remote_visua_inspection.coil1;
-                    cmd.Parameters.Add(new MySqlParameter("@coil2", MySqlDbType.VarChar)).Value = remote_visua_inspection.coil2;
-                    cmd.Parameters.Add(new MySqlParameter("@coil3", MySqlDbType.VarChar)).Value = remote_visua_inspection.coil3;
-                    cmd.Parameters.Add(new MySqlParameter("@coil4", MySqlDbType.VarChar)).Value = remote_visua_inspection.coil4;
-                    cmd.Parameters.Add(new MySqlParameter("@coil5", MySqlDbType.VarChar)).Value = remote_visua_inspection.coil5;
-                    cmd.Parameters.Add(new MySqlParameter("@coil6", MySqlDbType.VarChar)).Value = remote_visua_inspection.coil6;
-                    cmd.Parameters.Add(new MySqlParameter("@coil7", MySqlDbType.VarChar)).Value = remote_visua_inspection.coil7;
-                    cmd.Parameters.Add(new MySqlParameter("@coil8", MySqlDbType.VarChar)).Value = remote_visua_inspection.coil8;
+                    cmd.Parameters.Add(new MySqlParameter("@carId", MySqlDbType.VarChar)).Value = remote_visual_inspection.carId;
+                    cmd.Parameters.Add(new MySqlParameter("@comment1", MySqlDbType.VarChar)).Value = remote_visual_inspection.comment1;
+                    cmd.Parameters.Add(new MySqlParameter("@comment2", MySqlDbType.VarChar)).Value = remote_visual_inspection.comment2;
+                    cmd.Parameters.Add(new MySqlParameter("@coil1", MySqlDbType.VarChar)).Value = remote_visual_inspection.coil1;
+                    cmd.Parameters.Add(new MySqlParameter("@coil2", MySqlDbType.VarChar)).Value = remote_visual_inspection.coil2;
+                    cmd.Parameters.Add(new MySqlParameter("@coil3", MySqlDbType.VarChar)).Value = remote_visual_inspection.coil3;
+                    cmd.Parameters.Add(new MySqlParameter("@coil4", MySqlDbType.VarChar)).Value = remote_visual_inspection.coil4;
+                    cmd.Parameters.Add(new MySqlParameter("@coil5", MySqlDbType.VarChar)).Value = remote_visual_inspection.coil5;
+                    cmd.Parameters.Add(new MySqlParameter("@coil6", MySqlDbType.VarChar)).Value = remote_visual_inspection.coil6;
+                    cmd.Parameters.Add(new MySqlParameter("@coil7", MySqlDbType.VarChar)).Value = remote_visual_inspection.coil7;
+                    cmd.Parameters.Add(new MySqlParameter("@coil8", MySqlDbType.VarChar)).Value = remote_visual_inspection.coil8;
 
                     if (IPAddress.Get() == "::1")
                     {
@@ -84,7 +83,7 @@ namespace prjC349WebMVC.Controllers
                     {
                         cmd.Parameters.Add(new MySqlParameter("@creator", MySqlDbType.VarChar)).Value = Request.Cookies["uid"].Value;
                     }
-                    cmd.Parameters.Add(new MySqlParameter("@updateTime", MySqlDbType.DateTime)).Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                    cmd.Parameters.Add(new MySqlParameter("@updateTime", MySqlDbType.DateTime)).Value = remote_visual_inspection.tdate;
                     cmd.Parameters.Add(new MySqlParameter("@ip", MySqlDbType.VarChar)).Value = IPAddress.Get();
                     ExecuteCmd(cmd);
                     return RedirectToAction("Index");
@@ -92,10 +91,10 @@ namespace prjC349WebMVC.Controllers
                 catch (Exception ex)
                 {
                     ViewBag.Error = true;
-                    return View(remote_visua_inspection);
+                    return View(remote_visual_inspection);
                 }
             }
-            return View(remote_visua_inspection);
+            return View(remote_visual_inspection);
         }
         public ActionResult Edit(string id)
         {
@@ -103,40 +102,46 @@ namespace prjC349WebMVC.Controllers
             return View(GetRecrod(id));
         }
         [HttpPost]
-        public ActionResult Edit(remote_visual_inspection remote_visua_inspection)
+        public ActionResult Edit(remote_visual_inspection remote_visual_inspection)
         {
             if (ModelState.IsValid)
             {
                 MySqlCommand cmd = new MySqlCommand();
 
-                cmd.CommandText = "UPDATE remote_visua_inspection SET tdate=@tdate, carId=@carId,comment1=@comment1, comment2=@comment2, " +
-                    "coil1=@coil1, coil2=@coil2, coil3=@coil3, coil4=@coil4, coil5=@coil5, coil6=@coil6, coil7=@coil7 ,coil8=@coil8,updateTime=@updateTime WHERE id=@id";
-                cmd.Parameters.Add(new MySqlParameter("@id", MySqlDbType.VarChar)).Value = remote_visua_inspection.id;
-                cmd.Parameters.Add(new MySqlParameter("@tdate", MySqlDbType.Date)).Value = remote_visua_inspection.tdate;
-                cmd.Parameters.Add(new MySqlParameter("@carId", MySqlDbType.VarChar)).Value = remote_visua_inspection.carId;
-                cmd.Parameters.Add(new MySqlParameter("@comment1", MySqlDbType.VarChar)).Value = remote_visua_inspection.comment1;
-                cmd.Parameters.Add(new MySqlParameter("@comment2", MySqlDbType.VarChar)).Value = remote_visua_inspection.comment2;
-                cmd.Parameters.Add(new MySqlParameter("@coil1", MySqlDbType.VarChar)).Value = remote_visua_inspection.coil1;
-                cmd.Parameters.Add(new MySqlParameter("@coil2", MySqlDbType.VarChar)).Value = remote_visua_inspection.coil2;
-                cmd.Parameters.Add(new MySqlParameter("@coil3", MySqlDbType.VarChar)).Value = remote_visua_inspection.coil3;
-                cmd.Parameters.Add(new MySqlParameter("@coil4", MySqlDbType.VarChar)).Value = remote_visua_inspection.coil4;
-                cmd.Parameters.Add(new MySqlParameter("@coil5", MySqlDbType.VarChar)).Value = remote_visua_inspection.coil5;
-                cmd.Parameters.Add(new MySqlParameter("@coil6", MySqlDbType.VarChar)).Value = remote_visua_inspection.coil6;
-                cmd.Parameters.Add(new MySqlParameter("@coil7", MySqlDbType.VarChar)).Value = remote_visua_inspection.coil7;
-                cmd.Parameters.Add(new MySqlParameter("@coil8", MySqlDbType.VarChar)).Value = remote_visua_inspection.coil8;
-                cmd.Parameters.Add(new MySqlParameter("@updateTime", MySqlDbType.DateTime)).Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                cmd.Parameters.Add(new MySqlParameter("@ip", MySqlDbType.VarChar)).Value = IPAddress.Get();
+                //cmd.CommandText = "UPDATE remote_visual_inspection_epslog SET tdate=@tdate, carId=@carId,comment1=@comment1, comment2=@comment2, " +
+                //    "coil1=@coil1, coil2=@coil2, coil3=@coil3, coil4=@coil4, coil5=@coil5, coil6=@coil6, coil7=@coil7 ,coil8=@coil8,updateTime=@updateTime WHERE id=@id";
+                //cmd.Parameters.Add(new MySqlParameter("@id", MySqlDbType.VarChar)).Value = remote_visual_inspection.id;
+                //cmd.Parameters.Add(new MySqlParameter("@tdate", MySqlDbType.Date)).Value = remote_visual_inspection.tdate;
+                //cmd.Parameters.Add(new MySqlParameter("@carId", MySqlDbType.VarChar)).Value = remote_visual_inspection.carId;
+                //cmd.Parameters.Add(new MySqlParameter("@comment1", MySqlDbType.VarChar)).Value = remote_visual_inspection.comment1;
+                //cmd.Parameters.Add(new MySqlParameter("@comment2", MySqlDbType.VarChar)).Value = remote_visual_inspection.comment2;
+                //cmd.Parameters.Add(new MySqlParameter("@coil1", MySqlDbType.VarChar)).Value = remote_visual_inspection.coil1;
+                //cmd.Parameters.Add(new MySqlParameter("@coil2", MySqlDbType.VarChar)).Value = remote_visual_inspection.coil2;
+                //cmd.Parameters.Add(new MySqlParameter("@coil3", MySqlDbType.VarChar)).Value = remote_visual_inspection.coil3;
+                //cmd.Parameters.Add(new MySqlParameter("@coil4", MySqlDbType.VarChar)).Value = remote_visual_inspection.coil4;
+                //cmd.Parameters.Add(new MySqlParameter("@coil5", MySqlDbType.VarChar)).Value = remote_visual_inspection.coil5;
+                //cmd.Parameters.Add(new MySqlParameter("@coil6", MySqlDbType.VarChar)).Value = remote_visual_inspection.coil6;
+                //cmd.Parameters.Add(new MySqlParameter("@coil7", MySqlDbType.VarChar)).Value = remote_visual_inspection.coil7;
+                //cmd.Parameters.Add(new MySqlParameter("@coil8", MySqlDbType.VarChar)).Value = remote_visual_inspection.coil8;
+                //cmd.Parameters.Add(new MySqlParameter("@updateTime", MySqlDbType.DateTime)).Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                //cmd.Parameters.Add(new MySqlParameter("@ip", MySqlDbType.VarChar)).Value = IPAddress.Get();
 
+
+                cmd.CommandText = "INSERT INTO remote_visual_inspection_abnormal(t_date,t_carId,t_comment)" +
+                        "VALUES(@t_date,@t_carId,@t_comment)";
+                cmd.Parameters.Add(new MySqlParameter("@t_date", MySqlDbType.DateTime)).Value = remote_visual_inspection.tdate;
+                cmd.Parameters.Add(new MySqlParameter("@t_carId", MySqlDbType.VarChar)).Value = remote_visual_inspection.carId;
+                cmd.Parameters.Add(new MySqlParameter("@t_comment", MySqlDbType.VarChar)).Value = remote_visual_inspection.comment1;
 
                 ExecuteCmd(cmd);
                 return RedirectToAction("Index");
             }
-            return View(remote_visua_inspection);
+            return View(remote_visual_inspection);
         }
         public ActionResult Delete(string id)
         {
             MySqlCommand cmd = new MySqlCommand();
-            cmd.CommandText = "DELETE FROM remote_visua_inspection WHERE id=@id";
+            cmd.CommandText = "DELETE FROM remote_visual_inspection_epslog WHERE id=@id";
             cmd.Parameters.Add(new MySqlParameter("@id", MySqlDbType.VarChar)).Value = id;
 
             ExecuteCmd(cmd);
@@ -150,28 +155,26 @@ namespace prjC349WebMVC.Controllers
             string SQL = "";
             if (queryMonth == "" || queryMonth == null)
             {
-                SQL = $"SELECT * FROM remote_visua_inspection ORDER BY id DESC";
+                SQL = $"SELECT `remote_visual_inspection_epslog`.`id`,tdate,carId,t_comment,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8 FROM `c349`.`remote_visual_inspection_epslog` left join `c349`.`remote_visual_inspection_abnormal` on `tdate` = `t_date` and `carId` = `t_carId` ORDER BY `c349`.`remote_visual_inspection_epslog`.`id` DESC";
             }
             else
             {
-                SQL = $"SELECT * FROM remote_visua_inspection WHERE MONTH(tdate) = {DateTime.Parse(queryMonth).Month} AND YEAR(tdate) = {DateTime.Parse(queryMonth).Year} ORDER BY id DESC";
+                SQL = $"SELECT `remote_visual_inspection_epslog`.`id`,tdate,carId,t_comment,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8 FROM `c349`.`remote_visual_inspection_epslog` left join `c349`.`remote_visual_inspection_abnormal` on `tdate` = `t_date` and `carId` = `t_carId` WHERE MONTH(tdate) = {DateTime.Parse(queryMonth).Month} AND YEAR(tdate) = {DateTime.Parse(queryMonth).Year} ORDER BY `c349`.`remote_visual_inspection_epslog`.`id` DESC";
             }
             MySqlDataAdapter adp = new MySqlDataAdapter(SQL, conn);
             DataSet ds = new DataSet();
             adp.Fill(ds);
             DataTable dt = ds.Tables[0];
-            List<remote_visual_inspection> employees = new List<remote_visual_inspection>();
+            List<remote_visual_inspection> rvi = new List<remote_visual_inspection>();
             ViewBag.Count = 0;
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                var yyy = dt.Rows[i]["comment1"].ToString();
-                employees.Add(new remote_visual_inspection
+                rvi.Add(new remote_visual_inspection
                 {
                     id = dt.Rows[i]["id"].ToString(),
                     tdate = DateTime.Parse(dt.Rows[i]["tdate"].ToString()),
                     carId = dt.Rows[i]["carId"].ToString(),
-                    comment1 = dt.Rows[i]["comment1"].ToString(),
-                    comment2 = dt.Rows[i]["comment2"].ToString(),
+                    comment1 = dt.Rows[i]["t_comment"].ToString(),
                     coil1 = dt.Rows[i]["coil1"].ToString(),
                     coil2 = dt.Rows[i]["coil2"].ToString(),
                     coil3 = dt.Rows[i]["coil3"].ToString(),
@@ -180,19 +183,19 @@ namespace prjC349WebMVC.Controllers
                     coil6 = dt.Rows[i]["coil6"].ToString(),
                     coil7 = dt.Rows[i]["coil7"].ToString(),
                     coil8 = dt.Rows[i]["coil8"].ToString(),
-                    creator = dt.Rows[i]["creator"].ToString(),
-                    updateTime = DateTime.Parse(dt.Rows[i]["updateTime"].ToString()),
-                    ip = dt.Rows[i]["ip"].ToString()
+                    //creator = dt.Rows[i]["creator"].ToString(),
+                    //updateTime = DateTime.Parse(dt.Rows[i]["updateTime"].ToString()),
+                    //ip = dt.Rows[i]["ip"].ToString()
                 });
                 ViewBag.Count++;
             }
-            return employees;
+            return rvi;
         }
         private remote_visual_inspection GetRecrod(string id)
         {
             MySqlConnection conn = new MySqlConnection(connStr);
             conn.ConnectionString = connStr;
-            MySqlCommand cmd = new MySqlCommand("SELECT * FROM remote_visua_inspection WHERE id=@id", conn);
+            MySqlCommand cmd = new MySqlCommand("SELECT * FROM remote_visual_inspection_epslog WHERE id=@id", conn);
             cmd.Parameters.Add(new MySqlParameter("@id", MySqlDbType.VarChar)).Value = id;
             MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
             DataSet ds = new DataSet();
@@ -239,7 +242,7 @@ namespace prjC349WebMVC.Controllers
 
         public ActionResult ExporttoExcel()
         {
-            List<remote_visual_inspection> remote_Visua_Inspections = GetAllRecrods("");
+            List<remote_visual_inspection> remote_visual_inspections = GetAllRecrods("");
 
 
             //建立Excel
@@ -256,7 +259,7 @@ namespace prjC349WebMVC.Controllers
             headerfont.Boldweight = (short)FontBoldWeight.Bold;
             headerStyle.SetFont(headerfont);
 
-            List<string> strList = new List<string> { "紀錄編號", "建立日期", "備註1", "備註2", "鋼捲1", "鋼捲2", "鋼捲3", "鋼捲4", "鋼捲5", "鋼捲6", "鋼捲7", "鋼捲8","載運車牌","輸入者","更新時間","IP" };
+            List<string> strList = new List<string> { "紀錄編號", "建立日期", "備註1", "備註2", "鋼捲1", "鋼捲2", "鋼捲3", "鋼捲4", "鋼捲5", "鋼捲6", "鋼捲7", "鋼捲8", "載運車牌", "輸入者", "更新時間", "IP" };
             for (int i = 0; i < strList.Count; i++)
             {
                 if (i == 0)
@@ -269,7 +272,7 @@ namespace prjC349WebMVC.Controllers
 
             //填入資料
             int rowIndex = 1;
-            foreach (var record in remote_Visua_Inspections)
+            foreach (var record in remote_visual_inspections)
             {
                 sheet.CreateRow(rowIndex).CreateCell(0).SetCellValue(record.id);
                 sheet.SetColumnWidth(0, 6 * 2 * 256);  //寬度調整
