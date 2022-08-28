@@ -58,14 +58,11 @@ namespace prjC349WebMVC.Controllers
                 try
                 {
                     MySqlCommand cmd = new MySqlCommand();
-                    cmd.CommandText = "INSERT INTO remote_visual_inspection_epslog(tdate,carId,comment1,comment2,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator,updateTime,ip)" +
-                        "VALUES(@tdate,@carId,@comment1,@comment2,@coil1,@coil2,@coil3,@coil4,@coil5,@coil6,@coil7,@coil8,@creator,@updateTime,@ip)";
+                    cmd.CommandText = "INSERT INTO remote_visual_inspection_epslog(tdate,carId,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator,updateTime,ip)" +
+                        "VALUES(@tdate,@carId,@coil1,@coil2,@coil3,@coil4,@coil5,@coil6,@coil7,@coil8,@creator,@updateTime,@ip)";
                     //cmd.Parameters.Add(new MySqlParameter("@id", MySqlDbType.VarChar)).Value = employee.id;
-                    cmd.Parameters.Add(new MySqlParameter("@tdate", MySqlDbType.DateTime)).Value = DateTime.Parse(remote_visual_inspection.tdate.ToString())
-                        .AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second);
+                    cmd.Parameters.Add(new MySqlParameter("@tdate", MySqlDbType.DateTime)).Value = remote_visual_inspection.tdate;
                     cmd.Parameters.Add(new MySqlParameter("@carId", MySqlDbType.VarChar)).Value = remote_visual_inspection.carId;
-                    cmd.Parameters.Add(new MySqlParameter("@comment1", MySqlDbType.VarChar)).Value = remote_visual_inspection.comment1;
-                    cmd.Parameters.Add(new MySqlParameter("@comment2", MySqlDbType.VarChar)).Value = remote_visual_inspection.comment2;
                     cmd.Parameters.Add(new MySqlParameter("@coil1", MySqlDbType.VarChar)).Value = remote_visual_inspection.coil1;
                     cmd.Parameters.Add(new MySqlParameter("@coil2", MySqlDbType.VarChar)).Value = remote_visual_inspection.coil2;
                     cmd.Parameters.Add(new MySqlParameter("@coil3", MySqlDbType.VarChar)).Value = remote_visual_inspection.coil3;
@@ -75,15 +72,11 @@ namespace prjC349WebMVC.Controllers
                     cmd.Parameters.Add(new MySqlParameter("@coil7", MySqlDbType.VarChar)).Value = remote_visual_inspection.coil7;
                     cmd.Parameters.Add(new MySqlParameter("@coil8", MySqlDbType.VarChar)).Value = remote_visual_inspection.coil8;
 
-                    if (IPAddress.Get() == "::1")
-                    {
-                        cmd.Parameters.Add(new MySqlParameter("@creator", MySqlDbType.VarChar)).Value = "test";
-                    }
-                    else
-                    {
-                        cmd.Parameters.Add(new MySqlParameter("@creator", MySqlDbType.VarChar)).Value = Request.Cookies["uid"].Value;
-                    }
-                    cmd.Parameters.Add(new MySqlParameter("@updateTime", MySqlDbType.DateTime)).Value = remote_visual_inspection.tdate;
+
+                    cmd.Parameters.Add(new MySqlParameter("@creator", MySqlDbType.VarChar)).Value = "EpsLog";
+
+                    cmd.Parameters.Add(new MySqlParameter("@updateTime", MySqlDbType.DateTime)).Value = DateTime.Parse(remote_visual_inspection.tdate.ToString())
+                        .AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second);
                     cmd.Parameters.Add(new MySqlParameter("@ip", MySqlDbType.VarChar)).Value = IPAddress.Get();
                     ExecuteCmd(cmd);
                     return RedirectToAction("Index");
@@ -106,7 +99,7 @@ namespace prjC349WebMVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                MySqlCommand cmd = new MySqlCommand();
+                //MySqlCommand cmd = new MySqlCommand();
 
                 //cmd.CommandText = "UPDATE remote_visual_inspection_epslog SET tdate=@tdate, carId=@carId,comment1=@comment1, comment2=@comment2, " +
                 //    "coil1=@coil1, coil2=@coil2, coil3=@coil3, coil4=@coil4, coil5=@coil5, coil6=@coil6, coil7=@coil7 ,coil8=@coil8,updateTime=@updateTime WHERE id=@id";
@@ -126,14 +119,40 @@ namespace prjC349WebMVC.Controllers
                 //cmd.Parameters.Add(new MySqlParameter("@updateTime", MySqlDbType.DateTime)).Value = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 //cmd.Parameters.Add(new MySqlParameter("@ip", MySqlDbType.VarChar)).Value = IPAddress.Get();
 
-
-                cmd.CommandText = "INSERT INTO remote_visual_inspection_abnormal(t_date,t_carId,t_comment)" +
-                        "VALUES(@t_date,@t_carId,@t_comment)";
+                MySqlConnection conn = new MySqlConnection(connStr);
+                string SQL = "select count(*) from `c349`.`remote_visual_inspection_abnormal` where `t_date` = @t_date and `t_carId` = @t_carId";
+                MySqlCommand cmd = new MySqlCommand(SQL, conn);
                 cmd.Parameters.Add(new MySqlParameter("@t_date", MySqlDbType.DateTime)).Value = remote_visual_inspection.tdate;
                 cmd.Parameters.Add(new MySqlParameter("@t_carId", MySqlDbType.VarChar)).Value = remote_visual_inspection.carId;
                 cmd.Parameters.Add(new MySqlParameter("@t_comment", MySqlDbType.VarChar)).Value = remote_visual_inspection.comment1;
 
-                ExecuteCmd(cmd);
+
+
+                MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                adp.Fill(ds);
+                DataTable dt = ds.Tables[0];
+                if (dt.Rows[0]["count(*)"].ToString() != "0")
+                {
+                    //update
+                    cmd.CommandText = "UPDATE remote_visual_inspection_abnormal SET t_comment=@t_comment where `t_date` = @t_date and `t_carId` = @t_carId";
+                    ExecuteCmd(cmd);
+                }
+                else
+                {
+                    //create
+                    cmd.CommandText = "INSERT INTO remote_visual_inspection_abnormal(t_date,t_carId,t_comment)" +
+                            "VALUES(@t_date,@t_carId,@t_comment)";
+
+                    ExecuteCmd(cmd);
+                }
+
+
+                //cmd.CommandText = "DELETE FROM remote_visual_inspection_abnormal WHERE t_date=@t_date AND t_carId=@t_carId";
+
+                //ExecuteCmd(cmd);
+
+
                 return RedirectToAction("Index");
             }
             return View(remote_visual_inspection);
@@ -155,11 +174,11 @@ namespace prjC349WebMVC.Controllers
             string SQL = "";
             if (queryMonth == "" || queryMonth == null)
             {
-                SQL = $"SELECT `remote_visual_inspection_epslog`.`id`,tdate,carId,t_comment,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8 FROM `c349`.`remote_visual_inspection_epslog` left join `c349`.`remote_visual_inspection_abnormal` on `tdate` = `t_date` and `carId` = `t_carId` ORDER BY `c349`.`remote_visual_inspection_epslog`.`id` DESC";
+                SQL = $"SELECT `remote_visual_inspection_epslog`.`id`,tdate,carId,t_comment,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator FROM `c349`.`remote_visual_inspection_epslog` left join `c349`.`remote_visual_inspection_abnormal` on `tdate` = `t_date` and `carId` = `t_carId` ORDER BY `c349`.`remote_visual_inspection_epslog`.`id` DESC";
             }
             else
             {
-                SQL = $"SELECT `remote_visual_inspection_epslog`.`id`,tdate,carId,t_comment,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8 FROM `c349`.`remote_visual_inspection_epslog` left join `c349`.`remote_visual_inspection_abnormal` on `tdate` = `t_date` and `carId` = `t_carId` WHERE MONTH(tdate) = {DateTime.Parse(queryMonth).Month} AND YEAR(tdate) = {DateTime.Parse(queryMonth).Year} ORDER BY `c349`.`remote_visual_inspection_epslog`.`id` DESC";
+                SQL = $"SELECT `remote_visual_inspection_epslog`.`id`,tdate,carId,t_comment,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator FROM `c349`.`remote_visual_inspection_epslog` left join `c349`.`remote_visual_inspection_abnormal` on `tdate` = `t_date` and `carId` = `t_carId` WHERE MONTH(tdate) = {DateTime.Parse(queryMonth).Month} AND YEAR(tdate) = {DateTime.Parse(queryMonth).Year} ORDER BY `c349`.`remote_visual_inspection_epslog`.`id` DESC";
             }
             MySqlDataAdapter adp = new MySqlDataAdapter(SQL, conn);
             DataSet ds = new DataSet();
@@ -183,6 +202,7 @@ namespace prjC349WebMVC.Controllers
                     coil6 = dt.Rows[i]["coil6"].ToString(),
                     coil7 = dt.Rows[i]["coil7"].ToString(),
                     coil8 = dt.Rows[i]["coil8"].ToString(),
+                    creator = dt.Rows[i]["creator"].ToString(),
                     //creator = dt.Rows[i]["creator"].ToString(),
                     //updateTime = DateTime.Parse(dt.Rows[i]["updateTime"].ToString()),
                     //ip = dt.Rows[i]["ip"].ToString()
@@ -194,8 +214,8 @@ namespace prjC349WebMVC.Controllers
         private remote_visual_inspection GetRecrod(string id)
         {
             MySqlConnection conn = new MySqlConnection(connStr);
-            conn.ConnectionString = connStr;
-            MySqlCommand cmd = new MySqlCommand("SELECT * FROM remote_visual_inspection_epslog WHERE id=@id", conn);
+            //conn.ConnectionString = connStr;
+            MySqlCommand cmd = new MySqlCommand("SELECT `remote_visual_inspection_epslog`.`id`,tdate,carId,t_comment,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8 FROM `c349`.`remote_visual_inspection_epslog` left join `c349`.`remote_visual_inspection_abnormal` on `tdate` = `t_date` and `carId` = `t_carId` WHERE `remote_visual_inspection_epslog`.`id`=@id", conn);
             cmd.Parameters.Add(new MySqlParameter("@id", MySqlDbType.VarChar)).Value = id;
             MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
             DataSet ds = new DataSet();
@@ -206,8 +226,7 @@ namespace prjC349WebMVC.Controllers
                 id = dt.Rows[0]["id"].ToString(),
                 tdate = DateTime.Parse(dt.Rows[0]["tdate"].ToString()),
                 carId = dt.Rows[0]["carId"].ToString(),
-                comment1 = dt.Rows[0]["comment1"].ToString(),
-                comment2 = dt.Rows[0]["comment2"].ToString(),
+                comment1 = dt.Rows[0]["t_comment"].ToString(),
                 coil1 = dt.Rows[0]["coil1"].ToString(),
                 coil2 = dt.Rows[0]["coil2"].ToString(),
                 coil3 = dt.Rows[0]["coil3"].ToString(),
@@ -216,9 +235,6 @@ namespace prjC349WebMVC.Controllers
                 coil6 = dt.Rows[0]["coil6"].ToString(),
                 coil7 = dt.Rows[0]["coil7"].ToString(),
                 coil8 = dt.Rows[0]["coil8"].ToString(),
-                creator = dt.Rows[0]["creator"].ToString(),
-                updateTime = DateTime.Parse(dt.Rows[0]["updateTime"].ToString()),
-                ip = dt.Rows[0]["ip"].ToString()
             };
             return emp;
         }

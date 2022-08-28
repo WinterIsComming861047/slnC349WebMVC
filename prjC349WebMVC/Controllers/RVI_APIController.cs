@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Configuration;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace prjC349WebMVC.Controllers
 {
@@ -22,6 +23,7 @@ namespace prjC349WebMVC.Controllers
         }
 
         // GET: api/RVI_API/5
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public remote_visual_inspection Get(string tdate, string carId)
         {
             return GetRecrod(tdate, carId);
@@ -75,16 +77,94 @@ namespace prjC349WebMVC.Controllers
 
 
         // POST: api/RVI_API
-        public void Post([FromBody]string value)
+        [HttpGet]
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public string Create(string tdate, string carId, string coil1, string coil2, string coil3, string coil4, string coil5, string coil6, string coil7, string coil8)
         {
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand();
+                cmd.CommandText = "INSERT INTO remote_visual_inspection_epslog(tdate,carId,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator,updateTime,ip)" +
+                    "VALUES(@tdate,@carId,@coil1,@coil2,@coil3,@coil4,@coil5,@coil6,@coil7,@coil8,@creator,@updateTime,@ip)";
+                //cmd.Parameters.Add(new MySqlParameter("@id", MySqlDbType.VarChar)).Value = employee.id;
+                cmd.Parameters.Add(new MySqlParameter("@tdate", MySqlDbType.DateTime)).Value = tdate;
+                cmd.Parameters.Add(new MySqlParameter("@carId", MySqlDbType.VarChar)).Value = carId;
+                cmd.Parameters.Add(new MySqlParameter("@coil1", MySqlDbType.VarChar)).Value = coil1;
+                cmd.Parameters.Add(new MySqlParameter("@coil2", MySqlDbType.VarChar)).Value = coil2;
+                cmd.Parameters.Add(new MySqlParameter("@coil3", MySqlDbType.VarChar)).Value = coil3;
+                cmd.Parameters.Add(new MySqlParameter("@coil4", MySqlDbType.VarChar)).Value = coil4;
+                cmd.Parameters.Add(new MySqlParameter("@coil5", MySqlDbType.VarChar)).Value = coil5;
+                cmd.Parameters.Add(new MySqlParameter("@coil6", MySqlDbType.VarChar)).Value = coil6;
+                cmd.Parameters.Add(new MySqlParameter("@coil7", MySqlDbType.VarChar)).Value = coil7;
+                cmd.Parameters.Add(new MySqlParameter("@coil8", MySqlDbType.VarChar)).Value = coil8;
+                cmd.Parameters.Add(new MySqlParameter("@creator", MySqlDbType.VarChar)).Value = "epslog";
+                cmd.Parameters.Add(new MySqlParameter("@updateTime", MySqlDbType.DateTime)).Value = DateTime.Parse(tdate.ToString())
+                    .AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second);
+                cmd.Parameters.Add(new MySqlParameter("@ip", MySqlDbType.VarChar)).Value = IPAddress.Get();
+                ExecuteCmd(cmd);
+                return "Success";
+            }
+            catch (Exception ex)
+            {
+                return ex.ToString();                
+            }
+
         }
 
+        // POST: api/RVI_API
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public string Post(string tdate, string carId, string coil1, string coil2, string coil3, string coil4, string coil5, string coil6, string coil7, string coil8)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    MySqlCommand cmd = new MySqlCommand();
+                    cmd.CommandText = "INSERT INTO remote_visual_inspection_epslog(tdate,carId,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator,updateTime,ip)" +
+                        "VALUES(@tdate,@carId,@coil1,@coil2,@coil3,@coil4,@coil5,@coil6,@coil7,@coil8,@creator,@updateTime,@ip)";
+                    //cmd.Parameters.Add(new MySqlParameter("@id", MySqlDbType.VarChar)).Value = employee.id;
+                    cmd.Parameters.Add(new MySqlParameter("@tdate", MySqlDbType.DateTime)).Value = tdate;
+                    cmd.Parameters.Add(new MySqlParameter("@carId", MySqlDbType.VarChar)).Value = carId;
+                    cmd.Parameters.Add(new MySqlParameter("@coil1", MySqlDbType.VarChar)).Value = coil1;
+                    cmd.Parameters.Add(new MySqlParameter("@coil2", MySqlDbType.VarChar)).Value = coil2;
+                    cmd.Parameters.Add(new MySqlParameter("@coil3", MySqlDbType.VarChar)).Value = coil3;
+                    cmd.Parameters.Add(new MySqlParameter("@coil4", MySqlDbType.VarChar)).Value = coil4;
+                    cmd.Parameters.Add(new MySqlParameter("@coil5", MySqlDbType.VarChar)).Value = coil5;
+                    cmd.Parameters.Add(new MySqlParameter("@coil6", MySqlDbType.VarChar)).Value = coil6;
+                    cmd.Parameters.Add(new MySqlParameter("@coil7", MySqlDbType.VarChar)).Value = coil7;
+                    cmd.Parameters.Add(new MySqlParameter("@coil8", MySqlDbType.VarChar)).Value = coil8;
+                    cmd.Parameters.Add(new MySqlParameter("@creator", MySqlDbType.VarChar)).Value = "epslog";
+                    cmd.Parameters.Add(new MySqlParameter("@updateTime", MySqlDbType.DateTime)).Value = DateTime.Parse(tdate.ToString())
+                        .AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second);
+                    cmd.Parameters.Add(new MySqlParameter("@ip", MySqlDbType.VarChar)).Value = IPAddress.Get();
+                    ExecuteCmd(cmd);
+                    return "Success";
+                }
+                catch (Exception ex)
+                {
+                    return ex.ToString();
+                }
+            }
+            return "Model State is not valid";
+        }
+
+        private void ExecuteCmd(MySqlCommand cmd)
+        {
+            MySqlConnection conn = new MySqlConnection();
+            conn.ConnectionString = connStr;
+            conn.Open();
+            cmd.Connection = conn;
+            var yy = cmd.ExecuteNonQuery();
+            conn.Close();
+        }
         // PUT: api/RVI_API/5
-        public void Put(int id, [FromBody]string value)
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
+        public void Put(int id, [FromBody] string value)
         {
         }
 
         // DELETE: api/RVI_API/5
+        [EnableCors(origins: "*", headers: "*", methods: "*")]
         public void Delete(int id)
         {
         }

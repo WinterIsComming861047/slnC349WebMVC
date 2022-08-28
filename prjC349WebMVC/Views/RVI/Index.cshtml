@@ -10,7 +10,9 @@
 
 <link href="~/Content/PagedList.css" rel="stylesheet" />
 
-<h2>遠端檢放管理</h2>
+<h2>遠端檢放管理(此畫面即將下線，請轉移至新畫面連結)->
+@Html.ActionLink("連結", "Index","RVI_CreateWithEPSLog")
+</h2>
 
 <br />
 <br />
@@ -31,7 +33,7 @@
 
 <br />
 <p>
-    @Html.ActionLink("新增", "Create", "", new { @class = "btn btn-primary" })
+    @*@Html.ActionLink("新增", "Create", "", new { @class = "btn btn-primary" })*@
     <input type="button" onclick="location.href='@Url.Action("ExporttoExcel", "RVI")'" value="匯出EXCEL" class="btn btn-success" />
 </p>
 @if (Model.Count() == 0)
