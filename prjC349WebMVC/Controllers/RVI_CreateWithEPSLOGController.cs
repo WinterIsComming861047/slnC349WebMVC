@@ -174,11 +174,11 @@ namespace prjC349WebMVC.Controllers
             string SQL = "";
             if (queryMonth == "" || queryMonth == null)
             {
-                SQL = $"SELECT `remote_visual_inspection_epslog`.`id`,tdate,carId,t_comment,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator FROM `c349`.`remote_visual_inspection_epslog` left join `c349`.`remote_visual_inspection_abnormal` on `tdate` = `t_date` and `carId` = `t_carId` ORDER BY `c349`.`remote_visual_inspection_epslog`.`id` DESC";
+                SQL = $"SELECT `remote_visual_inspection_epslog`.`id`,tdate,carId,t_comment,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator FROM `c349`.`remote_visual_inspection_epslog` left join `c349`.`remote_visual_inspection_abnormal` on `tdate` = `t_date` and `carId` = `t_carId` ORDER BY `c349`.`remote_visual_inspection_epslog`.`tdate` DESC";
             }
             else
             {
-                SQL = $"SELECT `remote_visual_inspection_epslog`.`id`,tdate,carId,t_comment,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator FROM `c349`.`remote_visual_inspection_epslog` left join `c349`.`remote_visual_inspection_abnormal` on `tdate` = `t_date` and `carId` = `t_carId` WHERE MONTH(tdate) = {DateTime.Parse(queryMonth).Month} AND YEAR(tdate) = {DateTime.Parse(queryMonth).Year} ORDER BY `c349`.`remote_visual_inspection_epslog`.`id` DESC";
+                SQL = $"SELECT `remote_visual_inspection_epslog`.`id`,tdate,carId,t_comment,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator FROM `c349`.`remote_visual_inspection_epslog` left join `c349`.`remote_visual_inspection_abnormal` on `tdate` = `t_date` and `carId` = `t_carId` WHERE MONTH(tdate) = {DateTime.Parse(queryMonth).Month} AND YEAR(tdate) = {DateTime.Parse(queryMonth).Year} ORDER BY `c349`.`remote_visual_inspection_epslog`.`tdate` DESC";
             }
             MySqlDataAdapter adp = new MySqlDataAdapter(SQL, conn);
             DataSet ds = new DataSet();
