@@ -73,7 +73,7 @@ namespace prjC349WebMVC.Controllers
                     cmd.Parameters.Add(new MySqlParameter("@coil8", MySqlDbType.VarChar)).Value = remote_visual_inspection.coil8;
 
 
-                    cmd.Parameters.Add(new MySqlParameter("@creator", MySqlDbType.VarChar)).Value = "EpsLog";
+                    cmd.Parameters.Add(new MySqlParameter("@creator", MySqlDbType.VarChar)).Value = remote_visual_inspection.creator;
 
                     cmd.Parameters.Add(new MySqlParameter("@updateTime", MySqlDbType.DateTime)).Value = DateTime.Parse(remote_visual_inspection.tdate.ToString())
                         .AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second);
