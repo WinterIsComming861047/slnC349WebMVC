@@ -79,7 +79,7 @@ namespace prjC349WebMVC.Controllers
         // POST: api/RVI_API
         [HttpGet]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public string Create(string tdate, string carId, string coil1, string coil2, string coil3, string coil4, string coil5, string coil6, string coil7, string coil8)
+        public string Create(string tdate, string carId, string coil1, string coil2, string coil3, string coil4, string coil5, string coil6, string coil7, string coil8, string creator)
         {
             try
             {
@@ -97,7 +97,7 @@ namespace prjC349WebMVC.Controllers
                 cmd.Parameters.Add(new MySqlParameter("@coil6", MySqlDbType.VarChar)).Value = coil6;
                 cmd.Parameters.Add(new MySqlParameter("@coil7", MySqlDbType.VarChar)).Value = coil7;
                 cmd.Parameters.Add(new MySqlParameter("@coil8", MySqlDbType.VarChar)).Value = coil8;
-                cmd.Parameters.Add(new MySqlParameter("@creator", MySqlDbType.VarChar)).Value = "epslog";
+                cmd.Parameters.Add(new MySqlParameter("@creator", MySqlDbType.VarChar)).Value = creator;
                 cmd.Parameters.Add(new MySqlParameter("@updateTime", MySqlDbType.DateTime)).Value = DateTime.Parse(tdate.ToString())
                     .AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second);
                 cmd.Parameters.Add(new MySqlParameter("@ip", MySqlDbType.VarChar)).Value = IPAddress.Get();
