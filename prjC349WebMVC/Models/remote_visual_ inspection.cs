@@ -57,7 +57,7 @@ namespace prjC349WebMVC.Models
         [Required(ErrorMessage = "車牌不可空白")]
         public string carId { get; set; }
 
-        [DisplayName("輸入者")]
+        [DisplayName("檢核員")]
         public string creator { get; set; }
 
         [DisplayName("更新時間")]

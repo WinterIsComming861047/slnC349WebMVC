@@ -11,186 +11,237 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.id)
-
-    <div class="form-group">
-        <div class="col-md-10">
-            @*@{
-                    var yy = DateTime.Parse(Model.tdate.ToString());
-                    var zz = yy.ToString("u");
-                    var x = 5;
-                }*@
-            @Html.LabelFor(model => model.tdate, htmlAttributes: new { @class = "control-label col-md-2" })：
-            @Model.tdate.Value.ToString("yyyy-MM-dd HH:mm:ss")
-            <input type="hidden" value="@Model.tdate.Value.ToString("yyyy-MM-dd HH:mm:ss")" name="tdate" />
-            @*@Html.EditorFor(model => model.tdate, new { htmlAttributes = new { @class = "form-control", @placeholder = "yyyy/MM/dd HH:mm:ss", @id = "tbDate" } })
-                @Html.ValidationMessageFor(model => model.tdate, "", new { @class = "text-danger" })*@
-        </div>
-    </div>
-
-    <div class="form-group">
-        <input type="hidden" value="@Model.carId" name="carId" />
-        <div class="col-md-10">
-            @Html.LabelFor(model => model.carId, htmlAttributes: new { @class = "control-label col-md-2" })：
-            @Model.carId
-
-            @*@Html.EditorFor(model => model.carId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.carId, "", new { @class = "text-danger" })*@
-        </div>
-    </div>
-
-    <br />
-
-
-    <div class="form-group">
-        @Html.LabelFor(model => model.comment1, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @*@Html.EditorFor(model => model.comment1, new { htmlAttributes = new { @class = "form-control" } })*@
-
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id)
+        <div class="form-group" style="display:inline">
             <div class="col-md-10">
+                @*@{
+                        var yy = DateTime.Parse(Model.tdate.ToString());
+                        var zz = yy.ToString("u");
+                        var x = 5;
+                    }*@
+                @*@Html.LabelFor(model => model.tdate, htmlAttributes: new { @class = "control-label col-md-2" })：
+                    @Model.tdate.Value.ToString("yyyy-MM-dd HH:mm:ss")
+                    <input type="hidden" value="@Model.tdate.Value.ToString("yyyy-MM-dd HH:mm:ss")" name="tdate" />*@
+                @*@Html.EditorFor(model => model.tdate, new { htmlAttributes = new { @class = "form-control", @placeholder = "yyyy/MM/dd HH:mm:ss", @id = "tbDate" } })
+                    @Html.ValidationMessageFor(model => model.tdate, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+
+        <div class="form-group" style="display:inline">
+            @*<input type="hidden" value="@Model.carId" name="carId" />*@
+            <div class="col-md-10">
+                @*@Html.LabelFor(model => model.carId, htmlAttributes: new { @class = "control-label col-md-2" })：
+                    @Model.carId*@
+
+                @*@Html.EditorFor(model => model.carId, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.carId, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+
+        <br />
+        <table>
+            <tr>
+                <td>
+                    <div style="display:inline">
+                        @Html.ActionLink("返回列表", "Index")
+                    </div>
+                </td>
+                <td></td>
+                <td>
+                <td rowspan="5">
+                    @{
+                        int[] cam_index_array = { 0, 1, 4, 7, 10, 2, 5, 8, 11, 3, 6, 9, 12, 13, 14 };
+                        string photosUrl = "http://10.10.102.14/Photos/";
+                        string str_i = cam_index_array[14].ToString().PadLeft(2, '0');
+                        string camlnk = $"{photosUrl}{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}/{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}_cam{str_i}.jpeg";
+                        <a href=@camlnk>
+                            <img src=@camlnk style="width:1080px" />
+                        </a>
+                    }
+                </td>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.tdate, htmlAttributes: new { @class = "control-label" })：
+                </td>
+                <td>
+                    @Model.tdate.Value.ToString("yyyy-MM-dd HH:mm:ss")
+                    <input type="hidden" value="@Model.tdate.Value.ToString("yyyy-MM-dd HH:mm:ss")" name="tdate" />
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.carId, htmlAttributes: new { @class = "control-label" })：
+
+                </td>
+                <td>
+                    @Model.carId
+                    <input type="hidden" value="@Model.carId" name="carId" />
+                </td>
+                <td></td>
+
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.comment1, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <select name="comment1" class="form-select" size="6" aria-label="size 6 select example">
+                        <option>1.小顆鋼捲號碼看不到</option>
+                        <option>2.光線反光鋼捲號碼不易辨識</option>
+                        <option>3.車輛超過停止線鋼捲號碼看不到</option>
+                        <option>4.攝影機無法調整角度鋼捲號碼不易辨識</option>
+                        <option>5.車輛不能自動報到</option>
+                        <option>6.併鴻立回復木銷帳</option>
+                    </select>
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="col-md-offset-2 col-md-10" style="display:inline">
+                        <input type="submit" value="儲存" class="btn btn-primary" />
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div class="form-group" style="display:inline">
+
+            <div class="col-md-12" style="display:inline">
                 @*@Html.EditorFor(model => model.comment1, new { htmlAttributes = new { @class = "form-control" } })*@
-                @*@Html.ValidationMessageFor(model => model.comment1, "", new { @class = "text-danger" })*@
-                <select name="comment1" class="form-select" size="6" aria-label="size 6 select example">
-                    <option>1.小顆鋼捲號碼看不到</option>
-                    <option>2.光線反光鋼捲號碼不易辨識</option>
-                    <option>3.車輛超過停止線鋼捲號碼看不到</option>
-                    <option>4.攝影機無法調整角度鋼捲號碼不易辨識</option>
-                    <option>5.車輛不能自動報到</option>
-                    <option>6.併鴻立回復木銷帳</option>
-                </select>
+                <div class="col-md-6" style="display:inline">
+                    @*@Html.EditorFor(model => model.comment1, new { htmlAttributes = new { @class = "form-control" } })*@
+                    @*@Html.ValidationMessageFor(model => model.comment1, "", new { @class = "text-danger" })*@
+
+                </div>
+                <div class="col-md-6" style="display:inline">
+
+                </div>
+                @Html.ValidationMessageFor(model => model.comment1, "", new { @class = "text-danger" })
             </div>
-
-            @Html.ValidationMessageFor(model => model.comment1, "", new { @class = "text-danger" })
         </div>
+
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.comment2, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.comment2, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.comment2, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+
+
+
+
+        <br />
+        <table style="border:solid">
+            <tr style="border:solid">
+                @{
+                    for (int i = 1; i <= 4; i++)
+                    {
+                        str_i = cam_index_array[i].ToString().PadLeft(2, '0');
+                        camlnk = $"{photosUrl}{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}/{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}_cam{str_i}.jpeg";
+                        <td style="border:solid">
+                            <a href=@camlnk>
+                                <img src=@camlnk style="width:384px;height:216px" />
+                            </a>
+
+                        </td>
+                    }
+                }
+            </tr>
+            <tr style="border:solid">
+                @{
+                    for (int i = 1; i <= 4; i++)
+                    {
+                        str_i = i.ToString().PadLeft(2, '0');
+                        <td style="border:solid" align="center">cam @str_i</td>
+                    }
+
+                }
+            </tr>
+            <tr style="border:solid">
+                @{
+                    for (int i = 5; i <= 8; i++)
+                    {
+                        str_i = cam_index_array[i].ToString().PadLeft(2, '0');
+                        camlnk = $"{photosUrl}{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}/{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}_cam{str_i}.jpeg";
+                        <td style="border:solid">
+                            <a href=@camlnk>
+                                <img src=@camlnk style="width:384px;height:216px" />
+                            </a>
+
+                        </td>
+                    }
+                }
+            </tr>
+            <tr style="border:solid">
+                @{
+                    for (int i = 5; i <= 8; i++)
+                    {
+                        str_i = i.ToString().PadLeft(2, '0');
+                        <td style="border:solid" align="center">cam @str_i</td>
+                    }
+
+                }
+            </tr>
+            <tr style="border:solid">
+                @{
+                    for (int i = 9; i <= 12; i++)
+                    {
+                        str_i = cam_index_array[i].ToString().PadLeft(2, '0');
+                        camlnk = $"{photosUrl}{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}/{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}_cam{str_i}.jpeg";
+                        <td style="border:solid">
+                            <a href=@camlnk>
+                                <img src=@camlnk style="width:384px;height:216px" />
+                            </a>
+
+                        </td>
+                    }
+                }
+            </tr>
+            <tr style="border:solid">
+                @{
+                    for (int i = 9; i <= 12; i++)
+                    {
+                        str_i = i.ToString().PadLeft(2, '0');
+                        <td style="border:solid" align="center">cam @str_i</td>
+                    }
+
+                }
+            </tr>
+            <tr style="border:solid">
+                @{
+                    for (int i = 13; i < 14; i++)
+                    {
+                        str_i = cam_index_array[i].ToString().PadLeft(2, '0');
+                        camlnk = $"{photosUrl}{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}/{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}_cam{str_i}.jpeg";
+                        <td style="border:solid">
+                            <a href=@camlnk>
+                                <img src=@camlnk style="width:384px;height:216px" />
+                            </a>
+
+                        </td>
+                    }
+                }
+            </tr>
+            <tr style="border:solid">
+                @{
+                    for (int i = 13; i < 14; i++)
+                    {
+                        str_i = i.ToString().PadLeft(2, '0');
+                        <td style="border:solid" align="center">cam @str_i</td>
+                    }
+
+                }
+            </tr>
+        </table>
     </div>
-
-
-    @*<div class="form-group">
-            @Html.LabelFor(model => model.comment2, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.comment2, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.comment2, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="儲存" class="btn btn-default" />
-        </div>
-    </div>
-    <div>
-        @Html.ActionLink("Back to List", "Index")
-    </div>
-    <br />
-    <table style="border:solid">
-        <tr style="border:solid">
-            @{
-                string photosUrl = "http://10.10.102.14/Photos/";
-                for (int i = 1; i <= 4; i++)
-                {
-                    string str_i = i.ToString().PadLeft(2, '0');
-                    string camlnk = $"{photosUrl}{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}/{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}_cam{str_i}.jpeg";
-                    <td style="border:solid">
-                        <a href=@camlnk>
-                            <img src=@camlnk style="width:384px;height:216px" />
-                        </a>
-
-                    </td>
-                }
-            }
-        </tr>
-        <tr style="border:solid">
-            @{
-                for (int i = 1; i <= 4; i++)
-                {
-                    string str_i = i.ToString().PadLeft(2, '0');
-                    <td style="border:solid" align="center">cam @str_i</td>
-                }
-
-            }
-        </tr>
-        <tr style="border:solid">
-            @{
-                for (int i = 5; i <= 8; i++)
-                {
-                    string str_i = i.ToString().PadLeft(2, '0');
-                    string camlnk = $"{photosUrl}{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}/{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}_cam{str_i}.jpeg";
-                    <td style="border:solid">
-                        <a href=@camlnk>
-                            <img src=@camlnk style="width:384px;height:216px" />
-                        </a>
-
-                    </td>
-                }
-            }
-        </tr>
-        <tr style="border:solid">
-            @{
-                for (int i = 5; i <= 8; i++)
-                {
-                    string str_i = i.ToString().PadLeft(2, '0');
-                    <td style="border:solid" align="center">cam @str_i</td>
-                }
-
-            }
-        </tr>
-        <tr style="border:solid">
-            @{
-                for (int i = 9; i <= 12; i++)
-                {
-                    string str_i = i.ToString().PadLeft(2, '0');
-                    string camlnk = $"{photosUrl}{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}/{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}_cam{str_i}.jpeg";
-                    <td style="border:solid">
-                        <a href=@camlnk>
-                            <img src=@camlnk style="width:384px;height:216px" />
-                        </a>
-
-                    </td>
-                }
-            }
-        </tr>
-        <tr style="border:solid">
-            @{
-                for (int i = 9; i <= 12; i++)
-                {
-                    string str_i = i.ToString().PadLeft(2, '0');
-                    <td style="border:solid" align="center">cam @str_i</td>
-                }
-
-            }
-        </tr>
-        <tr style="border:solid">
-            @{
-                for (int i = 13; i <= 14; i++)
-                {
-                    string str_i = i.ToString().PadLeft(2, '0');
-                    string camlnk = $"{photosUrl}{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}/{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}_cam{str_i}.jpeg";
-                    <td style="border:solid">
-                        <a href=@camlnk>
-                            <img src=@camlnk style="width:384px;height:216px" />
-                        </a>
-
-                    </td>
-                }
-            }
-        </tr>
-        <tr style="border:solid">
-            @{
-                for (int i = 13; i <= 14; i++)
-                {
-                    string str_i = i.ToString().PadLeft(2, '0');
-                    <td style="border:solid" align="center">cam @str_i</td>
-                }
-
-            }
-        </tr>
-    </table>
-</div>
 }
 
 
