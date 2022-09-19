@@ -67,21 +67,20 @@
             <tr>
                 <td>
                     @Html.LabelFor(model => model.tdate, htmlAttributes: new { @class = "control-label" })：
-                </td>
-                <td>
                     @Model.tdate.Value.ToString("yyyy-MM-dd HH:mm:ss")
                     <input type="hidden" value="@Model.tdate.Value.ToString("yyyy-MM-dd HH:mm:ss")" name="tdate" />
+                </td>
+                <td>
                 </td>
 
             </tr>
             <tr>
                 <td>
                     @Html.LabelFor(model => model.carId, htmlAttributes: new { @class = "control-label" })：
-
-                </td>
-                <td>
                     @Model.carId
                     <input type="hidden" value="@Model.carId" name="carId" />
+                </td>
+                <td>
                 </td>
                 <td></td>
 
