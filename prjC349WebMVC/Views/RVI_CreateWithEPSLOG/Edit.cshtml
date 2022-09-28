@@ -308,8 +308,8 @@
                     <div class="mySlides">
                         <div class="numbertext">@i </div>
                         <a href=@camlnk>
-                            <img src=@camlnk style="width:100%">
-                        </a>
+                        <img src=@camlnk style="width:100%" onclick="openModal_2()" class="hover-shadow cursor">
+                            </a>
                     </div>
                 }
             }
@@ -337,19 +337,22 @@
 
         </div>
     </div>
-    <div id="myModa2" class="modal">
-        <span class="close cursor" onclick="closeModa2()">&times;</span>
-        <div class="moda2-content">
+    @*<div id="myModal_2" class="modal">
+        <span class="close cursor" onclick="closeModal_2()">&times;</span>
+        <div class="modal_2-content">
         </div>
-    </div>
+    </div>*@
 
     <script>
-        document.addEventListener('keypress', function (e) {
-            console.log("yo");
-            if (e.key === "Escape") {
-                closeModal();
-            }
-        }, true);
+        //不知道為什麼可以偵測按鍵，但是對Esc沒有反應
+        //document.addEventListener('keypress', function (e) {
+        //    console.log("yo");
+        //    if (e.key === "Escape") {
+        //        closeModal();
+        //    }
+        //}, true);
+
+        /*https://segmentfault.com/q/1010000000452465*/
         document.addEventListener('click', function (e) {
             var _con = $(".modal-content");   //
             if (!_con.is(e.target) && _con.has(e.target).length === 0) { // Mark 1
@@ -392,6 +395,20 @@
             dots[slideIndex - 1].className += " active";
             captionText.innerHTML = dots[slideIndex - 1].alt;
         }
+
+        //function openModal_2() {
+        //    document.getElementById("myModal_2").style.display = "block";
+        //}
+
+        //function closeModal_2() {
+        //    document.getElementById("myModal_2").style.display = "none";
+        //}
+        //document.addEventListener('click', function (e) {
+        //    var _con = $(".modal_2-content");   //
+        //    if (!_con.is(e.target) && _con.has(e.target).length === 0) { // Mark 1
+        //        closeModal_2();
+        //    }
+        //}, true);
     </script>
     @*燈箱*@
     @*<div class="form-horizontal">
