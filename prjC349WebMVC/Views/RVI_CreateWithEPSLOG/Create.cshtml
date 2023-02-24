@@ -97,36 +97,15 @@
                     @Html.ValidationMessageFor(model => model.coil8, "", new { @class = "text-danger" })
                 </div>
             </div>
-        </div>
-        <br />
-        <div class="row">
             <div class="form-group col-3">
-                @Html.LabelFor(model => model.comment1, htmlAttributes: new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.location, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @*@Html.EditorFor(model => model.comment1, new { htmlAttributes = new { @class = "form-control" } })*@
-                    <select name="comment1" class="form-select" size="5" aria-label="size 5 select example">
-                        <option>LED看板故障</option>
-                        <option>刷卡異常</option>
-                        <option>條碼槍掃描異常</option>
-                        <option>印表機異常</option>
-                        <option>高聲電話、電話異常</option>
-                    </select>
-                    @*@Html.DropDownListFor(model =>model.comment1, new SelectList(Enum.GetValues(typeof(Comment1))),"選擇備註1")*@
-                    @Html.ValidationMessageFor(model => model.comment1, "", new { @class = "text-danger" })
-
-                </div>
-            </div>
-            <br />
-            <div class="form-group col-3">
-                @Html.LabelFor(model => model.comment2, htmlAttributes: new { @class = "control-label col-md-2" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.comment2, new { htmlAttributes = new { @class = "form-control col-4" } })
-                    @Html.ValidationMessageFor(model => model.comment2, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.location, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.location, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
         <br />
-
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">

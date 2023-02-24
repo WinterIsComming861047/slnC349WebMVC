@@ -1,0 +1,520 @@
+﻿@model prjC349WebMVC.Models.remote_visual_inspection
+
+@{
+    ViewBag.Title = "C349_1車道";
+}
+
+<style>
+    body {
+        font-family: Verdana, sans-serif;
+        margin: 0;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .row > .column {
+        padding: 0 0px;
+    }
+
+    .row:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
+
+    .column {
+        float: left;
+        width: 25%;
+    }
+
+    /* The Modal (background) */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        padding-top: 100px;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: black;
+    }
+
+    /* Modal Content */
+    .modal-content {
+        position: relative;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 0;
+        width: 90%;
+        max-width: 1200px;
+    }
+
+    /* The Close Button */
+    .close {
+        color: white;
+        position: absolute;
+        top: 10px;
+        right: 25px;
+        font-size: 35px;
+        font-weight: bold;
+    }
+
+        .close:hover,
+        .close:focus {
+            color: #999;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+    .mySlides {
+        display: none;
+    }
+
+    .cursor {
+        cursor: pointer;
+    }
+
+    /* Next & previous buttons */
+    .prev,
+    .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        width: auto;
+        padding: 16px;
+        margin-top: -50px;
+        color: white;
+        font-weight: bold;
+        font-size: 20px;
+        transition: 0.6s ease;
+        border-radius: 0 3px 3px 0;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+
+    /* Position the "next button" to the right */
+    .next {
+        right: 0;
+        border-radius: 3px 0 0 3px;
+    }
+
+        /* On hover, add a black background color with a little bit see-through */
+        .prev:hover,
+        .next:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+        }
+
+    /* Number text (1/3 etc) */
+    .numbertext {
+        color: #f2f2f2;
+        font-size: 12px;
+        padding: 8px 12px;
+        position: absolute;
+        top: 0;
+    }
+
+    img {
+        margin-bottom: -4px;
+    }
+
+    .caption-container {
+        text-align: center;
+        background-color: black;
+        padding: 2px 16px;
+        color: white;
+    }
+
+    .demo {
+        opacity: 0.6;
+    }
+
+        .active,
+        .demo:hover {
+            opacity: 1;
+        }
+
+    img.hover-shadow {
+        transition: 0.3s;
+    }
+
+    .hover-shadow:hover {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+</style>
+
+<h2>@ViewBag.Title</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.id)
+    <div class="form-group" style="display:inline">
+        <div class="col-md-10">
+            @*@{
+                    var yy = DateTime.Parse(Model.tdate.ToString());
+                    var zz = yy.ToString("u");
+                    var x = 5;
+                }*@
+            @*@Html.LabelFor(model => model.tdate, htmlAttributes: new { @class = "control-label col-md-2" })：
+                @Model.tdate.Value.ToString("yyyy-MM-dd HH:mm:ss")
+                <input type="hidden" value="@Model.tdate.Value.ToString("yyyy-MM-dd HH:mm:ss")" name="tdate" />*@
+            @*@Html.EditorFor(model => model.tdate, new { htmlAttributes = new { @class = "form-control", @placeholder = "yyyy/MM/dd HH:mm:ss", @id = "tbDate" } })
+                @Html.ValidationMessageFor(model => model.tdate, "", new { @class = "text-danger" })*@
+        </div>
+    </div>
+
+    <div class="form-group" style="display:inline">
+        @*<input type="hidden" value="@Model.carId" name="carId" />*@
+        <div class="col-md-10">
+            @*@Html.LabelFor(model => model.carId, htmlAttributes: new { @class = "control-label col-md-2" })：
+                @Model.carId*@
+
+            @*@Html.EditorFor(model => model.carId, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.carId, "", new { @class = "text-danger" })*@
+        </div>
+    </div>
+
+    <br />
+    <table>
+        <tr>
+            <td>
+                <div style="display:inline">
+                    @Html.ActionLink("返回列表", "Index")
+                </div>
+            </td>
+            <td></td>
+            <td>
+            <td rowspan="5">
+                @{
+                    int[] cam_index_array = { 0, 1, 4, 7, 10, 2, 5, 8, 11, 3, 6, 9, 12, 13, 14 };
+                    string photosUrl = "http://10.10.102.14/Photos/";
+                    string str_i = cam_index_array[14].ToString().PadLeft(2, '0');
+                    string camlnk = $"{photosUrl}{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}/{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}_cam{str_i}.jpeg";
+                    <a href=@camlnk>
+                        <img src=@camlnk style="width:1080px" />
+                    </a>
+                }
+            </td>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.tdate, htmlAttributes: new { @class = "control-label" })：
+                @Model.tdate.Value.ToString("yyyy-MM-dd HH:mm:ss")
+                <input type="hidden" value="@Model.tdate.Value.ToString("yyyy-MM-dd HH:mm:ss")" name="tdate" />
+            </td>
+            <td>
+            </td>
+
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.carId, htmlAttributes: new { @class = "control-label" })：
+                @Model.carId
+                <input type="hidden" value="@Model.carId" name="carId" />
+            </td>
+            <td>
+            </td>
+            <td></td>
+
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>
+                <div class="col-md-offset-2 col-md-10" style="display:inline">
+                    <input type="submit" value="儲存" class="btn btn-primary" />
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div class="form-group" style="display:inline">
+
+        <div class="col-md-12" style="display:inline">
+            @*@Html.EditorFor(model => model.comment1, new { htmlAttributes = new { @class = "form-control" } })*@
+            <div class="col-md-6" style="display:inline">
+                @*@Html.EditorFor(model => model.comment1, new { htmlAttributes = new { @class = "form-control" } })*@
+                @*@Html.ValidationMessageFor(model => model.comment1, "", new { @class = "text-danger" })*@
+
+            </div>
+            <div class="col-md-6" style="display:inline">
+
+            </div>
+            @Html.ValidationMessageFor(model => model.comment1, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.comment2, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.comment2, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.comment2, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+
+
+
+
+    <br />
+
+    //燈箱
+
+    <div class="row">
+        @{
+            for (int i = 1; i <= 13; i++)
+            {
+                str_i = cam_index_array[i].ToString().PadLeft(2, '0');
+                camlnk = $"{photosUrl}{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}/{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}_cam{str_i}.jpeg";
+                <div class="column">
+                    <img src=@camlnk style="width:100%" onclick="openModal();currentSlide(@i)" class="hover-shadow cursor">
+                </div>
+            }
+        }
+    </div>
+
+    <div id="myModal" class="modal">
+        <span class="close cursor" onclick="closeModal()">&times;</span>
+        <div class="modal-content">
+
+            @{
+                for (int i = 1; i <= 13; i++)
+                {
+                    str_i = cam_index_array[i].ToString().PadLeft(2, '0');
+                    camlnk = $"{photosUrl}{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}/{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}_cam{str_i}.jpeg";
+                    <div class="mySlides">
+                        <div class="numbertext">@i </div>
+                        <a href=@camlnk>
+                            <img src=@camlnk style="width:100%" onclick="openModal_2()" class="hover-shadow cursor">
+                        </a>
+                    </div>
+                }
+            }
+
+
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+            <div class="caption-container">
+                <p id="caption"></p>
+            </div>
+
+            <div class="row">
+                @{
+                    for (int i = 1; i <= 13; i++)
+                    {
+                        str_i = cam_index_array[i].ToString().PadLeft(2, '0');
+                        camlnk = $"{photosUrl}{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}/{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}_cam{str_i}.jpeg";
+                        <div class="column">
+                            <img class="demo cursor" src=@camlnk style="width:100%" onclick="currentSlide(@i)" alt="cam @str_i">
+                        </div>
+                    }
+                }
+            </div>
+
+        </div>
+    </div>
+    @*<div id="myModal_2" class="modal">
+            <span class="close cursor" onclick="closeModal_2()">&times;</span>
+            <div class="modal_2-content">
+            </div>
+        </div>*@
+
+    <script>
+        //不知道為什麼可以偵測按鍵，但是對Esc沒有反應
+        //document.addEventListener('keypress', function (e) {
+        //    console.log("yo");
+        //    if (e.key === "Escape") {
+        //        closeModal();
+        //    }
+        //}, true);
+
+        /*https://segmentfault.com/q/1010000000452465*/
+        document.addEventListener('click', function (e) {
+            var _con = $(".modal-content");   //
+            if (!_con.is(e.target) && _con.has(e.target).length === 0) { // Mark 1
+                closeModal();
+            }
+        }, true);
+        function openModal() {
+            document.getElementById("myModal").style.display = "block";
+        }
+
+        function closeModal() {
+            document.getElementById("myModal").style.display = "none";
+        }
+
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+            var captionText = document.getElementById("caption");
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+            captionText.innerHTML = dots[slideIndex - 1].alt;
+        }
+
+        //function openModal_2() {
+        //    document.getElementById("myModal_2").style.display = "block";
+        //}
+
+        //function closeModal_2() {
+        //    document.getElementById("myModal_2").style.display = "none";
+        //}
+        //document.addEventListener('click', function (e) {
+        //    var _con = $(".modal_2-content");   //
+        //    if (!_con.is(e.target) && _con.has(e.target).length === 0) { // Mark 1
+        //        closeModal_2();
+        //    }
+        //}, true);
+    </script>
+    @*燈箱*@
+    @*<div class="form-horizontal">
+            <table style="border:solid">
+                <tr style="border:solid">
+                    @{
+                        for (int i = 1; i <= 4; i++)
+                        {
+                            str_i = cam_index_array[i].ToString().PadLeft(2, '0');
+                            camlnk = $"{photosUrl}{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}/{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}_cam{str_i}.jpeg";
+                            <td style="border:solid">
+                                <a href=@camlnk>
+                                    <img src=@camlnk style="width:384px;height:216px" />
+                                </a>
+
+                            </td>
+                        }
+                    }
+                </tr>
+                <tr style="border:solid">
+                    @{
+                        for (int i = 1; i <= 4; i++)
+                        {
+                            str_i = i.ToString().PadLeft(2, '0');
+                            <td style="border:solid" align="center">cam @str_i</td>
+                        }
+
+                    }
+                </tr>
+                <tr style="border:solid">
+                    @{
+                        for (int i = 5; i <= 8; i++)
+                        {
+                            str_i = cam_index_array[i].ToString().PadLeft(2, '0');
+                            camlnk = $"{photosUrl}{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}/{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}_cam{str_i}.jpeg";
+                            <td style="border:solid">
+                                <a href=@camlnk>
+                                    <img src=@camlnk style="width:384px;height:216px" />
+                                </a>
+
+                            </td>
+                        }
+                    }
+                </tr>
+                <tr style="border:solid">
+                    @{
+                        for (int i = 5; i <= 8; i++)
+                        {
+                            str_i = i.ToString().PadLeft(2, '0');
+                            <td style="border:solid" align="center">cam @str_i</td>
+                        }
+
+                    }
+                </tr>
+                <tr style="border:solid">
+                    @{
+                        for (int i = 9; i <= 12; i++)
+                        {
+                            str_i = cam_index_array[i].ToString().PadLeft(2, '0');
+                            camlnk = $"{photosUrl}{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}/{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}_cam{str_i}.jpeg";
+                            <td style="border:solid">
+                                <a href=@camlnk>
+                                    <img src=@camlnk style="width:384px;height:216px" />
+                                </a>
+
+                            </td>
+                        }
+                    }
+                </tr>
+                <tr style="border:solid">
+                    @{
+                        for (int i = 9; i <= 12; i++)
+                        {
+                            str_i = i.ToString().PadLeft(2, '0');
+                            <td style="border:solid" align="center">cam @str_i</td>
+                        }
+
+                    }
+                </tr>
+                <tr style="border:solid">
+                    @{
+                        for (int i = 13; i < 14; i++)
+                        {
+                            str_i = cam_index_array[i].ToString().PadLeft(2, '0');
+                            camlnk = $"{photosUrl}{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}/{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}_cam{str_i}.jpeg";
+                            <td style="border:solid">
+                                <a href=@camlnk>
+                                    <img src=@camlnk style="width:384px;height:216px" />
+                                </a>
+
+                            </td>
+                        }
+                    }
+                </tr>
+                <tr style="border:solid">
+                    @{
+                        for (int i = 13; i < 14; i++)
+                        {
+                            str_i = i.ToString().PadLeft(2, '0');
+                            <td style="border:solid" align="center">cam @str_i</td>
+                        }
+
+                    }
+                </tr>
+            </table>
+        </div>*@
+}
+
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+
+@section scripts{
+    <link rel="stylesheet" href="~/Scripts/jquery-ui-1.13.1.custom/jquery-ui.css">
+}

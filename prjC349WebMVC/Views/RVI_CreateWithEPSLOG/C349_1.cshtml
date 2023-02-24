@@ -3,18 +3,18 @@
 @using PagedList.Mvc
 @using System
 @{
-    ViewBag.Title = "遠端檢放管理";
+    ViewBag.Title = "C349_1車道檢放管理";
 }
 
 <h1>@ViewBag.Cookie</h1>
 
 <link href="~/Content/PagedList.css" rel="stylesheet" />
 
-<h2>遠端檢放管理</h2>
+<h2>@ViewBag.Title</h2>
 
 <br />
 <br />
-<form method="get" action="~/RVI_CreateWithEPSLOG/Index">
+<form method="get" action="~/RVI_CreateWithEPSLOG/C349_1">
     <input type="text" name="queryMonth" id="tbMonth" value="@ViewBag.queryMonth" />
     <input type="submit" value="查詢其他月份" />
 </form>
@@ -32,7 +32,7 @@
 <br />
 <p>
     @*@Html.ActionLink("新增", "Create", "", new { @class = "btn btn-primary" })*@
-    @ViewBag.Location="Y423";
+    @ViewBag.Location="C349_1";
     <input type="button" onclick="location.href='@Url.Action("ExporttoExcel", "RVI_CreateWithEPSLOG")'" value="匯出EXCEL" class="btn btn-success" />
 </p>
 @if (Model.Count() == 0)
@@ -173,7 +173,7 @@ else
                     string str_i = i.ToString().PadLeft(2, '0');
                     string camlnk = $"{photosUrl}{item.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(item.carId.ToString())}/{item.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(item.carId.ToString())}_cam{str_i}.jpeg";
                     <td colspan="10">
-                        <a href=@Url.Action("Edit")?id=@item.id>
+                        <a href=@Url.Action("Edit") ?id=@item.id>
                             <img src=@camlnk style="width:96px;height:54px" />
                         </a>
                     </td>

@@ -768,6 +768,8 @@
     <Content Include="Views\RVI_CreateWithEPSLOG\Create.cshtml" />
     <Content Include="Views\RVI_CreateWithEPSLOG\Index.cshtml" />
     <Content Include="Views\RVI_CreateWithEPSLOG\Edit.cshtml" />
+    <Content Include="Views\RVI_CreateWithEPSLOG\C349_1.cshtml" />
+    <Content Include="Views\RVI_CreateWithEPSLOG\C349_1_Detail.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

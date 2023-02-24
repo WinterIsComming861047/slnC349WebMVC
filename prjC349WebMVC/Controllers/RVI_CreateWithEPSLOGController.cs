@@ -13,6 +13,7 @@ using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using System.IO;
 using NPOI.XSSF.UserModel;
+using MySqlX.XDevAPI.Common;
 
 namespace prjC349WebMVC.Controllers
 {
@@ -28,11 +29,22 @@ namespace prjC349WebMVC.Controllers
             //}
             ViewBag.queryMonth = queryMonth;
             int currentPage = page < 1 ? 1 : page;
-            var result = GetAllRecrods(queryMonth).ToPagedList(currentPage, pageSize);
+            var result = GetAllRecrods(queryMonth,"Y423").ToPagedList(currentPage, pageSize);
             //ViewBag.Cookie = Request.Cookies.AllKeys[0];
             return View(result);
         }
-
+        public ActionResult C349_1(string queryMonth, int page = 1)
+        {
+            ViewBag.queryMonth = queryMonth;
+            int currentPage = page < 1 ? 1 : page;
+            var result = GetAllRecrods(queryMonth,"C349_1").ToPagedList(currentPage, pageSize);
+            //ViewBag.Cookie = Request.Cookies.AllKeys[0];
+            return View(result);
+        }
+        public ActionResult C349_1_Detail(string id)
+        {
+            return View(GetRecrod(id));            
+        }
         public ActionResult Create()
         {
 
@@ -58,8 +70,8 @@ namespace prjC349WebMVC.Controllers
                 try
                 {
                     MySqlCommand cmd = new MySqlCommand();
-                    cmd.CommandText = "INSERT INTO remote_visual_inspection_epslog(tdate,carId,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator,updateTime,ip)" +
-                        "VALUES(@tdate,@carId,@coil1,@coil2,@coil3,@coil4,@coil5,@coil6,@coil7,@coil8,@creator,@updateTime,@ip)";
+                    cmd.CommandText = "INSERT INTO remote_visual_inspection_epslog(tdate,carId,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator,updateTime,ip,location)" +
+                        "VALUES(@tdate,@carId,@coil1,@coil2,@coil3,@coil4,@coil5,@coil6,@coil7,@coil8,@creator,@updateTime,@ip,@location)";
                     //cmd.Parameters.Add(new MySqlParameter("@id", MySqlDbType.VarChar)).Value = employee.id;
                     cmd.Parameters.Add(new MySqlParameter("@tdate", MySqlDbType.DateTime)).Value = remote_visual_inspection.tdate;
                     cmd.Parameters.Add(new MySqlParameter("@carId", MySqlDbType.VarChar)).Value = remote_visual_inspection.carId;
@@ -74,6 +86,7 @@ namespace prjC349WebMVC.Controllers
 
 
                     cmd.Parameters.Add(new MySqlParameter("@creator", MySqlDbType.VarChar)).Value = remote_visual_inspection.creator;
+                    cmd.Parameters.Add(new MySqlParameter("@location", MySqlDbType.VarChar)).Value = remote_visual_inspection.location;
 
                     cmd.Parameters.Add(new MySqlParameter("@updateTime", MySqlDbType.DateTime)).Value = DateTime.Parse(remote_visual_inspection.tdate.ToString())
                         .AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second);
@@ -167,18 +180,18 @@ namespace prjC349WebMVC.Controllers
             return RedirectToAction("Index");
         }
         // GET: Home
-        private List<remote_visual_inspection> GetAllRecrods(string queryMonth)
+        private List<remote_visual_inspection> GetAllRecrods(string queryMonth, string location)
         {
             MySqlConnection conn = new MySqlConnection(connStr);
             conn.ConnectionString = connStr;
             string SQL = "";
             if (queryMonth == "" || queryMonth == null)
             {
-                SQL = $"SELECT `remote_visual_inspection_epslog`.`id`,tdate,carId,t_comment,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator FROM `c349`.`remote_visual_inspection_epslog` left join `c349`.`remote_visual_inspection_abnormal` on `tdate` = `t_date` and `carId` = `t_carId` ORDER BY `c349`.`remote_visual_inspection_epslog`.`tdate` DESC";
+                SQL = $"SELECT `remote_visual_inspection_epslog`.`id`,tdate,carId,t_comment,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator FROM `c349`.`remote_visual_inspection_epslog` left join `c349`.`remote_visual_inspection_abnormal` on `tdate` = `t_date` and `carId` = `t_carId` where `location` = '{location}' ORDER BY `c349`.`remote_visual_inspection_epslog`.`tdate` DESC";
             }
             else
             {
-                SQL = $"SELECT `remote_visual_inspection_epslog`.`id`,tdate,carId,t_comment,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator FROM `c349`.`remote_visual_inspection_epslog` left join `c349`.`remote_visual_inspection_abnormal` on `tdate` = `t_date` and `carId` = `t_carId` WHERE MONTH(tdate) = {DateTime.Parse(queryMonth).Month} AND YEAR(tdate) = {DateTime.Parse(queryMonth).Year} ORDER BY `c349`.`remote_visual_inspection_epslog`.`tdate` DESC";
+                SQL = $"SELECT `remote_visual_inspection_epslog`.`id`,tdate,carId,t_comment,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator FROM `c349`.`remote_visual_inspection_epslog` left join `c349`.`remote_visual_inspection_abnormal` on `tdate` = `t_date` and `carId` = `t_carId` WHERE `location` = '{location}' AND MONTH(tdate) = {DateTime.Parse(queryMonth).Month} AND YEAR(tdate) = {DateTime.Parse(queryMonth).Year} ORDER BY `c349`.`remote_visual_inspection_epslog`.`tdate` DESC";
             }
             MySqlDataAdapter adp = new MySqlDataAdapter(SQL, conn);
             DataSet ds = new DataSet();
@@ -258,7 +271,7 @@ namespace prjC349WebMVC.Controllers
 
         public ActionResult ExporttoExcel()
         {
-            List<remote_visual_inspection> remote_visual_inspections = GetAllRecrods("");
+            List<remote_visual_inspection> remote_visual_inspections = GetAllRecrods("", ViewBag.Location);
 
 
             //建立Excel

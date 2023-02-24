@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Web.Configuration;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using static Google.Protobuf.Reflection.SourceCodeInfo.Types;
 
 namespace prjC349WebMVC.Controllers
 {
@@ -64,7 +65,8 @@ namespace prjC349WebMVC.Controllers
                     coil8 = dt.Rows[0]["coil8"].ToString(),
                     creator = dt.Rows[0]["creator"].ToString(),
                     updateTime = DateTime.Parse(dt.Rows[0]["updateTime"].ToString()),
-                    ip = dt.Rows[0]["ip"].ToString()
+                    ip = dt.Rows[0]["ip"].ToString(),
+                    location =dt.Rows[0]["location"].ToString()
                 };
             }
             catch
@@ -76,16 +78,16 @@ namespace prjC349WebMVC.Controllers
         }
 
 
-        // POST: api/RVI_API
+        // GET: api/RVI_API
         [HttpGet]
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public string Create(string tdate, string carId, string coil1, string coil2, string coil3, string coil4, string coil5, string coil6, string coil7, string coil8, string creator)
+        public string Create(string tdate, string carId, string coil1, string coil2, string coil3, string coil4, string coil5, string coil6, string coil7, string coil8, string creator, string location)
         {
             try
             {
                 MySqlCommand cmd = new MySqlCommand();
-                cmd.CommandText = "INSERT INTO remote_visual_inspection_epslog(tdate,carId,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator,updateTime,ip)" +
-                    "VALUES(@tdate,@carId,@coil1,@coil2,@coil3,@coil4,@coil5,@coil6,@coil7,@coil8,@creator,@updateTime,@ip)";
+                cmd.CommandText = "INSERT INTO remote_visual_inspection_epslog(tdate,carId,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator,updateTime,ip, location)" +
+                    "VALUES(@tdate,@carId,@coil1,@coil2,@coil3,@coil4,@coil5,@coil6,@coil7,@coil8,@creator,@updateTime,@ip,@location)";
                 //cmd.Parameters.Add(new MySqlParameter("@id", MySqlDbType.VarChar)).Value = employee.id;
                 cmd.Parameters.Add(new MySqlParameter("@tdate", MySqlDbType.DateTime)).Value = tdate;
                 cmd.Parameters.Add(new MySqlParameter("@carId", MySqlDbType.VarChar)).Value = carId;
@@ -98,6 +100,7 @@ namespace prjC349WebMVC.Controllers
                 cmd.Parameters.Add(new MySqlParameter("@coil7", MySqlDbType.VarChar)).Value = coil7;
                 cmd.Parameters.Add(new MySqlParameter("@coil8", MySqlDbType.VarChar)).Value = coil8;
                 cmd.Parameters.Add(new MySqlParameter("@creator", MySqlDbType.VarChar)).Value = creator;
+                cmd.Parameters.Add(new MySqlParameter("@location", MySqlDbType.VarChar)).Value = location;
                 cmd.Parameters.Add(new MySqlParameter("@updateTime", MySqlDbType.DateTime)).Value = DateTime.Parse(tdate.ToString())
                     .AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second);
                 cmd.Parameters.Add(new MySqlParameter("@ip", MySqlDbType.VarChar)).Value = IPAddress.Get();
@@ -113,15 +116,15 @@ namespace prjC349WebMVC.Controllers
 
         // POST: api/RVI_API
         [EnableCors(origins: "*", headers: "*", methods: "*")]
-        public string Post(string tdate, string carId, string coil1, string coil2, string coil3, string coil4, string coil5, string coil6, string coil7, string coil8)
+        public string Post(string tdate, string carId, string coil1, string coil2, string coil3, string coil4, string coil5, string coil6, string coil7, string coil8, string location)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
                     MySqlCommand cmd = new MySqlCommand();
-                    cmd.CommandText = "INSERT INTO remote_visual_inspection_epslog(tdate,carId,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator,updateTime,ip)" +
-                        "VALUES(@tdate,@carId,@coil1,@coil2,@coil3,@coil4,@coil5,@coil6,@coil7,@coil8,@creator,@updateTime,@ip)";
+                    cmd.CommandText = "INSERT INTO remote_visual_inspection_epslog(tdate,carId,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator,updateTime,ip, location)" +
+                        "VALUES(@tdate,@carId,@coil1,@coil2,@coil3,@coil4,@coil5,@coil6,@coil7,@coil8,@creator,@updateTime,@ip,@location)";
                     //cmd.Parameters.Add(new MySqlParameter("@id", MySqlDbType.VarChar)).Value = employee.id;
                     cmd.Parameters.Add(new MySqlParameter("@tdate", MySqlDbType.DateTime)).Value = tdate;
                     cmd.Parameters.Add(new MySqlParameter("@carId", MySqlDbType.VarChar)).Value = carId;
@@ -134,6 +137,7 @@ namespace prjC349WebMVC.Controllers
                     cmd.Parameters.Add(new MySqlParameter("@coil7", MySqlDbType.VarChar)).Value = coil7;
                     cmd.Parameters.Add(new MySqlParameter("@coil8", MySqlDbType.VarChar)).Value = coil8;
                     cmd.Parameters.Add(new MySqlParameter("@creator", MySqlDbType.VarChar)).Value = "epslog";
+                    cmd.Parameters.Add(new MySqlParameter("@location", MySqlDbType.VarChar)).Value = location;
                     cmd.Parameters.Add(new MySqlParameter("@updateTime", MySqlDbType.DateTime)).Value = DateTime.Parse(tdate.ToString())
                         .AddHours(DateTime.Now.Hour).AddMinutes(DateTime.Now.Minute).AddSeconds(DateTime.Now.Second);
                     cmd.Parameters.Add(new MySqlParameter("@ip", MySqlDbType.VarChar)).Value = IPAddress.Get();
