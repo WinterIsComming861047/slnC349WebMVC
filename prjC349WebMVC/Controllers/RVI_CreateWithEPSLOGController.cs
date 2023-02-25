@@ -187,11 +187,11 @@ namespace prjC349WebMVC.Controllers
             string SQL = "";
             if (queryMonth == "" || queryMonth == null)
             {
-                SQL = $"SELECT `remote_visual_inspection_epslog`.`id`,tdate,carId,t_comment,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator FROM `c349`.`remote_visual_inspection_epslog` left join `c349`.`remote_visual_inspection_abnormal` on `tdate` = `t_date` and `carId` = `t_carId` where `location` = '{location}' ORDER BY `c349`.`remote_visual_inspection_epslog`.`tdate` DESC";
+                SQL = $"SELECT `remote_visual_inspection_epslog`.`id`,tdate,carId,t_comment,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,coil9,coil10,coil11,coil12,coil13,coil14,coil15,coil16,creator FROM `c349`.`remote_visual_inspection_epslog` left join `c349`.`remote_visual_inspection_abnormal` on `tdate` = `t_date` and `carId` = `t_carId` where `location` = '{location}' ORDER BY `c349`.`remote_visual_inspection_epslog`.`tdate` DESC";
             }
             else
             {
-                SQL = $"SELECT `remote_visual_inspection_epslog`.`id`,tdate,carId,t_comment,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,creator FROM `c349`.`remote_visual_inspection_epslog` left join `c349`.`remote_visual_inspection_abnormal` on `tdate` = `t_date` and `carId` = `t_carId` WHERE `location` = '{location}' AND MONTH(tdate) = {DateTime.Parse(queryMonth).Month} AND YEAR(tdate) = {DateTime.Parse(queryMonth).Year} ORDER BY `c349`.`remote_visual_inspection_epslog`.`tdate` DESC";
+                SQL = $"SELECT `remote_visual_inspection_epslog`.`id`,tdate,carId,t_comment,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,coil9,coil10,coil11,coil12,coil13,coil14,coil15,coil16,creator FROM `c349`.`remote_visual_inspection_epslog` left join `c349`.`remote_visual_inspection_abnormal` on `tdate` = `t_date` and `carId` = `t_carId` WHERE `location` = '{location}' AND MONTH(tdate) = {DateTime.Parse(queryMonth).Month} AND YEAR(tdate) = {DateTime.Parse(queryMonth).Year} ORDER BY `c349`.`remote_visual_inspection_epslog`.`tdate` DESC";
             }
             MySqlDataAdapter adp = new MySqlDataAdapter(SQL, conn);
             DataSet ds = new DataSet();
@@ -215,6 +215,14 @@ namespace prjC349WebMVC.Controllers
                     coil6 = dt.Rows[i]["coil6"].ToString(),
                     coil7 = dt.Rows[i]["coil7"].ToString(),
                     coil8 = dt.Rows[i]["coil8"].ToString(),
+                    coil9 = dt.Rows[i]["coil9"].ToString(),
+                    coil10 = dt.Rows[i]["coil10"].ToString(),
+                    coil11 = dt.Rows[i]["coil11"].ToString(),
+                    coil12 = dt.Rows[i]["coil12"].ToString(),
+                    coil13 = dt.Rows[i]["coil13"].ToString(),
+                    coil14 = dt.Rows[i]["coil14"].ToString(),
+                    coil15 = dt.Rows[i]["coil15"].ToString(),
+                    coil16 = dt.Rows[i]["coil16"].ToString(),
                     creator = dt.Rows[i]["creator"].ToString(),
                     //creator = dt.Rows[i]["creator"].ToString(),
                     //updateTime = DateTime.Parse(dt.Rows[i]["updateTime"].ToString()),
@@ -228,7 +236,7 @@ namespace prjC349WebMVC.Controllers
         {
             MySqlConnection conn = new MySqlConnection(connStr);
             //conn.ConnectionString = connStr;
-            MySqlCommand cmd = new MySqlCommand("SELECT `remote_visual_inspection_epslog`.`id`,tdate,carId,t_comment,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8 FROM `c349`.`remote_visual_inspection_epslog` left join `c349`.`remote_visual_inspection_abnormal` on `tdate` = `t_date` and `carId` = `t_carId` WHERE `remote_visual_inspection_epslog`.`id`=@id", conn);
+            MySqlCommand cmd = new MySqlCommand("SELECT `remote_visual_inspection_epslog`.`id`,tdate,carId,t_comment,coil1,coil2,coil3,coil4,coil5,coil6,coil7,coil8,coil9,coil10,coil11,coil12,coil13,coil14,coil15,coil16 FROM `c349`.`remote_visual_inspection_epslog` left join `c349`.`remote_visual_inspection_abnormal` on `tdate` = `t_date` and `carId` = `t_carId` WHERE `remote_visual_inspection_epslog`.`id`=@id", conn);
             cmd.Parameters.Add(new MySqlParameter("@id", MySqlDbType.VarChar)).Value = id;
             MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
             DataSet ds = new DataSet();
@@ -248,6 +256,14 @@ namespace prjC349WebMVC.Controllers
                 coil6 = dt.Rows[0]["coil6"].ToString(),
                 coil7 = dt.Rows[0]["coil7"].ToString(),
                 coil8 = dt.Rows[0]["coil8"].ToString(),
+                coil9 = dt.Rows[0]["coil9"].ToString(),
+                coil10 = dt.Rows[0]["coil10"].ToString(),
+                coil11 = dt.Rows[0]["coil11"].ToString(),
+                coil12 = dt.Rows[0]["coil12"].ToString(),
+                coil13 = dt.Rows[0]["coil13"].ToString(),
+                coil14 = dt.Rows[0]["coil14"].ToString(),
+                coil15 = dt.Rows[0]["coil15"].ToString(),
+                coil16 = dt.Rows[0]["coil16"].ToString(),
             };
             return emp;
         }
@@ -288,7 +304,7 @@ namespace prjC349WebMVC.Controllers
             headerfont.Boldweight = (short)FontBoldWeight.Bold;
             headerStyle.SetFont(headerfont);
 
-            List<string> strList = new List<string> { "紀錄編號", "建立日期", "備註1", "備註2", "鋼捲1", "鋼捲2", "鋼捲3", "鋼捲4", "鋼捲5", "鋼捲6", "鋼捲7", "鋼捲8", "載運車牌", "輸入者", "更新時間", "IP" };
+            List<string> strList = new List<string> { "紀錄編號", "建立日期", "備註1", "備註2", "鋼捲1", "鋼捲2", "鋼捲3", "鋼捲4", "鋼捲5", "鋼捲6", "鋼捲7", "鋼捲8", "鋼捲9", "鋼捲10", "鋼捲11", "鋼捲12", "鋼捲13", "鋼捲14", "鋼捲15", "鋼捲16", "載運車牌", "輸入者", "更新時間", "IP" };
             for (int i = 0; i < strList.Count; i++)
             {
                 if (i == 0)
@@ -326,14 +342,30 @@ namespace prjC349WebMVC.Controllers
                 sheet.GetRow(rowIndex).CreateCell(10).SetCellValue(record.coil7);
                 sheet.SetColumnWidth(10, 6 * 2 * 256);   //寬度調整
                 sheet.GetRow(rowIndex).CreateCell(11).SetCellValue(record.coil8);
+                sheet.SetColumnWidth(10, 6 * 2 * 256);   //寬度調整
+                sheet.GetRow(rowIndex).CreateCell(12).SetCellValue(record.coil9);
                 sheet.SetColumnWidth(11, 6 * 2 * 256);   //寬度調整
-                sheet.GetRow(rowIndex).CreateCell(12).SetCellValue(record.carId);
+                sheet.GetRow(rowIndex).CreateCell(13).SetCellValue(record.coil10);
+                sheet.SetColumnWidth(4, 6 * 2 * 256);   //寬度調整
+                sheet.GetRow(rowIndex).CreateCell(14).SetCellValue(record.coil11);
+                sheet.SetColumnWidth(5, 6 * 2 * 256);   //寬度調整
+                sheet.GetRow(rowIndex).CreateCell(15).SetCellValue(record.coil12);
+                sheet.SetColumnWidth(6, 6 * 2 * 256);   //寬度調整
+                sheet.GetRow(rowIndex).CreateCell(16).SetCellValue(record.coil13);
+                sheet.SetColumnWidth(7, 6 * 2 * 256);   //寬度調整
+                sheet.GetRow(rowIndex).CreateCell(17).SetCellValue(record.coil14);
+                sheet.SetColumnWidth(8, 6 * 2 * 256);   //寬度調整
+                sheet.GetRow(rowIndex).CreateCell(18).SetCellValue(record.coil15);
+                sheet.SetColumnWidth(9, 6 * 2 * 256);   //寬度調整
+                sheet.GetRow(rowIndex).CreateCell(19).SetCellValue(record.coil16);
+                sheet.SetColumnWidth(9, 6 * 2 * 256);   //寬度調整
+                sheet.GetRow(rowIndex).CreateCell(20).SetCellValue(record.carId);
                 sheet.SetColumnWidth(12, 6 * 2 * 256);   //寬度調整
-                sheet.GetRow(rowIndex).CreateCell(13).SetCellValue(record.creator);
+                sheet.GetRow(rowIndex).CreateCell(21).SetCellValue(record.creator);
                 sheet.SetColumnWidth(13, 6 * 2 * 256);   //寬度調整
-                sheet.GetRow(rowIndex).CreateCell(14).SetCellValue(record.updateTime.ToString());
+                sheet.GetRow(rowIndex).CreateCell(22).SetCellValue(record.updateTime.ToString());
                 sheet.SetColumnWidth(14, 7 * 2 * 256);   //寬度調整
-                sheet.GetRow(rowIndex).CreateCell(15).SetCellValue(record.ip);
+                sheet.GetRow(rowIndex).CreateCell(23).SetCellValue(record.ip);
                 sheet.SetColumnWidth(15, 6 * 2 * 256);   //寬度調整
                 rowIndex++;
             }

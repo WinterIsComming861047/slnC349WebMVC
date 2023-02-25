@@ -32,7 +32,7 @@
 <br />
 <p>
     @*@Html.ActionLink("新增", "Create", "", new { @class = "btn btn-primary" })*@
-    @ViewBag.Location="Y423";
+    @{ViewBag.Location = "Y423"; }
     <input type="button" onclick="location.href='@Url.Action("ExporttoExcel", "RVI_CreateWithEPSLOG")'" value="匯出EXCEL" class="btn btn-success" />
 </p>
 @if (Model.Count() == 0)

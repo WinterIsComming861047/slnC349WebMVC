@@ -195,7 +195,7 @@
             <td>
             <td rowspan="5">
                 @{
-                    int[] cam_index_array = { 0, 1, 4, 7, 10, 2, 5, 8, 11, 3, 6, 9, 12, 13, 14 };
+                    int[] cam_index_array = { 0, 1, 2, 3, 4, 5, 7};
                     string photosUrl = "http://10.10.102.14/Photos/";
                     string str_i = cam_index_array[14].ToString().PadLeft(2, '0');
                     string camlnk = $"{photosUrl}{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}/{Model.tdate.Value.ToString("yyyyMMdd_HHmmss")}_{Uri.EscapeUriString(Model.carId.ToString())}_cam{str_i}.jpeg";
