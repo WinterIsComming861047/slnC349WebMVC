@@ -27,6 +27,7 @@ namespace prjC349WebMVC.Controllers
             //{
             //    queryMonth = DateTime.Now.Month.ToString().PadLeft(2,'0')+"/"+ DateTime.Now.Year.ToString();
             //}
+            ViewBag.Location = "Y423";
             ViewBag.queryMonth = queryMonth;
             int currentPage = page < 1 ? 1 : page;
             var result = GetAllRecrods(queryMonth,"Y423").ToPagedList(currentPage, pageSize);
@@ -285,9 +286,9 @@ namespace prjC349WebMVC.Controllers
             public string Address { get; set; }
         }
 
-        public ActionResult ExporttoExcel()
+        public ActionResult ExporttoExcel(string location)
         {
-            List<remote_visual_inspection> remote_visual_inspections = GetAllRecrods("", ViewBag.Location);
+            List<remote_visual_inspection> remote_visual_inspections = GetAllRecrods("", location);
 
 
             //建立Excel
