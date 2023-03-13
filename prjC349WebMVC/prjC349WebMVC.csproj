@@ -730,6 +730,7 @@
     <Compile Include="Controllers\RVIController.cs" />
     <Compile Include="Controllers\RVI_APIController.cs" />
     <Compile Include="Controllers\RVI_CreateWithEPSLOGController.cs" />
+    <Compile Include="Controllers\ToolBoxController.cs" />
     <Compile Include="getChartJsData.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -770,6 +771,7 @@
     <Content Include="Views\RVI_CreateWithEPSLOG\Edit.cshtml" />
     <Content Include="Views\RVI_CreateWithEPSLOG\C349_1.cshtml" />
     <Content Include="Views\RVI_CreateWithEPSLOG\C349_1_Detail.cshtml" />
+    <Content Include="Views\ToolBox\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

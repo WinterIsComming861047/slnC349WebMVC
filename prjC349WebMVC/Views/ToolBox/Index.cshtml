@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    .preview-box {
+        position: center;
+        z-index: 1;
+        background-color: #fff;
+        box-shadow: 0px 0px 5px #888;
+        border: 1px solid #ccc;
+        padding: 10px;
+        /*display: none;*/
+    }
+
+/*    a:hover + .preview-box {
+        display: block;
+    }*/
+
+/*    .preview-box:hover {
+        display: block;
+        width: 1000px;
+        height: 600px;
+    }*/
+</style>
+
+<table cellpadding="10">
+    <tr>
+        <td colspan="2">電話簿</td>
+    </tr>
+    <tr>
+        <td><iframe src="http://eas.csc.com.tw/ka/func/kaf0" width="900" height="300"></iframe></td>
+        <td><iframe src="http://eas.csc.com.tw/ka/func/kaf2" width="900" height="300"></iframe></td>
+    </tr>
+    <tr>
+        <td colspan="2">鋼捲資料</td>
+    </tr>
+    <tr>
+        <td><iframe class="preview-box" src="http://crane.csc.com.tw/mis/oy_mgr_website/OYL3/OYAOL3.aspx" width="900" height="300"></iframe></td>
+        <td><iframe class="preview-box" src="http://eas.csc.com.tw/ig/basic/igi1" width="900" height="300"></iframe></td>
+    </tr>
+    <tr>
+        <td colspan="2">作業情形</td>
+    </tr>
+    <tr>
+        <td><iframe class="preview-box" src="http://crane.csc.com.tw/mis/oy_mgr_website/OY21/OYAO21.aspx" width="900" height="300"></iframe></td>
+        <td><iframe class="preview-box" src="http://eas.csc.com.tw/ig/export/ig8d" width="900" height="300"></iframe></td>
+    </tr>
+    <tr>
+        <td colspan="2"><iframe class="preview-box" src="http://10.10.102.28/PLS" width="1800" height="300"></iframe></td>
+    </tr>    
+    <tr>
+        <td colspan="2"><iframe class="preview-box" src="http://10.10.102.28/HttpRequestTest" width="1800" height="300"></iframe></td>
+    </tr>
+    <tr>
+        <td><iframe class="preview-box" src="http://dept.csc.com.tw/MIS/C34/C34Web/C34X.aspx" width="900" height="300"></iframe></td>
+        <td><iframe class="preview-box" src="http://eas.csc.com.tw/pd/attend/pdvf" width="900" height="300"></iframe></td>
+    </tr>
+
+    <tr>
+        <td colspan="2">窗口</td>
+    </tr>
+    <tr>
+        <td><iframe class="preview-box" src="http://mvatcp.csc.com.tw:6080/CICS/SB8B/SBOU8BL/214585" width="900" height="300"></iframe></td>
+        <td></td>
+    </tr>
+</table>
+<table cellpadding="10">
+    <tr>
+        <td colspan="3">行政業務</td>
+    </tr>
+    <tr>
+        <td><a href="http://mvatcp.csc.com.tw:7080/CICS/KW1N/KWOU1N/214585">協力廠商日常績效考核表</a></td>
+        <td><a href="http://eas.csc.com.tw/pd/night/pdwj">待命費及三節出勤慰勞金申請作業</a></td>
+        <td><a href="http://eas.csc.com.tw/pd/absent/pdsa?">夜間巡查</a></td>
+    </tr>
+</table>
+@*<div class="container">
+        <input Id="leftnameinput" onchange=""/>
+        <iframe Id ="leftframe" src="" width="500" height="300"> </iframe>
+        <input Id="rightnameinput" />
+        <iframe Id="rightframe" src="" width="500" height="300"> </iframe>
+        <script>
+            function leftchange() {
+                document.getElementById("leftframe").src = document.getElementById("leftnameinput").value
+            };
+        </script>
+    </div>*@
+
+
