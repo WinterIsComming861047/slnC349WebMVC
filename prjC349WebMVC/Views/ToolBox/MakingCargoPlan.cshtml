@@ -1,0 +1,96 @@
+﻿@model IEnumerable<prjC349WebMVC.Models.tMakingCargoPlan>
+
+@{
+    ViewBag.Title = "MakingCargoPlan";
+}
+
+<h2>MakingCargoPlan</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<form>
+    <div>
+        <label>登入狀態：@ViewBag.isLogin</label>
+    </div>
+    <div>
+        <input id="userId" name="userId" type="text" placeholder="職工編號" value=@ViewBag.userId />
+        <input id="userPassword" name="userPassword" type="password" placeholder="密碼" value=@ViewBag.userPassword />
+    </div>
+    <div>
+        <input type="submit" value="登入" class="btn btn-warning" />
+    </div>
+</form>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.warehouse)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.label)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.area)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.pos)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.order_num)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.bill_of_ladding)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ship_num)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.making_cargo_plan)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.update_time)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.warehouse)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.label)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.area)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.pos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.order_num)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.bill_of_ladding)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ship_num)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.making_cargo_plan)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.update_time)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.id })
+            </td>
+        </tr>
+    }
+
+</table>

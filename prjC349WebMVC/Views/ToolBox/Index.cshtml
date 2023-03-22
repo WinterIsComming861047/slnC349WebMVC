@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "工具箱";
 }
 
 <style>
@@ -14,11 +14,11 @@
         /*display: none;*/
     }
 
-/*    a:hover + .preview-box {
+    /*    a:hover + .preview-box {
         display: block;
     }*/
 
-/*    .preview-box:hover {
+    /*    .preview-box:hover {
         display: block;
         width: 1000px;
         height: 600px;
@@ -30,7 +30,7 @@
         <td colspan="2">電話簿</td>
     </tr>
     <tr>
-        <td><iframe src="http://eas.csc.com.tw/ka/func/kaf0" width="900" height="300"></iframe></td>
+        <td><iframe id="telbook_1" src="http://eas.csc.com.tw/ka/func/kaf0" width="900" height="300"></iframe></td>
         <td><iframe src="http://eas.csc.com.tw/ka/func/kaf2" width="900" height="300"></iframe></td>
     </tr>
     <tr>
@@ -44,12 +44,12 @@
         <td colspan="2">作業情形</td>
     </tr>
     <tr>
-        <td><iframe class="preview-box" src="http://crane.csc.com.tw/mis/oy_mgr_website/OY21/OYAO21.aspx" width="900" height="300"></iframe></td>
+        <td><iframe id="oy21" class="preview-box" src="http://crane.csc.com.tw/mis/oy_mgr_website/OY21/OYAO21.aspx" width="900" height="300"></iframe></td>
         <td><iframe class="preview-box" src="http://eas.csc.com.tw/ig/export/ig8d" width="900" height="300"></iframe></td>
     </tr>
     <tr>
         <td colspan="2"><iframe class="preview-box" src="http://10.10.102.28/PLS" width="1800" height="300"></iframe></td>
-    </tr>    
+    </tr>
     <tr>
         <td colspan="2"><iframe class="preview-box" src="http://10.10.102.28/HttpRequestTest" width="1800" height="300"></iframe></td>
     </tr>
@@ -73,7 +73,62 @@
     <tr>
         <td><a href="http://mvatcp.csc.com.tw:7080/CICS/KW1N/KWOU1N/214585">協力廠商日常績效考核表</a></td>
         <td><a href="http://eas.csc.com.tw/pd/night/pdwj">待命費及三節出勤慰勞金申請作業</a></td>
-        <td><a href="http://eas.csc.com.tw/pd/absent/pdsa?">夜間巡查</a></td>
+        <td><a href="http://eas.csc.com.tw/pd/absent/pdsa?">查勤作業(夜間巡查)</a></td>
+    </tr>
+    <tr>
+        <td><a href="http://eas.csc.com.tw/ks/inspect/ksba">集團主管巡視登錄作業</a></td>
+        <td><a href="http://eas.csc.com.tw/ks/inspect/ksbb">集團主管巡視查詢作業</a></td>
+        <td><a href="http://intra8.csc.com.tw/MIS/KV/KV_PrintBarcode_Website/KVAU2F.aspx?ID1=214585&USERID=214585">長期物品攜出單條碼申請作業</a></td>
+    </tr>
+    <tr>
+        <td><a href="http://eas.csc.com.tw/dt/check/dts7">各單位待澄清軟體數量查詢</a></td>
+        <td><a href="http://erp.csc.com.tw/erp/mf/gul/mfjgH02.gul?uid=09C1H0633H91173">Q/H/M購案驗收簽核作業</a></td>
+        <td><a href="https://cs.csc.com.tw/qss/ec/qssec">中鋼電子商務</a></td>
+    </tr>
+    <tr>
+        <td><a href="http://ux.csc.com.tw/Y9/web/US06/USH0600.asp">事故調查/職災管理</a></td>
+        <td><a href="http://intra7.csc.com.tw/mis/DN/DN_Application_WebSite/DNAJ/DNAUAJ.aspx?userid=214585&appNo=f2bd8b64-9723-4211-a2ab-2db9a261ee62&flowStep=9">網際網路VPN連線申請</a></td>
+        <td><a href="http://mvatcp.csc.com.tw:7080/CICS/KW96/KWOI96/214585?">廠商人員團體出勤紀錄</a></td>
+    </tr>
+    <tr>
+        <td><a href="http://mvatcp.csc.com.tw:6080/CICS/WKP6/WKOUP6L/214585?">日生產軋延量</a></td>
+        <td><a href="http://erp.csc.com.tw/erp/ds/gul/dsjg6B.gul">使用者授權資訊查詢與交接</a></td>
+        <td><a href="http://search.csc.com.tw/MIS/MI/MIAI01.asp?ID1=214585">中鋼物料基本資料搜尋引擎</a></td>
+    </tr>
+    <tr>
+        <td><a href="http://mvatcp.csc.com.tw:7080/CICS/MIG2/MIOUG2/214585?">一般物料請領作業</a></td>
+        <td><a href="http://intra7.csc.com.tw/MIS/DN/DN_Application_Website/DNAC/DNAUAC.aspx?ID1=214585&USERID=214585">檔案及網頁空間伺服器使用申請</a></td>
+        <td><a href="http://gm.csc.com.tw/MIS/KX/KX/KXAU51/KX51.aspx">廠商安衛獎懲登錄作業</a></td>
+    </tr>
+    <tr>
+        <td><a href="http://intra7.csc.com.tw/MIS/DN/DN_Application_Website/DNAH/DNAUAH.aspx?userid=214585">網際網路上網申請-依職工編號</a></td>
+        <td><a href="http://ux.csc.com.tw/Y9/web/USA/USAUA4.ASP">單位人員環安衛業務設定 </a></td>
+        <td><a href="http://service.csc.com.tw/">F33技術暨網路開發組</a></td>
+    </tr>
+    <tr>
+        <td><a href="https://glr.csc.com.tw/uaz/activitysignup/uazi1">活動清單</a></td>
+        <td><a href="http://easd.csc.com.tw/eas/dew/vue/dewv0">-DEWV0- Vue基本程式範例</a></td>
+        <td><a href="http://service.csc.com.tw/Forms/default.htm?ID1=214585&USERID=214585">F3各式申請表格-中鋼公司</a></td>
+    </tr>
+    <tr>
+        <td><a href="http://dept.csc.com.tw/MIS/C34/C34Web/C349EveryDayProduction.aspx">C349-Y57X每日生產量</a></td>
+        <td><a href="http://eas.csc.com.tw/ks/machine/ks6d?companyId=0000&item=3&equipDept=C349&inspectorId=41F11A1500106">危險性機械設備定檢明細設定</a></td>
+        <td><a href="http://eas.csc.com.tw/ks/machine/ks6m">危險性機械設備多筆查詢</a></td>
+    </tr>
+    <tr>
+        <td><a href="http://eas.csc.com.tw/ks/machine/ks6k">危險性機械設備異動申請-變更作業</a></td>
+        <td><a href="http://eas.csc.com.tw/ks/machine/ks6g">危險性機械設備異動申請-報支作業</a></td>
+        <td><a href="http://eas.csc.com.tw/ig/print/igpe">-IGPE- 熱冷軋標籤補印檢核作業</a></td>
+    </tr>
+    <tr>
+        <td><a href="http://eas.csc.com.tw/kv/visit/kv56?visitNo=11202180016">洽公、會客申請作業</a></td>
+        <td><a href="http://eas.csc.com.tw/pt/training/ptx0">訓練課程資訊服務作業</a></td>
+        <td><a href=""></a></td>
+    </tr>
+    <tr>
+        <td><a href=""></a></td>
+        <td><a href=""></a></td>
+        <td><a href=""></a></td>
     </tr>
 </table>
 @*<div class="container">
