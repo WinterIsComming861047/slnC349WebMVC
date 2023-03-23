@@ -1,0 +1,100 @@
+<style>
+.storage-container-1 {
+  position: relative;
+  width: 50%;
+  height: 100px;
+}
+.storage-container-2 {
+  position: relative;
+  width: 50%;
+  height: 500px;
+  right: 50px;
+}
+.level-1 {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 250px;
+}
+
+.level-2 {
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  height: 250px;
+}
+
+.bin {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  background-color: #ccc;
+  border: 1px solid #333;
+}
+.coil {
+    border-radius: 50px;
+    background-color: aqua;
+    width: 80px;
+    height: 80px;
+}
+</style>
+    
+<div id ="storage_container_2" class="storage-container-2">
+    <div class="level-2">
+      <!-- add more bins as needed -->
+    </div>
+    <!-- add more levels as needed -->
+</div>  
+<div class="storage-container-1">
+    <div class="level-1">
+      <!-- add more bins as needed -->
+    </div>
+  </div>
+<script>
+const LEVEL_1_CAPACITY = 10; // number of bins on level 1
+const LEVEL_1_LENGTH = 100; // length of level 1 in meters
+const BIN_WIDTH = 5; // width of each bin in meters
+
+const level1 = document.querySelector('.level-1');
+const level2 = document.querySelector('.level-2');
+
+// calculate the number of bins that can fit on each level
+const level1BinCount = LEVEL_1_CAPACITY;
+const level2BinCount = LEVEL_1_CAPACITY - 1;
+
+// calculate the width of each bin in pixels
+// const binWidth = (BIN_WIDTH / LEVEL_1_LENGTH) * 100;
+const binWidth = (LEVEL_1_LENGTH/LEVEL_1_CAPACITY);
+
+
+// create the bins for level 1
+var lastbinpos = 0;
+for (let i = 1; i <= level1BinCount; i++) {
+  const bin = document.createElement('div');
+  bin.classList.add('bin');
+  bin.id = 1+(i * 2 - 1).toString().padStart(2,'0');
+//   bin.style.left = `${binWidth * (i - 1)}%`;
+  bin.style.left = `${binWidth * (i - 1)}%`
+  level1.appendChild(bin);
+}
+
+// create the bins for level 2
+for (let i = 1; i <= level2BinCount; i++) {
+  const bin = document.createElement('div');
+  bin.classList.add('bin');
+  bin.id = 2+(i * 2).toString().padStart(2,'0');
+  bin.style.left = `${binWidth * i}%`;
+  level2.appendChild(bin);
+}
+  const lv2container=document.getElementById('storage_container_2');
+  lv2container.style.right = `${binWidth/2/2}%`;
+
+  var mycoil = document.createElement('div');
+  mycoil.className = 'coil';
+
+  let mypos = document.getElementById('113');
+  mypos.appendChild(mycoil);
+  mypos.removeChild(mycoil);
+  mypos = document.getElementById('103');
+  mypos.appendChild(mycoil);
+  </script>
