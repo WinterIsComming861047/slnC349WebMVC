@@ -1,5 +1,4 @@
 ﻿@model IEnumerable<prjC349WebMVC.Models.tMakingCargoPlan>
-
 @{
     ViewBag.Title = "MakingCargoPlan";
 }
@@ -10,7 +9,7 @@
     @Html.ActionLink("Create New", "Create")
 </p>
 
-<form>
+<form method="post" action="~/ToolBox/MakingCargoPlan">
     <div>
         <label>登入狀態：@ViewBag.isLogin</label>
     </div>
@@ -93,4 +92,46 @@
         </tr>
     }
 
+
 </table>
+
+<div class="row">
+    <div class="col-6">
+        @if (@ViewBag.isLogin == true)
+        {
+            <iframe id="oy05" class="preview-box" src="http://crane.csc.com.tw/mis/oy_mgr_website/OY05/OYAO05.aspx?UserId=@ViewBag.userId" width="900" height="600"></iframe>
+        }
+    </div>
+    <div class="col-6">
+        <div style="height: 600px; overflow: auto;">
+            <table class="table table-striped">
+                @if (ViewBag.test != null)
+                {
+                    string src = "";
+                    foreach (IGS4.Model item in ViewBag.test)
+                    {
+                        <tr>
+                            @{src = $@"http://crane.csc.com.tw/mis/oy_mgr_website/OY05/OYAO05.aspx?STOCK={item.area.Substring(0, 2)}&PART={item.area.Substring(2, 5)}";
+                            }
+                            <td><a href=@src>@item.area</a></td>
+                            <td>@item.label</td>
+                            <td>@item.state</td>
+                            <td>@item.order_num</td>
+                            <td>@item.bill_of_ladding</td>
+                            <td>@item.ship_num_or_customer.Trim()</td>
+                            <td><button onclick=change_iframe_src("@src") class="btn btn-primary">go</button></td>
+                        </tr>
+
+                    }
+                }
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function change_iframe_src(src) {
+        var my_iframe = document.getElementById('oy05');
+        my_iframe.src = src;
+    }
+</script>
