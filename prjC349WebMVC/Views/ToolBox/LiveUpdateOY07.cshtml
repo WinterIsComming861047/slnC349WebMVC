@@ -1,0 +1,184 @@
+﻿@model IEnumerable<prjC349WebMVC.Models.LiveUpdateOY07>
+
+@{
+    ViewBag.Title = "LiveUpdateOY07";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+<style>
+    .warning {
+        color: red;
+    }
+</style>
+@if (Session["isLogin"] == null)
+{
+
+    if (Session["LoginFail"] != null && Session["LoginFail"].ToString() == true.ToString())
+    {
+        <div class="warning">
+            <label>警告:登入失敗 請確認帳號密碼輸入正確，多次失敗EIP會鎖定帳號</label>
+        </div>
+    }
+    <form method="post" action="~/ToolBox/LogIn">
+        <div>
+            <label>代理模式：未啟動</label>
+        </div>
+        <div>
+            <input id="userId" name="userId" type="text" placeholder="職工編號" value=@Session["userId"] required />
+            <input id="userPassword" name="userPassword" type="password" placeholder="密碼" value=@Session["userPassword"] required />
+            <input type="submit" value="登入啟動" class="btn btn-warning" />
+        </div>
+    </form>
+}
+else
+{
+    <div class="row">
+        <div class="col-1">
+            <label>代理模式：啟動</label>
+        </div>
+    </div>
+    <div class="row" style="padding:10px">
+        <div style="padding:10px" class="col-1">
+            <form method="post" action="~/ToolBox/LogOut">
+                <input type="submit" value="登出" class="btn btn-warning" />
+            </form>
+        </div>
+        <div style="padding:10px" class="col-1">
+            <form method="post" action="~/ToolBox/LiveUpdateOY07">
+                <input type="submit" value="更新資料" class="btn btn-warning" />
+            </form>
+        </div>
+    </div>
+
+
+
+}
+
+
+@*<table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.warehouse)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.label)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.area)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.pos)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.order_num)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.bill_of_ladding)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ship_num)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.making_cargo_plan)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.update_time)
+                    </th>
+                    <th></th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.warehouse)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.label)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.area)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.pos)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.order_num)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.bill_of_ladding)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ship_num)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.making_cargo_plan)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.update_time)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
+                            @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.id })
+                        </td>
+                    </tr>
+            </table>
+    }*@
+
+
+
+<div class="row">
+    <div class="col-7">
+        @if (Session["isLogin"] != null)
+        {
+            <iframe id="oy05" class="preview-box" src="http://crane.csc.com.tw/mis/oy_mgr_website/OY05/OYAO05.aspx?UserId=@ViewBag.userId" width="900" height="600"></iframe>
+        }
+    </div>
+    <div class="col-5">
+        <div style="height: 600px; overflow: auto;">
+            <table class="table table-striped">
+                @if (Model != null)
+                {
+                    <tr>
+                        <th>連結</th>
+                        <th>儲區</th>
+                        <th>儲位</th>
+                        <th>Label</th>
+                        <th>訂單</th>
+                        <th>提單</th>
+                        <th>客戶/船號</th>
+                        <th>配艙時間</th>
+                    </tr>
+                    string src = "";
+                    foreach (prjC349WebMVC.Models.LiveUpdateOY07 item in Model)
+                    {
+                        <tr>
+                            @{src = $@"http://crane.csc.com.tw/mis/oy_mgr_website/OY05/OYAO05.aspx?STOCK={item.warehouse}&PART={item.area}";
+                            }
+                            <td><button onclick=change_iframe_src("@src") class="btn btn-primary">go</button></td>
+                            <td><a target="_blank" href=@src>@item.area </a></td>
+                            <td>@item.position</td>
+                            <td>@item.label</td>
+                            <td>@item.order_num</td>
+                            <td>@item.bill_of_ladding</td>
+                            <td>@item.ship_num_or_customer.Trim()</td>
+                            <td>@item.making_cargo_plan.Trim()</td>
+                        </tr>
+                    }
+                }
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function change_iframe_src(src) {
+        var my_iframe = document.getElementById('oy05');
+        my_iframe.src = src;
+    }
+</script>

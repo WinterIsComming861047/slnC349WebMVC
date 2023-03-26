@@ -10,14 +10,14 @@ namespace prjC349WebMVC
 {
     public class IGS4
     {
-        public CookieContainer cookieContainer { get; set; }
+        public EIP eip { get; set; }
         public List<Model> List { get { return _List; }}
         private List<Model> _List = new List<IGS4.Model>();
-        public IGS4(CookieContainer cookieContainer)
+        public IGS4(EIP eip)
         {
-            this.cookieContainer = cookieContainer;
-            var igs4_response = PostToURL(cookieContainer);
-            List<List<object>> igs4_excel = getExcel(cookieContainer, igs4_response.Filename);
+            this.eip = eip;
+            var igs4_response = PostToURL();
+            List<List<object>> igs4_excel = getExcel(eip.cookieContainer, igs4_response.Filename);
 
             for (int i = 2; i < igs4_excel.Count - 4; i++)
             {
@@ -65,11 +65,11 @@ namespace prjC349WebMVC
         }
 
 
-        public Response PostToURL(CookieContainer cookieContainer)
+        public Response PostToURL()
         {
             string url = "http://eas.csc.com.tw/ig/stock/igs4?_action=exportExcel&_format=json";
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
-            request.CookieContainer = cookieContainer;
+            request.CookieContainer = eip.cookieContainer;
             request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
             request.Accept = "application/json;charset=UTF-8";
             request.Method = "POST";

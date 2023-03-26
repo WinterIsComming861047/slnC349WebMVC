@@ -758,7 +758,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="ChartJsDataSource.cs" />
+    <Compile Include="Library\ChartJsDataSource.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ChartJs1Controller.cs" />
     <Compile Include="Controllers\EIPLoginWebAPIController.cs" />
@@ -766,15 +766,16 @@
     <Compile Include="Controllers\RVI_APIController.cs" />
     <Compile Include="Controllers\RVI_CreateWithEPSLOGController.cs" />
     <Compile Include="Controllers\ToolBoxController.cs" />
-    <Compile Include="EIP.cs" />
-    <Compile Include="ExcelManager.cs" />
-    <Compile Include="FileManager.cs" />
-    <Compile Include="getChartJsData.cs" />
+    <Compile Include="Library\WebCrawler\EIP.cs" />
+    <Compile Include="Library\ExcelManager.cs" />
+    <Compile Include="Library\FileManager.cs" />
+    <Compile Include="Library\getChartJsData.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="IGS4.cs" />
-    <Compile Include="IPAddress.cs" />
+    <Compile Include="Library\WebCrawler\IGS4.cs" />
+    <Compile Include="Library\IPAddress.cs" />
+    <Compile Include="Library\WebCrawler\SPB1.cs" />
     <Compile Include="Models\ChartJs1.cs" />
     <Compile Include="Models\dbMakingCargoPlanModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -791,13 +792,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dbMakingCargoPlanModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\LiveUpdateOY07.cs" />
     <Compile Include="Models\ModelChartJs.cs" />
     <Compile Include="Models\remote_visual_ inspection.cs" />
     <Compile Include="Models\tMakingCargoPlan.cs">
       <DependentUpon>dbMakingCargoPlanModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="MySQLHelper.cs" />
-    <Compile Include="OYR1D1Report.cs" />
+    <Compile Include="Library\MySQLHelper.cs" />
+    <Compile Include="Library\WebCrawler\OYR1D1Report.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validation\DateAfterAttribute.cs" />
     <Compile Include="Validation\DomesticForeignValidationAttribute.cs" />
@@ -830,7 +832,7 @@
     <Content Include="Views\RVI_CreateWithEPSLOG\C349_1.cshtml" />
     <Content Include="Views\RVI_CreateWithEPSLOG\C349_1_Detail.cshtml" />
     <Content Include="Views\ToolBox\Index.cshtml" />
-    <Content Include="Views\ToolBox\MakingCargoPlan.cshtml" />
+    <Content Include="Views\ToolBox\LiveUpdateOY07.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

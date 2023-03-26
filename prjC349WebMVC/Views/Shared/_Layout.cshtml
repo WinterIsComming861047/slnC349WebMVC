@@ -30,46 +30,63 @@
                         <a href="https://eip.csc.com.tw/SSO/DSS0/DSAOS0.aspx" target="_blank"> 登入 </a>
                     }
                 }
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <!--<li class="nav-item">
-            @*<a class="nav-link active" aria-current="page" href="#">Article</a>*@
-        <!--</li>-->
-                    @*<li class="nav-item">
-                @Html.ActionLink("員工管理", "Index", "Home", "", new { @class = "av-link active" })
-            </li>
-            <li class="nav-item">
-                @Html.ActionLink("文章管理", "Index", "Article", "",new { @class = "av-link active" })
-            </li>*@
-                    @*<li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    員工管理
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li>@Html.ActionLink("員工管理", "Index", "Home",new { }, new { @class = "dropdown-item" })</li>
-                    <li>@Html.ActionLink("員工新增", "Create", "Home",new { }, new { @class = "dropdown-item" })</li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-            </li>*@
-                    @*<li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    文章管理
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li>@Html.ActionLink("文章管理", "Index", "Article",new { }, new { @class = "dropdown-item" })</li>
-                    <li>@Html.ActionLink("文章新增", "Create", "Article",new { }, new { @class = "dropdown-item" })</li>
-                    <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-            </li>*@
-                    @*<li class="nav-item">
-                <a class="nav-link disabled">Disabled</a>
-            </li>*@
-                </ul>
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown-item" >
+                    <a href="http://dept.csc.com.tw/MIS/C34/C34Web/C34X.aspx">C34工廠日誌</a>
+                </li>
+                @{
+                    try
+                    {
+                        if (Request.Cookies["dept"].Value=="C349"&& Request.Cookies["uid"].Value != "213298")
+                        {
+                            <li class="nav-item">@Html.ActionLink("LiveUpdateOY07", "LiveUpdateOY07", "Toolbox", new { }, new { @class = "dropdown-item" })</li>
+                            <li class="nav-item">@Html.ActionLink("遠端檢放", "Index", "RVI_CreateWithEPSLOG", new { }, new { @class = "dropdown-item" })</li>
+                        }
+                    }
+                    catch { }
+                }
+
+
+
+                <!--<li class="nav-item">
+        @*<a class="nav-link active" aria-current="page" href="#">Article</a>*@
+    <!--</li>-->
+                @*<li class="nav-item">
+            @Html.ActionLink("員工管理", "Index", "Home", "", new { @class = "av-link active" })
+        </li>
+        <li class="nav-item">
+            @Html.ActionLink("文章管理", "Index", "Article", "",new { @class = "av-link active" })
+        </li>*@
+                @*<li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                員工管理
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>@Html.ActionLink("員工管理", "Index", "Home",new { }, new { @class = "dropdown-item" })</li>
+                <li>@Html.ActionLink("員工新增", "Create", "Home",new { }, new { @class = "dropdown-item" })</li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+        </li>*@
+                @*<li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                文章管理
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li>@Html.ActionLink("文章管理", "Index", "Article",new { }, new { @class = "dropdown-item" })</li>
+                <li>@Html.ActionLink("文章新增", "Create", "Article",new { }, new { @class = "dropdown-item" })</li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+        </li>*@
+                @*<li class="nav-item">
+            <a class="nav-link disabled">Disabled</a>
+        </li>*@
+            </ul>
                 @*<form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>*@
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>*@
 
             </div>
         </div>

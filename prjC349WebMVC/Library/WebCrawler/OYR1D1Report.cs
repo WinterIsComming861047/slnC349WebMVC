@@ -12,13 +12,13 @@ namespace prjC349WebMVC
 {
     public class OYR1D1Report
     {
-        public CookieContainer cookieContainer { get; set; }
+        public EIP eip { get; set; }
         public List<Model> List { get { return _List; } }
         private List<Model> _List = new List<OYR1D1Report.Model>();
-        public OYR1D1Report(CookieContainer cookieContainer)
+        public OYR1D1Report(EIP eip)
         {
-            this.cookieContainer = cookieContainer;
-            List<List<object>> oyr1_d1report_excel = PostToGetExcel(cookieContainer);
+            this.eip = eip;
+            List<List<object>> oyr1_d1report_excel = PostToGetExcel();
 
             for (int i = 0; i < oyr1_d1report_excel.Count; i++)
             {
@@ -65,11 +65,11 @@ namespace prjC349WebMVC
         }
 
 
-        public List<List<object>> PostToGetExcel(CookieContainer cookieContainer)
+        public List<List<object>> PostToGetExcel()
         {
             string url = "http://eas.csc.com.tw/oy/report/oyr1";
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
-            request.CookieContainer = cookieContainer;
+            request.CookieContainer = eip.cookieContainer;
             request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";
             request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7";
             request.Method = "POST";

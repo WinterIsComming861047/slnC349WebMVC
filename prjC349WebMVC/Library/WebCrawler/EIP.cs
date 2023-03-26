@@ -52,7 +52,6 @@ namespace prjC349WebMVC
                 request.Method = "GET";
                 request.ContentType = "application/x-www-form-urlencoded";
 
-
                 //看到.GetResponse()才代表真正把 request 送到 伺服器
                 using (WebResponse response = request.GetResponse())
                 {
