@@ -5,22 +5,61 @@
 
 <h2>MakingCargoPlan</h2>
 
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create")
-</p>
+</p>*@
+<style>
+    .warning{
+        color:red;
+    }
+</style>
+@if (Session["isLogin"] == null)
+{
 
-<form method="post" action="~/ToolBox/MakingCargoPlan">
-    <div>
-        <label>登入狀態：@ViewBag.isLogin</label>
+    if (Session["LoginFail"] != null && Session["LoginFail"].ToString() == true.ToString())
+    {
+        <div class="warning">
+            <label>警告:登入失敗 請確認帳號密碼輸入正確，多次失敗EIP會鎖定帳號</label>
+        </div>
+    }
+    <form method="post" action="~/ToolBox/LogIn">
+        <div>
+            <label>代理模式：未啟動</label>
+        </div>
+        <div>
+            <input id="userId" name="userId" type="text" placeholder="職工編號" value=@Session["userId"] required />
+            <input id="userPassword" name="userPassword" type="password" placeholder="密碼" value=@Session["userPassword"] required />
+            <input type="submit" value="登入" class="btn btn-warning" />
+        </div>
+    </form>
+}
+else
+{
+
+    <div class="row">
+        <div class="col-1">
+            <label>代理模式：啟動</label>
+        </div>
+        <div class="col-1">
+            <form method="post" action="~/ToolBox/LogOut">
+                <div>
+                    <input type="submit" value="登出" class="btn btn-warning" />
+                </div>
+            </form>
+        </div>
+        <div class="col-1">
+            <form method="post" action="~/ToolBox/MakingCargoPlan">
+                <div>
+                    <input type="submit" value="更新資料" class="btn btn-warning" />
+                </div>
+            </form>
+        </div>
     </div>
-    <div>
-        <input id="userId" name="userId" type="text" placeholder="職工編號" value=@ViewBag.userId />
-        <input id="userPassword" name="userPassword" type="password" placeholder="密碼" value=@ViewBag.userPassword />
-    </div>
-    <div>
-        <input type="submit" value="登入" class="btn btn-warning" />
-    </div>
-</form>
+
+
+
+}
+
 
 <table class="table">
     <tr>
@@ -97,7 +136,7 @@
 
 <div class="row">
     <div class="col-6">
-        @if (@ViewBag.isLogin == true)
+        @if (Session["isLogin"] != null)
         {
             <iframe id="oy05" class="preview-box" src="http://crane.csc.com.tw/mis/oy_mgr_website/OY05/OYAO05.aspx?UserId=@ViewBag.userId" width="900" height="600"></iframe>
         }
