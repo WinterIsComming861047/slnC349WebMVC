@@ -37,5 +37,12 @@ namespace prjC349WebMVC.Models
 
         //from spb1
         public string making_cargo_plan { get; set; }
+
+        //from ranking
+        public string catagory { get; set; }
+
+        //from igs1
+        public string is_order_finish { get; set; }
+        
     }
 }

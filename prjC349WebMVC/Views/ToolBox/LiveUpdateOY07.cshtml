@@ -133,15 +133,29 @@ else
 
 
 <div class="row">
-    <div class="col-7">
+    <div class="col-6">
         @if (Session["isLogin"] != null)
         {
             <iframe id="oy05" class="preview-box" src="http://crane.csc.com.tw/mis/oy_mgr_website/OY05/OYAO05.aspx?UserId=@ViewBag.userId" width="900" height="600"></iframe>
         }
     </div>
-    <div class="col-5">
+    <div class="col-6">
+        <div id="dept_filter" style="display:flex ; flex-direction:row">
+            <div class="form-check form-switch">
+                <div class="row">
+                    <label class="form-check-label" for="cb_supress" style="margin: 0 auto; text-align:center">出貨被壓</label>
+                    <input class="form-check-input" type="checkbox" id="cb_supress" style="margin: 0 auto;" onclick="onSearchStr()">
+                </div>
+            </div>
+            <div class="form-check form-switch">
+                <div class="row">
+                    <label class="form-check-label" for="cb_has_no_owner" style="margin: 0 auto; text-align:center">無主</label>
+                    <input class="form-check-input" type="checkbox" id="cb_has_no_owner" style="margin: 0 auto;" onclick="onSearchStr()">
+                </div>
+            </div>
+        </div>
         <div style="height: 600px; overflow: auto;">
-            <table class="table table-striped">
+            <table class="table table-striped" id="tb_todolist">
                 @if (Model != null)
                 {
                     <tr>
@@ -149,10 +163,13 @@ else
                         <th>儲區</th>
                         <th>儲位</th>
                         <th>Label</th>
+                        <th>狀態</th>
                         <th>訂單</th>
                         <th>提單</th>
                         <th>客戶/船號</th>
                         <th>配艙時間</th>
+                        <th>分類</th>
+                        <th>訂單狀態</th>
                     </tr>
                     string src = "";
                     foreach (prjC349WebMVC.Models.LiveUpdateOY07 item in Model)
@@ -162,12 +179,15 @@ else
                             }
                             <td><button onclick=change_iframe_src("@src") class="btn btn-primary">go</button></td>
                             <td><a target="_blank" href=@src>@item.area </a></td>
-                            <td>@item.position</td>
+                            <td style="color:red">@item.position</td>
                             <td>@item.label</td>
+                            <td>@item.state</td>
                             <td>@item.order_num</td>
                             <td>@item.bill_of_ladding</td>
-                            <td>@item.ship_num_or_customer.Trim()</td>
-                            <td>@item.making_cargo_plan.Trim()</td>
+                            <td>@if (item.ship_num_or_customer != null) { item.ship_num_or_customer.Trim(); }</td>
+                            <td>@if (item.making_cargo_plan != null) { item.making_cargo_plan.Trim(); }</td>
+                            <td>@item.catagory</td>
+                            <td>@item.is_order_finish</td>
                         </tr>
                     }
                 }
@@ -180,5 +200,51 @@ else
     function change_iframe_src(src) {
         var my_iframe = document.getElementById('oy05');
         my_iframe.src = src;
+    };
+
+    function onSearchStr() {//js函式開始
+        setTimeout(function () {//因為是即時查詢，需要用setTimeout進行延遲，讓值寫入到input內，再讀取
+
+            function resetTable() {
+                for (var i = 1; i < rowsLength; i++) {//復原table
+                    storeId.rows[i].style.display = '';//顯示行操作，
+                }
+                console.log('Reseted')
+            }
+            resetTable();
+
+
+            var storeId = document.getElementById('tb_todolist');//獲取table的id標識
+            var cb1 = document.getElementById('cb_supress');//獲取cb1的id標識
+            var cb2 = document.getElementById('cb_has_no_owner');//獲取cb2的id標識
+
+            var cb1txt = (cb1.checked == true) ? cb1txt = "出貨被壓" : "";
+            var cb2txt = (cb2.checked == true) ? cb2txt = "無主" : "";
+
+
+
+
+
+            var rowsLength = storeId.rows.length;//表格總共有多少行
+
+            var searchCol = 9;//要搜尋的哪一Col，從0開始數起
+
+
+            for (var i = 1; i < rowsLength; i++) {//按表的行數進行迴圈，本例第一行是標題，所以i=1，從第二行開始篩選（從0數起）
+                var searchText = storeId.rows[i].cells[searchCol].innerHTML;//取得table rows[i], cells[searchCol]的值
+                console.log("searchText= " + searchText);
+                var match1 = (searchText.match(cb1txt) !== null) ? cb1txt : false;
+                var match2 = (searchText.match(cb2txt) !== null) ? cb2txt : false;
+
+
+                if (match1 || match2) {//用match函式進行篩選，如果input的值，即變數 key的值為空，返回的是ture，
+                    storeId.rows[i].style.display = '';//顯示行操作，
+                } else {
+                    storeId.rows[i].style.display = 'none';//隱藏行操作
+                }
+            }
+            if ((cb1.checked || cb2.checked) == false) { console.log('beforeReset'); resetTable(); console.log('afterReset'); }
+
+        }, 200);//200為延時時間
     }
 </script>

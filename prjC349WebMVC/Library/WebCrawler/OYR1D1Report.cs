@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Web;
-using static prjC349WebMVC.IGS4;
 
 namespace prjC349WebMVC
 {
