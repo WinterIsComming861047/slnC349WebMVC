@@ -15,6 +15,7 @@ namespace prjC349WebMVC
         public EIP eip { get; set; }
         public List<Model> List { get { return _List; } }
         private List<Model> _List = new List<IGS1.Model>();
+        public string warehouse;
         public IGS1(EIP eip)
         {
             this.eip = eip;
@@ -102,7 +103,7 @@ namespace prjC349WebMVC
             request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7";
             request.Method = "GET";
 
-            string filePath = $@"D:\C349WebMVC\tmp_IGS1.xlsx";
+            string filePath = $@"D:\C349WebMVC\tmp_IGS1_{DateTime.Now.ToString("yyyy-MM-dd_HHmmss")}.xlsx";
 
             FileManager.tryDeleteFile(filePath);
             FileStream fileStream = new FileStream(filePath, FileMode.Create);

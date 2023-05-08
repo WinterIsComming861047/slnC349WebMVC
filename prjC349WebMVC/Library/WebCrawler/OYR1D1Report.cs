@@ -87,7 +87,7 @@ namespace prjC349WebMVC
                 dataStream.Close();
             }
 
-            string filePath = $@"D:\C349WebMVC\tmp_OYR1_D1Report.xlsx";
+            string filePath = $@"D:\C349WebMVC\tmp_OYR1_D1Report_{DateTime.Now.ToString("yyyy-MM-dd_HHmmss")}.xlsx";
 
             FileManager.tryDeleteFile(filePath);
             FileStream fileStream = new FileStream(filePath, FileMode.Create);

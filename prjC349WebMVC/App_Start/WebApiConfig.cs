@@ -11,8 +11,8 @@ namespace prjC349WebMVC
         public static void Register(HttpConfiguration config)
         {
             config.MapHttpAttributeRoutes();
-            var cors = new EnableCorsAttribute("*", "*", "*");
-            config.EnableCors(cors);
+            //var cors = new EnableCorsAttribute("*", "*", "*");
+            config.EnableCors();
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

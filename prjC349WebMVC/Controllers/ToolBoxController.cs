@@ -15,6 +15,8 @@ using System.Text;
 using System.Web.Helpers;
 using prjC349WebMVC.Library.WebCrawler;
 using prjC349WebMVC.Library;
+using System.Security.Policy;
+using static System.Net.WebRequestMethods;
 
 namespace prjC349WebMVC.Controllers
 {
@@ -25,6 +27,39 @@ namespace prjC349WebMVC.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+        public ActionResult Receieve()
+        {
+            return View();
+        }
+        public ActionResult MailAndPhonebook()
+        {
+            return View();
+        }
+        public ActionResult Attendance()
+        {
+            return View();
+
+        }
+
+        public ActionResult LiveUpdateOY07_APIView()
+        {
+            return View();
+        }
+        [HttpPost]
+        public JsonResult LiveUpdateOY07_API(string userId, string userPassword)
+        {
+            EIP eip = tryLoginEIP(userId, userPassword);
+            StockingLogic stockingLogic = new StockingLogic(eip);
+
+            //var result2 = from m in result1List
+            //         where m.ship_num_or_customer != ""
+            //             select m;           
+
+            List<LiveUpdateOY07> dataForView = stockingLogic.ToDoList();
+            //return View(MakingCargoPlanList);
+
+            return Json(dataForView);
         }
 
         public ActionResult LiveUpdateOY07()

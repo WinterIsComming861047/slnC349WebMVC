@@ -114,7 +114,7 @@ namespace prjC349WebMVC
             request.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
 
 
-            string filePath = $@"D:\C349WebMVC\tmp_IGS4.xlsx";
+            string filePath = $@"D:\C349WebMVC\tmp_IGS4_{DateTime.Now.ToString("yyyy-MM-dd_HHmmss")}.xlsx";
 
             FileManager.tryDeleteFile(filePath);
             FileStream fileStream = new FileStream(filePath, FileMode.Create);

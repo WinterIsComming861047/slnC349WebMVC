@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "LiveUpdateOY07_APIView";
+}
+
+<h2>LiveUpdateOY07_APIView</h2>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // 這裡放需要在 DOMContentLoaded 後執行的程式碼
+        fnLoadData();
+    });
+
+    let myData;
+
+    //const apiurl = "http://localhost:1954/ToolBox/LiveUpdateOY07_APIView";
+
+    function fnLoadData() {
+        $.ajax({
+            url: "LiveUpdateOY07_API",
+            type: 'POST',
+            data: { userId: '214585', userPassword: '791005' },
+            success: function (data) {
+                myData = data;
+            }
+        });
+    }
+</script>
