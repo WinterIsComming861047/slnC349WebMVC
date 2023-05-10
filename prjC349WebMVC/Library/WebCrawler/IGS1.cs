@@ -16,9 +16,10 @@ namespace prjC349WebMVC
         public List<Model> List { get { return _List; } }
         private List<Model> _List = new List<IGS1.Model>();
         public string warehouse;
-        public IGS1(EIP eip)
+        public IGS1(EIP eip,string warehouse)
         {
             this.eip = eip;
+            this.warehouse = warehouse;
             List<List<object>> igs1_excel = GETToGetExcel();
 
             for (int i = 2; i < igs1_excel.Count; i++)
@@ -96,7 +97,7 @@ namespace prjC349WebMVC
 
         public List<List<object>> GETToGetExcel()
         {
-            string url = "http://eas.csc.com.tw/ig/stock/igs1?_action=generateReport&stock=89&type=All&isDomestic=false&isExport=false";
+            string url = $"http://eas.csc.com.tw/ig/stock/igs1?_action=generateReport&stock={warehouse}&type=All&isDomestic=false&isExport=false";
             HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(url);
             request.CookieContainer = eip.cookieContainer;
             request.UserAgent = "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36";

@@ -11,14 +11,16 @@ namespace prjC349WebMVC.Library
     public class StockingLogic
     {
         public EIP eip;
-        public StockingLogic(EIP eip)
+        public string warehouse;
+        public StockingLogic(EIP eip,string warehouse)
         {
             this.eip = eip;
+            this.warehouse = warehouse;
         }
         public List<LiveUpdateOY07> ToDoList()
         {
-            IGS4 igs4 = new IGS4(eip);
-            OYR1D1Report oyr1_d1report = new OYR1D1Report(eip);
+            IGS4 igs4 = new IGS4(eip, warehouse);
+            OYR1D1Report oyr1_d1report = new OYR1D1Report(eip, warehouse);
 
 
             var result1 = from m in igs4.List
@@ -114,7 +116,7 @@ namespace prjC349WebMVC.Library
                             };
             List<LiveUpdateOY07> dataForView = finalData.ToList();
 
-            IGS1 igs1 = new IGS1(eip);
+            IGS1 igs1 = new IGS1(eip, warehouse);
 
             var combinedData2 = from i in igs1.List
                                 join o in oyr1_d1report.List on i.label equals o.label into igs1oyr1_d1report

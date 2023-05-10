@@ -30,6 +30,12 @@
         <div>
             <input id="userId" name="userId" type="text" placeholder="職工編號" value=@Session["userId"] required />
             <input id="userPassword" name="userPassword" type="password" placeholder="密碼" value=@Session["userPassword"] required />
+            <select name="warehouse" required>
+                <option value="86">86庫</option>
+                <option value="87">87庫</option>
+                <option value="89">89庫</option>
+                <option value="91">91庫</option>
+            </select>
             <input type="submit" value="登入啟動" class="btn btn-warning" />
         </div>
     </form>
@@ -41,21 +47,24 @@ else
             <label>代理模式：啟動</label>
         </div>
     </div>
-    <div class="row" style="padding:10px">
-        <div style="padding:10px" class="col-1">
-            <form method="post" action="~/ToolBox/LogOut">
-                <input type="submit" value="登出" class="btn btn-warning" />
-            </form>
-        </div>
-        <div style="padding:10px" class="col-1">
-            <form method="post" action="~/ToolBox/LiveUpdateOY07">
-                <input type="submit" value="更新資料" class="btn btn-warning" />
-            </form>
-        </div>
+    <div>
+
+        <form method="post" action="~/ToolBox/LogOut">
+            <input type="submit" value="登出" class="btn btn-warning" />
+        </form>
+
+
+        <form method="post" action="~/ToolBox/LiveUpdateOY07">
+            <select name="warehouse" required>
+                <option value="86">86庫</option>
+                <option value="87">87庫</option>
+                <option value="89">89庫</option>
+                <option value="91">91庫</option>
+            </select>
+            <input type="submit" value="更新資料" class="btn btn-warning" />
+        </form>
+
     </div>
-
-
-
 }
 
 

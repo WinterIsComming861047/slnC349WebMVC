@@ -14,9 +14,11 @@ namespace prjC349WebMVC
         public EIP eip { get; set; }
         public List<Model> List { get { return _List; } }
         private List<Model> _List = new List<OYR1D1Report.Model>();
-        public OYR1D1Report(EIP eip)
+        public string warehouse;
+        public OYR1D1Report(EIP eip, string warehouse)
         {
             this.eip = eip;
+            this.warehouse = warehouse;
             List<List<object>> oyr1_d1report_excel = PostToGetExcel();
 
             for (int i = 0; i < oyr1_d1report_excel.Count; i++)
@@ -73,7 +75,7 @@ namespace prjC349WebMVC
             request.Accept = "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7";
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
-            string stock = "89";
+            string stock = warehouse;
             string action = "getoyD1Report";
 
             string PostData = $"stocks[]={HttpUtility.UrlEncode(stock, Encoding.UTF8)}&_action={HttpUtility.UrlEncode(action, Encoding.UTF8)}";

@@ -47,10 +47,10 @@ namespace prjC349WebMVC.Controllers
             return View();
         }
         [HttpPost]
-        public JsonResult LiveUpdateOY07_API(string userId, string userPassword)
+        public JsonResult LiveUpdateOY07_API(string userId, string userPassword,string warehouse)
         {
             EIP eip = tryLoginEIP(userId, userPassword);
-            StockingLogic stockingLogic = new StockingLogic(eip);
+            StockingLogic stockingLogic = new StockingLogic(eip,warehouse);
 
             //var result2 = from m in result1List
             //         where m.ship_num_or_customer != ""
@@ -62,7 +62,7 @@ namespace prjC349WebMVC.Controllers
             return Json(dataForView);
         }
 
-        public ActionResult LiveUpdateOY07()
+        public ActionResult LiveUpdateOY07(string warehouse)
         {
             //var MakingCargoPlanList = db.tMakingCargoPlan.OrderByDescending(m => m.id).ToList();
             //if (Session["isLogin"] == null) return View(MakingCargoPlanList);
@@ -73,7 +73,7 @@ namespace prjC349WebMVC.Controllers
 
 
             EIP eip = tryLoginEIP(tmpUser.userId, tmpUser.userPassword);
-            StockingLogic stockingLogic = new StockingLogic(eip);
+            StockingLogic stockingLogic = new StockingLogic(eip, Session["warehouse"].ToString());
 
             //var result2 = from m in result1List
             //         where m.ship_num_or_customer != ""
@@ -87,10 +87,11 @@ namespace prjC349WebMVC.Controllers
 
 
         [HttpPost]
-        public ActionResult LogIn(string userId, string userPassword)
+        public ActionResult LogIn(string userId, string userPassword, string warehouse)
         {
             if (CheckLoginInfo(userId, userPassword) == false) return RedirectToAction("LiveUpdateOY07");
             tryLoginEIP(userId, userPassword);
+            Session["warehouse"] = warehouse;
             return RedirectToAction("LiveUpdateOY07");
         }
         [HttpPost]

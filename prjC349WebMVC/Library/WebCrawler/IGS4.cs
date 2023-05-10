@@ -13,9 +13,12 @@ namespace prjC349WebMVC
         public EIP eip { get; set; }
         public List<Model> List { get { return _List; }}
         private List<Model> _List = new List<IGS4.Model>();
-        public IGS4(EIP eip)
+        public string warehouse;
+
+        public IGS4(EIP eip, string warehouse)
         {
             this.eip = eip;
+            this.warehouse = warehouse;
             var igs4_response = PostToURL();
             List<List<object>> igs4_excel = getExcel(eip.cookieContainer, igs4_response.Filename);
 
@@ -34,6 +37,8 @@ namespace prjC349WebMVC
                 };
                 _List.Add(tmp_igs4);
             }
+
+            this.warehouse = warehouse;
         }
 
         #region Response
@@ -74,9 +79,10 @@ namespace prjC349WebMVC
             request.Accept = "application/json;charset=UTF-8";
             request.Method = "POST";
             request.ContentType = "application/json;charset=UTF-8";
+            string stock = warehouse;
             var jsonObj = new
             {
-                stock = "89"
+                stock = stock
             };
             string PostData = JsonConvert.SerializeObject(jsonObj);
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(PostData);
