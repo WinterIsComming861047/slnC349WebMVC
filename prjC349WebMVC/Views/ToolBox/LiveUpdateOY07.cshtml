@@ -42,25 +42,65 @@
 }
 else
 {
+
+
     <div class="row">
         <div class="col-1">
             <label>代理模式：啟動</label>
         </div>
-    </div>
-    <div>
+    </div><div>
 
         <form method="post" action="~/ToolBox/LogOut">
             <input type="submit" value="登出" class="btn btn-warning" />
         </form>
-
-
         <form method="post" action="~/ToolBox/LiveUpdateOY07">
             <select name="warehouse" required>
-                <option value="86">86庫</option>
-                <option value="87">87庫</option>
-                <option value="89">89庫</option>
-                <option value="91">91庫</option>
+                @{ if (Session["warehouse"].ToString() == "86")
+                    {
+                        <option value="86" selected>86庫</option>
+                        <option value="87">87庫</option>
+                        <option value="89">89庫</option>
+                        <option value="91">91庫</option>
+
+                    }
+                    else if (Session["warehouse"].ToString() == "87")
+                    {
+
+                        <option value="86">86庫</option>
+                        <option value="87" selected>87庫</option>
+                        <option value="89">89庫</option>
+                        <option value="91">91庫</option>
+
+                    }
+                    else if (Session["warehouse"].ToString() == "89")
+                    {
+
+                        <option value="86">86庫</option>
+                        <option value="87">87庫</option>
+                        <option value="89" selected>89庫</option>
+                        <option value="91">91庫</option>
+
+                    }
+                    else if (Session["warehouse"].ToString() == "91")
+                    {
+
+                        <option value="86">86庫</option>
+                        <option value="87">87庫</option>
+                        <option value="89">89庫</option>
+                        <option value="91" selected>91庫</option>
+
+                    }
+                    else
+                    {
+                        <option value="86">86庫</option>
+                        <option value="87">87庫</option>
+                        <option value="89">89庫</option>
+                        <option value="91">91庫</option>
+                    }
+                }
+
             </select>
+
             <input type="submit" value="更新資料" class="btn btn-warning" />
         </form>
 

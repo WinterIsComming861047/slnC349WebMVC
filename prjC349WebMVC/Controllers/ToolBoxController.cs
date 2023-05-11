@@ -71,7 +71,7 @@ namespace prjC349WebMVC.Controllers
             //if (tmpUser.isLogin == false) return View(MakingCargoPlanList);
             if (tmpUser.isLogin == false) return View();
 
-
+            if(warehouse!=null)Session["warehouse"] = warehouse;
             EIP eip = tryLoginEIP(tmpUser.userId, tmpUser.userPassword);
             StockingLogic stockingLogic = new StockingLogic(eip, Session["warehouse"].ToString());
 
