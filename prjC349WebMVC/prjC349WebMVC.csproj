@@ -785,6 +785,7 @@
     <Compile Include="Library\WebCrawler\IGI1.cs" />
     <Compile Include="Library\WebCrawler\IGS1.cs" />
     <Compile Include="Library\WebCrawler\SPB1.cs" />
+    <Compile Include="Models\AdvanceOY15.cs" />
     <Compile Include="Models\ChartJs1.cs" />
     <Compile Include="Models\dbMakingCargoPlanModel.Context.cs">
       <AutoGen>True</AutoGen>
@@ -846,6 +847,7 @@
     <Content Include="Views\ToolBox\Attendance.cshtml" />
     <Content Include="Views\ToolBox\Receieve.cshtml" />
     <Content Include="Views\ToolBox\LiveUpdateOY07_APIView.cshtml" />
+    <Content Include="Views\ToolBox\AdvanceOY15.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

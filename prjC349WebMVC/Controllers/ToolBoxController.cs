@@ -47,21 +47,32 @@ namespace prjC349WebMVC.Controllers
             return View();
         }
         [HttpPost]
-        public JsonResult LiveUpdateOY07_API(string userId, string userPassword,string warehouse)
+        public JsonResult LiveUpdateOY07_API(string userId, string userPassword, string warehouse)
         {
             EIP eip = tryLoginEIP(userId, userPassword);
-            StockingLogic stockingLogic = new StockingLogic(eip,warehouse);
+            StockingLogic stockingLogic = new StockingLogic(eip, warehouse);
 
             //var result2 = from m in result1List
             //         where m.ship_num_or_customer != ""
             //             select m;           
 
-            List<LiveUpdateOY07> dataForView = stockingLogic.ToDoList();
+            List<LiveUpdateOY07> dataForView = stockingLogic.LiveOY07_ToDoList();
             //return View(MakingCargoPlanList);
 
             return Json(dataForView);
         }
 
+        public ActionResult AdvanceOY15(string warehouse)
+        {
+            if (Session["isLogin"] == null) return View();
+            User tmpUser = new User(Session["userId"].ToString(), Session["userPassword"].ToString(), Session["isLogin"].ToString());
+            if (tmpUser.isLogin == false) return View();
+            if (warehouse != null) Session["warehouse"] = warehouse;
+            EIP eip = tryLoginEIP(tmpUser.userId, tmpUser.userPassword);
+            StockingLogic stockingLogic = new StockingLogic(eip, Session["warehouse"].ToString());
+            List<AdvanceOY15> dataForView = stockingLogic.AdvanceOY15_ToDoList();
+            return View(dataForView);
+        }
         public ActionResult LiveUpdateOY07(string warehouse)
         {
             //var MakingCargoPlanList = db.tMakingCargoPlan.OrderByDescending(m => m.id).ToList();
@@ -71,7 +82,7 @@ namespace prjC349WebMVC.Controllers
             //if (tmpUser.isLogin == false) return View(MakingCargoPlanList);
             if (tmpUser.isLogin == false) return View();
 
-            if(warehouse!=null)Session["warehouse"] = warehouse;
+            if (warehouse != null) Session["warehouse"] = warehouse;
             EIP eip = tryLoginEIP(tmpUser.userId, tmpUser.userPassword);
             StockingLogic stockingLogic = new StockingLogic(eip, Session["warehouse"].ToString());
 
@@ -79,7 +90,7 @@ namespace prjC349WebMVC.Controllers
             //         where m.ship_num_or_customer != ""
             //             select m;           
 
-            List<LiveUpdateOY07> dataForView = stockingLogic.ToDoList();
+            List<LiveUpdateOY07> dataForView = stockingLogic.LiveOY07_ToDoList();
             //return View(MakingCargoPlanList);
             return View(dataForView);
         }
@@ -87,12 +98,24 @@ namespace prjC349WebMVC.Controllers
 
 
         [HttpPost]
-        public ActionResult LogIn(string userId, string userPassword, string warehouse)
+        public ActionResult LogIn(string userId, string userPassword, string warehouse, string operation)
         {
             if (CheckLoginInfo(userId, userPassword) == false) return RedirectToAction("LiveUpdateOY07");
             tryLoginEIP(userId, userPassword);
             Session["warehouse"] = warehouse;
-            return RedirectToAction("LiveUpdateOY07");
+
+            if (operation == "LiveUpdateOY07")
+            {
+                return RedirectToAction("LiveUpdateOY07");
+            }
+            else if (operation == "AdvanceOY15") 
+            {
+                return RedirectToAction("AdvanceOY15");
+            }
+            else
+            {
+                return RedirectToAction("LiveUpdateOY07");
+            }
         }
         [HttpPost]
         public ActionResult LogOut()

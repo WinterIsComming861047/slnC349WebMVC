@@ -28,8 +28,8 @@ namespace prjC349WebMVC
                 {
                     label = igs1_excel.ElementAt(i).ElementAt(0).ToString(),
                     thick = igs1_excel.ElementAt(i).ElementAt(1).ToString(),
-                    width = igs1_excel.ElementAt(i).ElementAt(2).ToString(),
-                    weight = igs1_excel.ElementAt(i).ElementAt(3).ToString(),
+                    width = igs1_excel.ElementAt(i).ElementAt(2).ToString().Split('.')[0],
+                    weight = igs1_excel.ElementAt(i).ElementAt(3).ToString().Split('.')[0],
                     warehouse = igs1_excel.ElementAt(i).ElementAt(4).ToString(),
                     area = igs1_excel.ElementAt(i).ElementAt(5).ToString(),
                     prod_category = igs1_excel.ElementAt(i).ElementAt(6).ToString(),

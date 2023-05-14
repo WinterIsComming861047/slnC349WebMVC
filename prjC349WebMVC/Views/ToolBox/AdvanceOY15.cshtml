@@ -1,7 +1,7 @@
-﻿@model IEnumerable<prjC349WebMVC.Models.LiveUpdateOY07>
+﻿@model IEnumerable<prjC349WebMVC.Models.AdvanceOY15>
 
 @{
-    ViewBag.Title = "LiveUpdateOY07";
+    ViewBag.Title = "AdvanceOY15";
 }
 
 <h2>@ViewBag.Title</h2>
@@ -12,6 +12,11 @@
 <style>
     .warning {
         color: red;
+    }
+    th:hover {
+        color: blue;
+        text-decoration: underline;
+        cursor: pointer; /* 可選，將滑鼠游標改為手型 */
     }
 </style>
 @if (Session["isLogin"] == null)
@@ -33,8 +38,6 @@
             <select name="warehouse" required>
                 <option value="86">86庫</option>
                 <option value="87">87庫</option>
-                <option value="89">89庫</option>
-                <option value="91">91庫</option>
             </select>
             <input type="hidden" name="operation" value=@ViewBag.Title />
             <input type="submit" value="登入啟動" class="btn btn-warning" />
@@ -54,14 +57,12 @@ else
         <form method="post" action="~/ToolBox/LogOut">
             <input type="submit" value="登出" class="btn btn-warning" />
         </form>
-        <form method="post" action="~/ToolBox/LiveUpdateOY07">
+        <form method="post" action="~/ToolBox/AdvanceOY15">
             <select name="warehouse" required>
                 @{ if (Session["warehouse"].ToString() == "86")
                     {
                         <option value="86" selected>86庫</option>
                         <option value="87">87庫</option>
-                        <option value="89">89庫</option>
-                        <option value="91">91庫</option>
 
                     }
                     else if (Session["warehouse"].ToString() == "87")
@@ -69,34 +70,11 @@ else
 
                         <option value="86">86庫</option>
                         <option value="87" selected>87庫</option>
-                        <option value="89">89庫</option>
-                        <option value="91">91庫</option>
-
-                    }
-                    else if (Session["warehouse"].ToString() == "89")
-                    {
-
-                        <option value="86">86庫</option>
-                        <option value="87">87庫</option>
-                        <option value="89" selected>89庫</option>
-                        <option value="91">91庫</option>
-
-                    }
-                    else if (Session["warehouse"].ToString() == "91")
-                    {
-
-                        <option value="86">86庫</option>
-                        <option value="87">87庫</option>
-                        <option value="89">89庫</option>
-                        <option value="91" selected>91庫</option>
-
                     }
                     else
                     {
                         <option value="86">86庫</option>
                         <option value="87">87庫</option>
-                        <option value="89">89庫</option>
-                        <option value="91">91庫</option>
                     }
                 }
 
@@ -108,80 +86,6 @@ else
     </div>
 }
 
-
-@*<table class="table">
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.warehouse)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.label)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.area)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.pos)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.order_num)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.bill_of_ladding)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.ship_num)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.making_cargo_plan)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.update_time)
-                    </th>
-                    <th></th>
-                </tr>
-
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.warehouse)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.label)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.area)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.pos)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.order_num)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.bill_of_ladding)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ship_num)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.making_cargo_plan)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.update_time)
-                        </td>
-                        <td>
-                            @Html.ActionLink("Edit", "Edit", new { id = item.id }) |
-                            @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                            @Html.ActionLink("Delete", "Delete", new { id = item.id })
-                        </td>
-                    </tr>
-            </table>
-    }*@
-
-
-
 <div class="row">
     <div class="col-lg-6">
         @if (Session["isLogin"] != null)
@@ -190,7 +94,7 @@ else
         }
     </div>
     <div class="col-lg-6">
-        <div id="dept_filter" style="display:flex ; flex-direction:row">
+        @*<div id="dept_filter" style="display:flex ; flex-direction:row">
             <div class="form-check form-switch">
                 <div class="row">
                     <label class="form-check-label" for="cb_supress" style="margin: 0 auto; text-align:center">出貨被壓</label>
@@ -203,8 +107,9 @@ else
                     <input class="form-check-input" type="checkbox" id="cb_has_no_owner" style="margin: 0 auto;" onclick="onSearchStr()">
                 </div>
             </div>
-        </div>
+        </div>*@
         <div style="height: 600px; overflow: auto;">
+            <input type="text" id="searchInput" placeholder="Search...">
             <table class="table table-striped" id="tb_todolist">
                 @if (Model != null)
                 {
@@ -212,17 +117,17 @@ else
                         <th>連結</th>
                         <th>儲區</th>
                         <th>儲位</th>
+                        <th>代碼</th>
                         <th>Label</th>
                         <th>狀態</th>
-                        <th>訂單</th>
-                        <th>提單</th>
-                        <th>客戶/船號</th>
-                        <th>配艙時間</th>
+                        <th>重量</th>
+                        <th>寬度</th>
+                        <th>交期</th>
                         <th>分類</th>
                         <th>訂單狀態</th>
                     </tr>
                     string src = "";
-                    foreach (prjC349WebMVC.Models.LiveUpdateOY07 item in Model)
+                    foreach (prjC349WebMVC.Models.AdvanceOY15 item in Model)
                     {
                         <tr>
                             @{src = $@"http://crane.csc.com.tw/mis/oy_mgr_website/OY05/OYAO05.aspx?STOCK={item.warehouse}&PART={item.area}";
@@ -230,12 +135,12 @@ else
                             <td><button onclick=change_iframe_src("@src") class="btn btn-primary">go</button></td>
                             <td><a target="_blank" href=@src>@item.area </a></td>
                             <td style="color:red">@item.position</td>
+                            <td>@item.coil_code</td>
                             <td>@item.label</td>
                             <td>@item.state</td>
-                            <td>@item.order_num</td>
-                            <td>@item.bill_of_ladding</td>
-                            <td>@if (item.ship_num_or_customer != null) { item.ship_num_or_customer.Trim(); }</td>
-                            <td>@if (item.making_cargo_plan != null) { item.making_cargo_plan.Trim(); }</td>
+                            <td>@item.weight</td>
+                            <td>@item.width</td>
+                            <td>@item.order_delivery</td>
                             <td>@item.catagory</td>
                             <td>@item.is_order_finish</td>
                         </tr>
@@ -297,4 +202,62 @@ else
 
         }, 200);//200為延時時間
     }
+</script>
+<script>
+    // 搜尋表格
+    function searchTable() {
+        setTimeout(function () {
+            const input = document.getElementById("searchInput");
+            const filter = input.value.toUpperCase();
+            const table = document.getElementById("tb_todolist");
+            const rows = table.getElementsByTagName("tr");
+
+            for (let i = 0; i < rows.length; i++) {
+                let shouldHideRow = true;
+                const cells = rows[i].getElementsByTagName("td");
+
+                for (let j = 0; j < cells.length; j++) {
+                    const cellText = cells[j].innerText.toUpperCase();
+
+                    if (cellText.includes(filter)) {
+                        shouldHideRow = false;
+                        break;
+                    }
+                }
+
+                rows[i].style.display = shouldHideRow ? "none" : "";
+            }
+        }, 200);
+    }
+
+
+    // 排序表格
+    function sortTable(columnIndex) {
+        const table = document.getElementById("tb_todolist");
+        const rows = table.rows;
+        const isAscending = table.getAttribute("data-sort-order") === "asc";
+        const compare = (a, b) => {
+            const valueA = a.cells[columnIndex].innerText;
+            const valueB = b.cells[columnIndex].innerText;
+            return isAscending ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+        };
+
+        // 將tbody中的tr轉為array以便排序
+        const arr = Array.from(rows).slice(1);
+        arr.sort(compare);
+
+        // 重新設置tbody中的排序後的tr
+        for (let i = 0; i < arr.length; i++) {
+            table.tBodies[0].appendChild(arr[i]);
+        }
+
+        // 切換排序方式
+        table.setAttribute("data-sort-order", isAscending ? "desc" : "asc");
+    }
+
+    // 綁定事件
+    document.getElementById("searchInput").addEventListener("keyup", searchTable);
+    document.querySelectorAll("#tb_todolist th").forEach((th, i) =>
+        th.addEventListener("click", () => sortTable(i))
+    );
 </script>
