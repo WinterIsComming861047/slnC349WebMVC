@@ -174,89 +174,93 @@ namespace prjC349WebMVC.Library
             IGS1 igs1 = new IGS1(eip, warehouse);
 
             var combinedData = from i in igs1.List
-                                join o in oyr1_d1report.List on i.label equals o.label into igs1oyr1_d1report
-                                from io in igs1oyr1_d1report
-                                select new AdvanceOY15
-                                {
-                                    is_order_finish = i.is_order_finish,
-                                    bill_of_ladding = i.bill_of_ladding,
-                                    order_num = i.order_num,
-                                    state = i.state,
-                                    order_delivery = i.order_delivery,
-                                    warehouse = io.warehouse,
-                                    area = io.area,
-                                    coil_number = io.coil_number,
-                                    label = io.label,
-                                    coil_code = io.coil_code,
-                                    area_code = io.area_code,
-                                    position = io.position,
-                                    length = io.length,
-                                    width = io.width,
-                                    thick = io.thick,
-                                    weight = io.weight,
-                                    inner_diameter = io.inner_diameter,
-                                    outer_diameter = io.outer_diameter,
-                                    red_tag_coil_layer = io.red_tag_coil_layer,
-                                    area_available_layer = io.area_available_layer,
-                                    move_count_oymv = io.move_count_oymv,
-                                };
+                               join o in oyr1_d1report.List on i.label equals o.label into igs1oyr1_d1report
+                               from io in igs1oyr1_d1report
+                               select new AdvanceOY15
+                               {
+                                   is_order_finish = i.is_order_finish,
+                                   bill_of_ladding = i.bill_of_ladding,
+                                   order_num = i.order_num,
+                                   state = i.state,
+                                   order_delivery = i.order_delivery,
+                                   warehouse = io.warehouse,
+                                   area = io.area,
+                                   coil_number = io.coil_number,
+                                   label = io.label,
+                                   coil_code = io.coil_code,
+                                   area_code = io.area_code,
+                                   position = io.position,
+                                   length = io.length,
+                                   width = io.width,
+                                   thick = io.thick,
+                                   weight = io.weight,
+                                   inner_diameter = io.inner_diameter,
+                                   outer_diameter = io.outer_diameter,
+                                   red_tag_coil_layer = io.red_tag_coil_layer,
+                                   area_available_layer = io.area_available_layer,
+                                   move_count_oymv = io.move_count_oymv,
+                               };
             List<AdvanceOY15> igs1oyr1_d1report_list = combinedData.ToList().
                 Where(r => r.state == "23" || r.state == "24" || r.state == "25" || r.state == "26" || r.order_num.Substring(0, 1) == "T" || r.is_order_finish == "已結案").ToList();
 
             List<AdvanceOY15> dataForView = new List<AdvanceOY15>();
 
             foreach (AdvanceOY15 tmp_igs1 in igs1oyr1_d1report_list)
-            {                
-                
-                if ((DateTime.ParseExact(tmp_igs1.order_delivery, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture) > DateTime.Today.AddDays(30)))
+            {
+                if (int.Parse(tmp_igs1.width) <= 1700)
                 {
-                    string order_delivery_date_judge = "-GT_30d";
-                    if (tmp_igs1.coil_code == "C10" || tmp_igs1.coil_code == "D10" || tmp_igs1.coil_code == "E10")
+                    if ((DateTime.ParseExact(tmp_igs1.order_delivery, "yyyyMMdd", System.Globalization.CultureInfo.InvariantCulture) > DateTime.Today.AddDays(30)))
                     {
-                        tmp_igs1.catagory = "LV1-C10/D10/E10"+ order_delivery_date_judge;
-                        dataForView.Add(tmp_igs1);
+                        string order_delivery_date_judge = "-GT_30d";
+                        if (tmp_igs1.coil_code == "C10" || tmp_igs1.coil_code == "D10" || tmp_igs1.coil_code == "E10")
+                        {
+                            tmp_igs1.catagory = "LV1-C10/D10/E10" + order_delivery_date_judge;
+                            dataForView.Add(tmp_igs1);
+                        }
+                        if (tmp_igs1.coil_code == "C13" || tmp_igs1.coil_code == "D13" || tmp_igs1.coil_code == "A13" && int.Parse(tmp_igs1.weight) < 12400)
+                        {
+                            tmp_igs1.catagory = "LV1-C13/D13/A13-weight_LT_12.4t" + order_delivery_date_judge;
+                            dataForView.Add(tmp_igs1);
+                        }
+                        if (tmp_igs1.coil_code == "B10" && int.Parse(tmp_igs1.width) > 1100)
+                        {
+                            tmp_igs1.catagory = "LV1-B10-width_GT_1100mm" + order_delivery_date_judge;
+                            dataForView.Add(tmp_igs1);
+                        }
+                        if (tmp_igs1.coil_code == "C09" || tmp_igs1.coil_code == "D08" && int.Parse(tmp_igs1.weight) > 9000)
+                        {
+                            tmp_igs1.catagory = "LV2-C09/D08-weight_GT_9t" + order_delivery_date_judge;
+                            dataForView.Add(tmp_igs1);
+                        }
                     }
-                    if (tmp_igs1.coil_code == "C13" || tmp_igs1.coil_code == "D13" || tmp_igs1.coil_code == "A13" && int.Parse(tmp_igs1.weight) < 12400)
+                    else
                     {
-                        tmp_igs1.catagory = "LV1-C13/D13/A13-weight_LT_12.4t"+ order_delivery_date_judge;
-                        dataForView.Add(tmp_igs1);
-                    }
-                    if (tmp_igs1.coil_code == "B10" && int.Parse(tmp_igs1.width) > 1100)
-                    {
-                        tmp_igs1.catagory = "LV1-B10-width_GT_1100mm"+ order_delivery_date_judge;
-                        dataForView.Add(tmp_igs1);
-                    }
-                    if (tmp_igs1.coil_code == "C09" || tmp_igs1.coil_code == "D08" && int.Parse(tmp_igs1.weight) > 9000)
-                    {
-                        tmp_igs1.catagory = "LV2-C09/D08-weight_GT_9t" + order_delivery_date_judge;
-                        dataForView.Add(tmp_igs1);
-                    }
-                }
-                else
-                {
-                    string order_delivery_date_judge = "-LT_30d";
+                        string order_delivery_date_judge = "-LT_30d";
 
-                    if (tmp_igs1.coil_code == "C10" || tmp_igs1.coil_code == "D10" || tmp_igs1.coil_code == "E10")
-                    {
-                        tmp_igs1.catagory = "LV3-C10/D10/E10" + order_delivery_date_judge;
-                        dataForView.Add(tmp_igs1);
+                        if (tmp_igs1.coil_code == "C10" || tmp_igs1.coil_code == "D10" || tmp_igs1.coil_code == "E10")
+                        {
+                            tmp_igs1.catagory = "LV3-C10/D10/E10" + order_delivery_date_judge;
+                            dataForView.Add(tmp_igs1);
+                        }
+                        if (tmp_igs1.coil_code == "C13" || tmp_igs1.coil_code == "D13" || tmp_igs1.coil_code == "A13" && int.Parse(tmp_igs1.weight) < 12400)
+                        {
+                            tmp_igs1.catagory = "LV3-C13/D13/A13-weight_LT_12.4t" + order_delivery_date_judge;
+                            dataForView.Add(tmp_igs1);
+                        }
+                        if (tmp_igs1.coil_code == "B10" && int.Parse(tmp_igs1.width) > 1100)
+                        {
+                            tmp_igs1.catagory = "LV3-B10-width_GT_1100mm" + order_delivery_date_judge;
+                            dataForView.Add(tmp_igs1);
+                        }
+                        if (tmp_igs1.coil_code == "C09" || tmp_igs1.coil_code == "D08" && int.Parse(tmp_igs1.weight) > 9000)
+                        {
+                            tmp_igs1.catagory = "LV4-C09/D08-weight_GT_9t" + order_delivery_date_judge;
+                            dataForView.Add(tmp_igs1);
+                        }
                     }
-                    if (tmp_igs1.coil_code == "C13" || tmp_igs1.coil_code == "D13" || tmp_igs1.coil_code == "A13" && int.Parse(tmp_igs1.weight) < 12400)
-                    {
-                        tmp_igs1.catagory = "LV3-C13/D13/A13-weight_LT_12.4t" + order_delivery_date_judge;
-                        dataForView.Add(tmp_igs1);
-                    }
-                    if (tmp_igs1.coil_code == "B10" && int.Parse(tmp_igs1.width) > 1100)
-                    {
-                        tmp_igs1.catagory = "LV3-B10-width_GT_1100mm" + order_delivery_date_judge;
-                        dataForView.Add(tmp_igs1);
-                    }
-                    if (tmp_igs1.coil_code == "C09" || tmp_igs1.coil_code == "D08" && int.Parse(tmp_igs1.weight) > 9000)
-                    {
-                        tmp_igs1.catagory = "LV4-C09/D08-weight_GT_9t" + order_delivery_date_judge;
-                        dataForView.Add(tmp_igs1);
-                    }
+
                 }
+
             }
 
             return dataForView;

@@ -35,12 +35,15 @@ namespace prjC349WebMVC.Models
         public string area_available_layer { get; set; }
         public string move_count_oymv { get; set; }
 
-        //from ranking
+        //for ranking
         public string catagory { get; set; }
 
         //from igs1
         public string is_order_finish { get; set; }
         public string order_delivery { get; set; }
+
+        //for target warehouse
+        public string target_warehouse { get; set; }
 
     }
 }

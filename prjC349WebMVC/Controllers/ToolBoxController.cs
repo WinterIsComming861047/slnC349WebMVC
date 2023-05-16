@@ -73,6 +73,19 @@ namespace prjC349WebMVC.Controllers
             List<AdvanceOY15> dataForView = stockingLogic.AdvanceOY15_ToDoList();
             return View(dataForView);
         }
+
+        public ActionResult AdvanceOY15_ClearMixArea(string warehouse)
+        {
+            if (Session["isLogin"] == null) return View();
+            User tmpUser = new User(Session["userId"].ToString(), Session["userPassword"].ToString(), Session["isLogin"].ToString());
+            if (tmpUser.isLogin == false) return View();
+            if (warehouse != null) Session["warehouse"] = warehouse;
+            EIP eip = tryLoginEIP(tmpUser.userId, tmpUser.userPassword);
+            StockingLogic stockingLogic = new StockingLogic(eip, Session["warehouse"].ToString());
+            List<AdvanceOY15> dataForView = stockingLogic.AdvanceOY15_ToDoList();
+            return View(dataForView);
+        }
+
         public ActionResult LiveUpdateOY07(string warehouse)
         {
             //var MakingCargoPlanList = db.tMakingCargoPlan.OrderByDescending(m => m.id).ToList();

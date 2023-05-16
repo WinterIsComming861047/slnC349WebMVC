@@ -13,7 +13,53 @@
     .warning {
         color: red;
     }
+    /* 1280*1024解析度下的媒體查詢 */
+    @@media only screen and (max-width: 1280px) and (max-height: 1024px) {
+        #tb_todolist th:not(:nth-child(1)):not(:nth-child(3)):not(:nth-child(4)),
+        #tb_todolist td:not(:nth-child(1)):not(:nth-child(3)):not(:nth-child(4)) {
+            display: none; /* 隱藏非第1、3和第4個欄位 */
+        }
+    }
+
+    .custom_container {
+        display: flex;
+    }
+
+    .left-div {
+        width: 900px;
+    }
+
+    .right-div {
+        flex-grow: 1;
+    }
+    .float-div {
+        flex-grow: 1;
+    }
+    .custom_table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        position: sticky;
+        top: 0;
+        background-color: #f5f5f5;
+        font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tr:hover {
+        background-color: #ffffcc;
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+    }
 </style>
+
 @if (Session["isLogin"] == null)
 {
 
@@ -43,68 +89,87 @@
 }
 else
 {
-
-
     <div class="row">
         <div class="col-1">
             <label>代理模式：啟動</label>
         </div>
-    </div><div>
+    </div>
+    <div class="custom_container">
+        <div class="left-div">
+            <form method="post" action="~/ToolBox/LogOut">
+                <input type="submit" value="登出" class="btn btn-warning" />
+            </form>
+        </div>
+        <div class="right-div">
+            <div class="custom_container">
+                <div>
+                    <form method="post" action="~/ToolBox/LiveUpdateOY07">
+                        <select name="warehouse" required>
+                            @{ if (Session["warehouse"].ToString() == "86")
+                                {
+                                    <option value="86" selected>86庫</option>
+                                    <option value="87">87庫</option>
+                                    <option value="89">89庫</option>
+                                    <option value="91">91庫</option>
 
-        <form method="post" action="~/ToolBox/LogOut">
-            <input type="submit" value="登出" class="btn btn-warning" />
-        </form>
-        <form method="post" action="~/ToolBox/LiveUpdateOY07">
-            <select name="warehouse" required>
-                @{ if (Session["warehouse"].ToString() == "86")
-                    {
-                        <option value="86" selected>86庫</option>
-                        <option value="87">87庫</option>
-                        <option value="89">89庫</option>
-                        <option value="91">91庫</option>
+                                }
+                                else if (Session["warehouse"].ToString() == "87")
+                                {
 
-                    }
-                    else if (Session["warehouse"].ToString() == "87")
-                    {
+                                    <option value="86">86庫</option>
+                                    <option value="87" selected>87庫</option>
+                                    <option value="89">89庫</option>
+                                    <option value="91">91庫</option>
 
-                        <option value="86">86庫</option>
-                        <option value="87" selected>87庫</option>
-                        <option value="89">89庫</option>
-                        <option value="91">91庫</option>
+                                }
+                                else if (Session["warehouse"].ToString() == "89")
+                                {
 
-                    }
-                    else if (Session["warehouse"].ToString() == "89")
-                    {
+                                    <option value="86">86庫</option>
+                                    <option value="87">87庫</option>
+                                    <option value="89" selected>89庫</option>
+                                    <option value="91">91庫</option>
 
-                        <option value="86">86庫</option>
-                        <option value="87">87庫</option>
-                        <option value="89" selected>89庫</option>
-                        <option value="91">91庫</option>
+                                }
+                                else if (Session["warehouse"].ToString() == "91")
+                                {
 
-                    }
-                    else if (Session["warehouse"].ToString() == "91")
-                    {
+                                    <option value="86">86庫</option>
+                                    <option value="87">87庫</option>
+                                    <option value="89">89庫</option>
+                                    <option value="91" selected>91庫</option>
 
-                        <option value="86">86庫</option>
-                        <option value="87">87庫</option>
-                        <option value="89">89庫</option>
-                        <option value="91" selected>91庫</option>
-
-                    }
-                    else
-                    {
-                        <option value="86">86庫</option>
-                        <option value="87">87庫</option>
-                        <option value="89">89庫</option>
-                        <option value="91">91庫</option>
-                    }
-                }
-
-            </select>
-
-            <input type="submit" value="更新資料" class="btn btn-warning" />
-        </form>
-
+                                }
+                                else
+                                {
+                                    <option value="86">86庫</option>
+                                    <option value="87">87庫</option>
+                                    <option value="89">89庫</option>
+                                    <option value="91">91庫</option>
+                                }
+                            }
+                        </select>
+                        <input type="submit" value="更新資料" class="btn btn-warning" />
+                    </form>
+                </div>
+                <div class="float-div">
+                    <div id="dept_filter" style="display:flex ; flex-direction:row">
+                        <div class="form-check form-switch">
+                            <div class="row">
+                                <label class="form-check-label" for="cb_supress" style="margin: 0 auto; text-align:center">出貨被壓</label>
+                                <input class="form-check-input" type="checkbox" id="cb_supress" style="margin: 0 auto;" onclick="onSearchStr()">
+                            </div>
+                        </div>
+                        <div class="form-check form-switch">
+                            <div class="row">
+                                <label class="form-check-label" for="cb_has_no_owner" style="margin: 0 auto; text-align:center">無主</label>
+                                <input class="form-check-input" type="checkbox" id="cb_has_no_owner" style="margin: 0 auto;" onclick="onSearchStr()">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 }
 
@@ -180,32 +245,22 @@ else
             </table>
     }*@
 
+<div class="custom_container">
+    <div class="left-div"></div>
+    <div class="right-div">
 
-
-<div class="row">
-    <div class="col-lg-6">
+    </div>
+</div>
+<div class="custom_container">
+    <div class="left-div">
         @if (Session["isLogin"] != null)
         {
             <iframe id="oy05" class="preview-box" src="http://crane.csc.com.tw/mis/oy_mgr_website/OY05/OYAO05.aspx?UserId=@ViewBag.userId" width="900" height="600"></iframe>
         }
     </div>
-    <div class="col-lg-6">
-        <div id="dept_filter" style="display:flex ; flex-direction:row">
-            <div class="form-check form-switch">
-                <div class="row">
-                    <label class="form-check-label" for="cb_supress" style="margin: 0 auto; text-align:center">出貨被壓</label>
-                    <input class="form-check-input" type="checkbox" id="cb_supress" style="margin: 0 auto;" onclick="onSearchStr()">
-                </div>
-            </div>
-            <div class="form-check form-switch">
-                <div class="row">
-                    <label class="form-check-label" for="cb_has_no_owner" style="margin: 0 auto; text-align:center">無主</label>
-                    <input class="form-check-input" type="checkbox" id="cb_has_no_owner" style="margin: 0 auto;" onclick="onSearchStr()">
-                </div>
-            </div>
-        </div>
+    <div class="right-div">
         <div style="height: 600px; overflow: auto;">
-            <table class="table table-striped" id="tb_todolist">
+            <table class="custom_table" id="tb_todolist">
                 @if (Model != null)
                 {
                     <tr>
@@ -234,8 +289,18 @@ else
                             <td>@item.state</td>
                             <td>@item.order_num</td>
                             <td>@item.bill_of_ladding</td>
-                            <td>@if (item.ship_num_or_customer != null) { item.ship_num_or_customer.Trim(); }</td>
-                            <td>@if (item.making_cargo_plan != null) { item.making_cargo_plan.Trim(); }</td>
+
+                            @{
+                                string ship_num_or_customer_forView = "";
+                                if (item.ship_num_or_customer != null) { ship_num_or_customer_forView = item.ship_num_or_customer.Trim(); }
+                            }
+                            <td>@ship_num_or_customer_forView</td>
+
+                            @{
+                                string making_cargo_plan_forView = "";
+                                if (item.making_cargo_plan != null) { making_cargo_plan_forView = item.making_cargo_plan.Trim(); }
+                            }
+                            <td>@making_cargo_plan_forView</td>
                             <td>@item.catagory</td>
                             <td>@item.is_order_finish</td>
                         </tr>
