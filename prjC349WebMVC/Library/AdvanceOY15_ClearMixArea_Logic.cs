@@ -109,7 +109,7 @@ namespace prjC349WebMVC.Library
 
                         Dictionary<string, List<OYR1_OY01Report.Model>> tmp_dst_section_Area_list = new Dictionary<string, List<OYR1_OY01Report.Model>>();
                         //走訪目標庫的所有庫段，依照儲區建立字典
-                        //例如:{1,List<OYR1_OY01Report.Model>},{2,List<OYR1_OY01Report.Model>},{5,List<OYR1_OY01Report.Model>}
+                        //例如:{庫段1,List<OYR1_OY01Report.Model>},{庫段22,List<OYR1_OY01Report.Model>},{庫段5,List<OYR1_OY01Report.Model>}
                         foreach (string sectionItem in WarehouseSectionDic[warehouseItem])
                         {
                             List<OYR1_OY01Report.Model> tmp_dst_Area_List = new List<OYR1_OY01Report.Model>();
@@ -141,7 +141,8 @@ namespace prjC349WebMVC.Library
                             //走訪目標庫 特定庫段的所有儲區
                             foreach (var dst_Area in tmp_dst_section_Area_list[sectionItem])
                             {
-                                if (srcItem.coil_code == dst_Area.area_code)
+                                //將目標庫-特定庫段-所有儲區與來源鋼捲比對，如果兩者代碼相同，且層數相同，則將其納入雜區清理鋼捲清單
+                                if (srcItem.coil_code == dst_Area.area_code && srcItem.red_tag_coil_layer == dst_Area.layer)
                                 {
                                     string dst_warehouse_section = determine_dst_warehouse_section(dst_Area.warehouse, dst_Area.area);
                                     if (!updateItem_isCreate || tmp_updateItem.dst_section != dst_warehouse_section)
