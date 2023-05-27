@@ -8,7 +8,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI.WebControls;
 
-namespace prjC349WebMVC
+namespace prjC349WebMVC.Library.WebCrawler
 {
     public class EIP
     {

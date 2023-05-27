@@ -1,0 +1,213 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="c349dbModel_Dev.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="advanceoy15_clearmixarea">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="area" Type="nchar" MaxLength="10" />
+          <Property Name="position" Type="nchar" MaxLength="10" />
+          <Property Name="coil_code" Type="nchar" MaxLength="10" />
+          <Property Name="red_tag_coil_layer" Type="nchar" MaxLength="10" />
+          <Property Name="label" Type="nchar" MaxLength="10" />
+          <Property Name="weight" Type="nchar" MaxLength="10" />
+          <Property Name="src_warehouse" Type="nchar" MaxLength="10" />
+          <Property Name="dst_warehouse" Type="nchar" MaxLength="10" />
+          <Property Name="dst_section" Type="nchar" MaxLength="10" />
+          <Property Name="comment" Type="nchar" MaxLength="500" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'c349db.dbo.phone_book' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="phone_book">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nchar" MaxLength="10" />
+          <Property Name="phone_number" Type="nvarchar" MaxLength="50" />
+          <Property Name="remark" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6013: The table/view 'c349db.dbo.tAdvanceOY15_ClearMixArea' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
+        <EntityType Name="tAdvanceOY15_ClearMixArea">
+          <Property Name="id" Type="int" />
+          <Property Name="area" Type="nchar" MaxLength="10" />
+          <Property Name="position" Type="nchar" MaxLength="10" />
+          <Property Name="coil_code" Type="nchar" MaxLength="10" />
+          <Property Name="red_tag_coil_layer" Type="nchar" MaxLength="10" />
+          <Property Name="label" Type="nchar" MaxLength="10" />
+          <Property Name="weight" Type="nchar" MaxLength="10" />
+          <Property Name="src_warehouse" Type="nchar" MaxLength="10" />
+          <Property Name="dst_section" Type="nchar" MaxLength="10" />
+          <Property Name="comment" Type="nchar" MaxLength="500" />
+        </EntityType>-->
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'c349db.dbo.tMakingCargoPlan' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tMakingCargoPlan">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="warehouse" Type="nvarchar" MaxLength="50" />
+          <Property Name="label" Type="nvarchar" MaxLength="50" />
+          <Property Name="area" Type="nvarchar" MaxLength="50" />
+          <Property Name="pos" Type="nvarchar" MaxLength="50" />
+          <Property Name="order_num" Type="nvarchar" MaxLength="50" />
+          <Property Name="bill_of_ladding" Type="nvarchar" MaxLength="50" />
+          <Property Name="ship_num" Type="nvarchar" MaxLength="50" />
+          <Property Name="making_cargo_plan" Type="nvarchar" MaxLength="50" />
+          <Property Name="update_time" Type="datetime" />
+        </EntityType>
+        <EntityContainer Name="c349dbModel_DevStoreContainer">
+          <EntitySet Name="advanceoy15_clearmixarea" EntityType="Self.advanceoy15_clearmixarea" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="phone_book" EntityType="Self.phone_book" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [phone_book].[id] AS [id], 
+    [phone_book].[name] AS [name], 
+    [phone_book].[phone_number] AS [phone_number], 
+    [phone_book].[remark] AS [remark]
+    FROM [dbo].[phone_book] AS [phone_book]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="tMakingCargoPlan" EntityType="Self.tMakingCargoPlan" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tMakingCargoPlan].[id] AS [id], 
+    [tMakingCargoPlan].[warehouse] AS [warehouse], 
+    [tMakingCargoPlan].[label] AS [label], 
+    [tMakingCargoPlan].[area] AS [area], 
+    [tMakingCargoPlan].[pos] AS [pos], 
+    [tMakingCargoPlan].[order_num] AS [order_num], 
+    [tMakingCargoPlan].[bill_of_ladding] AS [bill_of_ladding], 
+    [tMakingCargoPlan].[ship_num] AS [ship_num], 
+    [tMakingCargoPlan].[making_cargo_plan] AS [making_cargo_plan], 
+    [tMakingCargoPlan].[update_time] AS [update_time]
+    FROM [dbo].[tMakingCargoPlan] AS [tMakingCargoPlan]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="c349dbModel_Dev" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="advanceoy15_clearmixarea">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="area" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="position" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="coil_code" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="red_tag_coil_layer" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="label" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="weight" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="src_warehouse" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="dst_warehouse" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="dst_section" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="comment" Type="String" MaxLength="500" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <EntityType Name="phone_book">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="phone_number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="remark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tMakingCargoPlan">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="warehouse" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="label" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="area" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="pos" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="order_num" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="bill_of_ladding" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ship_num" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="making_cargo_plan" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="update_time" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityContainer Name="c349dbEntities_Dev" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="advanceoy15_clearmixarea" EntityType="Self.advanceoy15_clearmixarea" />
+          <EntitySet Name="phone_book" EntityType="Self.phone_book" />
+          <EntitySet Name="tMakingCargoPlan" EntityType="Self.tMakingCargoPlan" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="c349dbModel_DevStoreContainer" CdmEntityContainer="c349dbEntities_Dev">
+          <EntitySetMapping Name="advanceoy15_clearmixarea">
+            <EntityTypeMapping TypeName="c349dbModel_Dev.advanceoy15_clearmixarea">
+              <MappingFragment StoreEntitySet="advanceoy15_clearmixarea">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="area" ColumnName="area" />
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="coil_code" ColumnName="coil_code" />
+                <ScalarProperty Name="red_tag_coil_layer" ColumnName="red_tag_coil_layer" />
+                <ScalarProperty Name="label" ColumnName="label" />
+                <ScalarProperty Name="weight" ColumnName="weight" />
+                <ScalarProperty Name="src_warehouse" ColumnName="src_warehouse" />
+                <ScalarProperty Name="dst_warehouse" ColumnName="dst_warehouse" />
+                <ScalarProperty Name="dst_section" ColumnName="dst_section" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="phone_book">
+            <EntityTypeMapping TypeName="c349dbModel_Dev.phone_book">
+              <MappingFragment StoreEntitySet="phone_book">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="phone_number" ColumnName="phone_number" />
+                <ScalarProperty Name="remark" ColumnName="remark" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tMakingCargoPlan">
+            <EntityTypeMapping TypeName="c349dbModel_Dev.tMakingCargoPlan">
+              <MappingFragment StoreEntitySet="tMakingCargoPlan">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="warehouse" ColumnName="warehouse" />
+                <ScalarProperty Name="label" ColumnName="label" />
+                <ScalarProperty Name="area" ColumnName="area" />
+                <ScalarProperty Name="pos" ColumnName="pos" />
+                <ScalarProperty Name="order_num" ColumnName="order_num" />
+                <ScalarProperty Name="bill_of_ladding" ColumnName="bill_of_ladding" />
+                <ScalarProperty Name="ship_num" ColumnName="ship_num" />
+                <ScalarProperty Name="making_cargo_plan" ColumnName="making_cargo_plan" />
+                <ScalarProperty Name="update_time" ColumnName="update_time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

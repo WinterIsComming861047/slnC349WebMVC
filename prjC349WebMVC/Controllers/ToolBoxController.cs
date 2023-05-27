@@ -17,12 +17,13 @@ using prjC349WebMVC.Library.WebCrawler;
 using prjC349WebMVC.Library;
 using System.Security.Policy;
 using static System.Net.WebRequestMethods;
+using System.Web.Services.Description;
 
 namespace prjC349WebMVC.Controllers
 {
     public class ToolBoxController : Controller
     {
-        c349dbEntities db = new c349dbEntities();
+        c349dbEntities_AdvanceOY15_ClearMixArea db = new c349dbEntities_AdvanceOY15_ClearMixArea();
         // GET: ToolBox
         public ActionResult Index()
         {
@@ -74,18 +75,54 @@ namespace prjC349WebMVC.Controllers
             return View(dataForView);
         }
 
-        public ActionResult AdvanceOY15_ClearMixArea(string warehouse)
+        public ActionResult AdvanceOY15ClearMixAreaAdmin(string src_warehouse,string dst_warehouse,string dst_section)
         {
-            if (Session["isLogin"] == null) return View();
-            User tmpUser = new User(Session["userId"].ToString(), Session["userPassword"].ToString(), Session["isLogin"].ToString());
-            if (tmpUser.isLogin == false) return View();
-            if (warehouse != null) Session["warehouse"] = warehouse;
-            EIP eip = tryLoginEIP(tmpUser.userId, tmpUser.userPassword);
-            StockingLogic stockingLogic = new StockingLogic(eip, Session["warehouse"].ToString());
-            List<AdvanceOY15> dataForView = stockingLogic.AdvanceOY15_ToDoList();
-            return View(dataForView);
-        }
 
+            if (Session["src_warehouse"] != null) { src_warehouse = Session["src_warehouse"].ToString(); }
+            else if (src_warehouse == null) { src_warehouse = "86"; }
+            if (Session["dst_warehouse"] != null) { dst_warehouse = Session["dst_warehouse"].ToString(); }
+            else if (dst_warehouse == null) { dst_warehouse = "82"; }
+            if (Session["dst_section"] != null) { dst_section = Session["dst_section"].ToString(); }
+            else if (dst_section == null) { dst_section = "2"; }
+
+            var todos = db.advanceoy15_clearmixarea.Where(m => m.src_warehouse == src_warehouse && m.dst_warehouse == dst_warehouse && m.dst_section == dst_section).ToList();
+
+            //沒有登入Session就直接回傳資料庫舊資料
+            if (Session["isLogin"] == null) return View(todos);
+
+            User tmpUser = new User(Session["userId"].ToString(), Session["userPassword"].ToString(), Session["isLogin"].ToString());
+            //帳號密碼錯誤就直接回傳資料庫舊資料，其中會在Session中設定警示訊息
+            if (tmpUser.isLogin == false) return View(todos);
+            EIP eip = tryLoginEIP(tmpUser.userId, tmpUser.userPassword);
+            AdvanceOY15_ClearMixArea_Logic ACL = new AdvanceOY15_ClearMixArea_Logic(eip);
+            ACL.UpdateToDoList();
+            todos = db.advanceoy15_clearmixarea.Where(m => m.src_warehouse == src_warehouse && m.dst_warehouse == dst_warehouse && m.dst_section == dst_section).ToList();
+            return View(todos);
+        }
+        public ActionResult AdvanceOY15ClearMixAreaCraneOperator(string src_warehouse, string dst_warehouse, string dst_section)
+        {
+            if (Session["src_warehouse"] != null) { src_warehouse = Session["src_warehouse"].ToString(); }
+            else if (src_warehouse == null) { src_warehouse = "86"; }
+            if (Session["dst_warehouse"] != null) { dst_warehouse = Session["dst_warehouse"].ToString(); }
+            else if (dst_warehouse == null) { dst_warehouse = "82"; }
+            if (Session["dst_section"] != null) { dst_section = Session["dst_section"].ToString(); }
+            else if (dst_section == null) { dst_section = "2"; }
+
+            var todos = db.advanceoy15_clearmixarea.Where(m => m.src_warehouse == src_warehouse && m.dst_warehouse == dst_warehouse && m.dst_section == dst_section).ToList();
+            return View(todos);
+        }
+        [HttpPost]
+        public JsonResult AdvanceOY15ClearMixAreaAPI(string src_warehouse, string dst_warehouse, string dst_section)
+        {
+            if (Session["src_warehouse"] != null) { src_warehouse = Session["src_warehouse"].ToString(); }
+            else if (src_warehouse == null) { src_warehouse = "86"; }
+            if (Session["dst_warehouse"] != null) { dst_warehouse = Session["dst_warehouse"].ToString(); }
+            else if (dst_warehouse == null) { dst_warehouse = "82"; }
+            if (Session["dst_section"] != null) { dst_section = Session["dst_section"].ToString(); }
+            else if (dst_section == null) { dst_section = "2"; }
+            var todos = db.advanceoy15_clearmixarea.Where(m => m.src_warehouse == src_warehouse && m.dst_warehouse == dst_warehouse && m.dst_section == dst_section).ToList();
+            return Json(todos);
+        }
         public ActionResult LiveUpdateOY07(string warehouse)
         {
             //var MakingCargoPlanList = db.tMakingCargoPlan.OrderByDescending(m => m.id).ToList();
@@ -109,21 +146,31 @@ namespace prjC349WebMVC.Controllers
         }
 
 
-
         [HttpPost]
         public ActionResult LogIn(string userId, string userPassword, string warehouse, string operation)
         {
-            if (CheckLoginInfo(userId, userPassword) == false) return RedirectToAction("LiveUpdateOY07");
-            tryLoginEIP(userId, userPassword);
+
+
             Session["warehouse"] = warehouse;
 
             if (operation == "LiveUpdateOY07")
             {
+                if (CheckLoginInfo(userId, userPassword) == false) return RedirectToAction("LiveUpdateOY07");
+                tryLoginEIP(userId, userPassword);
                 return RedirectToAction("LiveUpdateOY07");
             }
             else if (operation == "AdvanceOY15") 
             {
+                if (CheckLoginInfo(userId, userPassword) == false) return RedirectToAction("AdvanceOY15");
+                tryLoginEIP(userId, userPassword);
                 return RedirectToAction("AdvanceOY15");
+            }
+            else if (operation == "AdvanceOY15ClearMixAreaAdmin")
+            {
+                if (string.IsNullOrEmpty(userId)&& string.IsNullOrEmpty(userPassword)) return RedirectToAction("AdvanceOY15ClearMixAreaAdmin");
+                if (CheckLoginInfo(userId, userPassword) == false) return RedirectToAction("AdvanceOY15ClearMixAreaAdmin");
+                tryLoginEIP(userId, userPassword);
+                return RedirectToAction("AdvanceOY15ClearMixAreaAdmin");
             }
             else
             {
@@ -131,12 +178,27 @@ namespace prjC349WebMVC.Controllers
             }
         }
         [HttpPost]
-        public ActionResult LogOut()
+        public ActionResult LogOut(string operation)
         {
             Session["userId"] = null;
             Session["userPassword"] = null;
             Session["isLogin"] = null;
-            return RedirectToAction("LiveUpdateOY07");
+            if (operation == "LiveUpdateOY07")
+            {
+                return RedirectToAction("LiveUpdateOY07");
+            }
+            else if (operation == "AdvanceOY15")
+            {
+                return RedirectToAction("AdvanceOY15");
+            }
+            else if (operation == "AdvanceOY15ClearMixAreaAdmin")
+            {
+                return RedirectToAction("AdvanceOY15ClearMixAreaAdmin");
+            }
+            else
+            {
+                return RedirectToAction("LiveUpdateOY07");
+            }
         }
 
 

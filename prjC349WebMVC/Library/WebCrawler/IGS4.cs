@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 
-namespace prjC349WebMVC
+namespace prjC349WebMVC.Library.WebCrawler
 {
     public class IGS4
     {

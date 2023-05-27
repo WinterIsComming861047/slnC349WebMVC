@@ -1,0 +1,298 @@
+﻿@model IEnumerable<prjC349WebMVC.Models.advanceoy15_clearmixarea>
+
+@{
+    ViewBag.Title = "AdvanceOY15ClearMixAreaCraneOperator";
+}
+
+<h2>外搬-雜區清單</h2>
+
+<style>
+    /* 设置滚动条的宽度和高度 */
+    ::-webkit-scrollbar {
+        width: 50px;
+        height: 20px;
+    }
+    /* 设置滚动条的背景颜色 */
+    ::-webkit-scrollbar-track {
+        background-color: #f1f1f1;
+    }
+
+    /* 设置滚动条滑块的样式 */
+    ::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 10px;
+    }
+
+        /* 设置滚动条滑块在 hover 状态下的样式 */
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
+
+    .warning {
+        color: red;
+    }
+
+    .warning {
+        color: red;
+    }
+    /* 1280*1024解析度下的媒體查詢 */
+    /*@@media only screen and (max-width: 1280px) and (max-height: 1024px) {
+        #tb_todolist th:not(:nth-child(1)):not(:nth-child(3)):not(:nth-child(4)):not(:nth-child(5)):not(:nth-child(10)),
+        #tb_todolist td:not(:nth-child(1)):not(:nth-child(3)):not(:nth-child(4)):not(:nth-child(5)):not(:nth-child(10)) {
+            display: none;*/ /* 隱藏非第1、3、4、和第10個欄位 */
+    /*}
+    }*/
+
+    .custom_container {
+        display: flex;
+    }
+
+    .left-div {
+        width: 900px;
+    }
+
+    .float-div {
+        margin-left: 4px;
+        flex-grow: 1;
+    }
+
+    .custom_table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        position: sticky;
+        top: 0;
+        background-color: #f5f5f5;
+        font-weight: bold;
+    }
+
+        th:hover {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer; /* 可選，將滑鼠游標改為手型 */
+        }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tr:hover {
+        background-color: #ffffcc;
+    }
+
+    th, td {
+        font-size: x-large;
+        border: 1px solid #ddd;
+    }
+</style>
+
+<div class="form-group" style="margin:4px">
+    <label>來源庫</label>
+    <div class="btn-group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check btnradio" name="srcWarehouse" id="btnradio_86" autocomplete="off" checked value="86">
+        <label class="btn btn-outline-primary" for="btnradio_86">86庫</label>
+
+        <input type="radio" class="btn-check btnradio" name="srcWarehouse" id="btnradio_87" autocomplete="off" value="87">
+        <label class="btn btn-outline-primary" for="btnradio_87">87庫</label>
+    </div>
+</div>
+
+<div class="form-group" style="margin:4px">
+    <label>目標庫</label>
+    <div class="btn-group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check btnradio" name="dstWarehouse" id="btnradio_82" autocomplete="off" checked value="82">
+        <label class="btn btn-outline-secondary" for="btnradio_82">82庫</label>
+
+        <input type="radio" class="btn-check btnradio" name="dstWarehouse" id="btnradio_83" autocomplete="off" value="83">
+        <label class="btn btn-outline-secondary" for="btnradio_83">83庫</label>
+
+        <input type="radio" class="btn-check btnradio" name="dstWarehouse" id="btnradio_84" autocomplete="off" value="84">
+        <label class="btn btn-outline-secondary" for="btnradio_84">84庫</label>
+
+        <input type="radio" class="btn-check btnradio" name="dstWarehouse" id="btnradio_85" autocomplete="off" value="85">
+        <label class="btn btn-outline-secondary" for="btnradio_85">85庫</label>
+
+        <input type="radio" class="btn-check btnradio" name="dstWarehouse" id="btnradio_81" autocomplete="off" value="81">
+        <label class="btn btn-outline-secondary" for="btnradio_81">81庫</label>
+
+        <input type="radio" class="btn-check btnradio" name="dstWarehouse" id="btnradio_89" autocomplete="off" value="89">
+        <label class="btn btn-outline-secondary" for="btnradio_89">89庫</label>
+
+        <input type="radio" class="btn-check btnradio" name="dstWarehouse" id="btnradio_91" autocomplete="off" value="91">
+        <label class="btn btn-outline-secondary" for="btnradio_91">91庫</label>
+    </div>
+</div>
+<div class="form-group" style="margin:4px">
+    <label>目標庫段</label>
+    <div class="btn-group" aria-label="Basic radio toggle button group">
+        <input type="radio" class="btn-check btnradio" name="dstSection" id="btnradio_section_2" autocomplete="off" checked value="2">
+        <label class="btn btn-outline-primary" for="btnradio_section_2">前</label>
+
+        <input type="radio" class="btn-check btnradio" name="dstSection" id="btnradio_section_5" autocomplete="off" value="5">
+        <label class="btn btn-outline-primary" for="btnradio_section_5">後</label>
+
+        <input type="radio" class="btn-check btnradio" name="dstSection" id="btnradio_section_1" autocomplete="off" value="1">
+        <label class="btn btn-outline-primary" for="btnradio_section_1">全</label>
+    </div>
+</div>
+
+<table class="custom_table" id="tb_todolist">
+    @if (Model != null)
+    {
+        <tr>
+            <th>儲區</th>
+            <th>儲位</th>
+            <th>代碼</th>
+            <th>Label</th>
+            <th>重量</th>
+            <th>備註</th>
+        </tr>
+        foreach (prjC349WebMVC.Models.advanceoy15_clearmixarea item in Model)
+        {
+            <tr>
+                <td>@item.area</td>
+                <td style="color:red">@item.position</td>
+                <td>@item.coil_code-@item.red_tag_coil_layer</td>
+                <td>@item.label</td>
+                <td>@item.weight</td>
+                <td>@item.comment</td>
+            </tr>
+        }
+    }
+</table>
+
+<script>
+    // 搜尋表格
+    function searchTable() {
+        setTimeout(function () {
+            const input = document.getElementById("searchInput");
+            const filter = input.value.toUpperCase();
+            const table = document.getElementById("tb_todolist");
+            const rows = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < rows.length; i++) {
+                let shouldHideRow = true;
+                const cells = rows[i].getElementsByTagName("td");
+
+                for (let j = 0; j < cells.length; j++) {
+                    const cellText = cells[j].innerText.toUpperCase();
+
+                    if (cellText.includes(filter)) {
+                        shouldHideRow = false;
+                        break;
+                    }
+                }
+
+                rows[i].style.display = shouldHideRow ? "none" : "";
+            }
+        }, 200);
+    }
+
+
+    // 排序表格
+    function sortTable(columnIndex) {
+        const table = document.getElementById("tb_todolist");
+        const rows = table.rows;
+        const isAscending = table.getAttribute("data-sort-order") === "asc";
+        const compare = (a, b) => {
+            const valueA = a.cells[columnIndex].innerText;
+            const valueB = b.cells[columnIndex].innerText;
+            return isAscending ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+        };
+
+        // 將tbody中的tr轉為array以便排序
+        const arr = Array.from(rows).slice(1);
+        arr.sort(compare);
+
+        // 重新設置tbody中的排序後的tr
+        for (let i = 0; i < arr.length; i++) {
+            table.tBodies[0].appendChild(arr[i]);
+        }
+
+        // 切換排序方式
+        table.setAttribute("data-sort-order", isAscending ? "desc" : "asc");
+    }
+
+    // 綁定事件
+    document.querySelectorAll("#tb_todolist th").forEach((th, i) =>
+        th.addEventListener("click", () => sortTable(i))
+    );
+</script>
+<script>
+    var refreshInterval = 60000; // 5秒
+
+    function refreshPage() {
+        ajax_update();
+    }
+
+    setInterval(refreshPage, refreshInterval);
+</script>
+<script>
+    function setCheck() {
+        var radioButtons = document.querySelectorAll('.btnradio');
+        radioButtons.forEach(function (radioButton) {
+            radioButton.addEventListener('click', function () {
+                // 在这里添加你的点击事件处理逻辑
+                radioButton.checked = true;
+            });
+            radioButton.addEventListener('click', ajax_update);
+        });
+    };
+
+    var global_data;
+    function ajax_update() {
+        var selectedSrcWarehouse = document.querySelector('input[name="srcWarehouse"]:checked');
+        var selectedDstWarehouse = document.querySelector('input[name="dstWarehouse"]:checked');
+        var selectedDstSection = document.querySelector('input[name="dstSection"]:checked');
+        $.ajax({
+            url: "AdvanceOY15ClearMixAreaAPI",
+            type: 'POST',
+            data: { src_warehouse: selectedSrcWarehouse.value, dst_warehouse: selectedDstWarehouse.value, dst_section: selectedDstSection.value },
+            success: function (data) {
+                global_data = data;
+
+                //// 篩選出重量小於等於輸入重量的資料項目
+                //var filteredData = global_data.filter(function (item) {
+                //    return item.重量 <= selectedWeightLimit;
+                //});
+
+                updateTableView(data);
+            }
+        });
+    };
+    setCheck();
+</script>
+<script>
+    function updateTableView(data) {
+        $("#tb_todolist").empty();
+        $("#tb_todolist").append(
+            "<tbody>" +
+            "<tr>" +
+            "<th>儲區</th>" +
+            "<th>儲位</th>" +
+            "<th>代碼</th>" +
+            "<th>Label</th>" +
+            "<th>重量</th>" +
+            "<th>備註</th>" +
+            "</tr>"
+        );
+        // 綁定事件
+        document.querySelectorAll("#tb_todolist th").forEach((th, i) =>
+            th.addEventListener("click", () => sortTable(i)));
+        for (var i = 0; i < data.length; i++) {
+            $("#tb_todolist").append(
+                "<tr>" +
+                "<td>" + data[i].area + "</td>" +
+                "<td style=\"color:red\">" + data[i].position + "</td>" +
+                "<td>" + data[i].coil_code + "-" + data[i].red_tag_coil_layer + "</td>" +
+                "<td>" + data[i].label + "</td>" +
+                "<td>" + data[i].weight + "</td>" +
+                "<td>" + data[i].comment + "</td>" +
+                "</tr>" +
+                "</tbody>"
+            )
+        }
+    }
+</script>

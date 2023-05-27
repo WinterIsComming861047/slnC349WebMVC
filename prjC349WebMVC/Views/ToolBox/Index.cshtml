@@ -36,6 +36,12 @@
         <td>
             @Html.ActionLink("Receieve", "Receieve", "Toolbox", new { })
         </td>
+        <td>
+            <ul>
+                <li class="nav-item">@Html.ActionLink("清雜區_中控", "AdvanceOY15ClearMixAreaAdmin", "Toolbox", new { }, new { @class = "dropdown-item" })</li>
+                <li class="nav-item">@Html.ActionLink("清雜區_天車手", "AdvanceOY15ClearMixAreaCraneOperator", "Toolbox", new { }, new { @class = "dropdown-item" })</li>
+            </ul>
+        </td>
     </tr>
 </table>
 <table cellpadding="10">

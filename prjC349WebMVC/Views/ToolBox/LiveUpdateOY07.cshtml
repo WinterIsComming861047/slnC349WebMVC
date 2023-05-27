@@ -28,10 +28,6 @@
     .left-div {
         width: 900px;
     }
-
-    .right-div {
-        flex-grow: 1;
-    }
     .float-div {
         flex-grow: 1;
     }
@@ -100,7 +96,7 @@ else
                 <input type="submit" value="登出" class="btn btn-warning" />
             </form>
         </div>
-        <div class="right-div">
+        <div class="float-div">
             <div class="custom_container">
                 <div>
                     <form method="post" action="~/ToolBox/LiveUpdateOY07">
@@ -247,7 +243,7 @@ else
 
 <div class="custom_container">
     <div class="left-div"></div>
-    <div class="right-div">
+    <div class="float-div">
 
     </div>
 </div>
@@ -258,7 +254,7 @@ else
             <iframe id="oy05" class="preview-box" src="http://crane.csc.com.tw/mis/oy_mgr_website/OY05/OYAO05.aspx?UserId=@ViewBag.userId" width="900" height="600"></iframe>
         }
     </div>
-    <div class="right-div">
+    <div class="float-div">
         <div style="height: 600px; overflow: auto;">
             <table class="custom_table" id="tb_todolist">
                 @if (Model != null)

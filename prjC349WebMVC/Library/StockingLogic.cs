@@ -1,9 +1,15 @@
-﻿using NPOI.SS.Formula.Functions;
+﻿using Google.Protobuf.Collections;
+using NPOI.SS.Formula.Functions;
+using prjC349WebMVC.Library;
 using prjC349WebMVC.Library.WebCrawler;
 using prjC349WebMVC.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Lifetime;
+using System.Text;
 using System.Web;
 
 namespace prjC349WebMVC.Library
@@ -200,12 +206,48 @@ namespace prjC349WebMVC.Library
                                    area_available_layer = io.area_available_layer,
                                    move_count_oymv = io.move_count_oymv,
                                };
-            List<AdvanceOY15> igs1oyr1_d1report_list = combinedData.ToList().
-                Where(r => r.state == "23" || r.state == "24" || r.state == "25" || r.state == "26" || r.order_num.Substring(0, 1) == "T" || r.is_order_finish == "已結案").ToList();
 
             List<AdvanceOY15> dataForView = new List<AdvanceOY15>();
 
-            foreach (AdvanceOY15 tmp_igs1 in igs1oyr1_d1report_list)
+            #region 白色鋼捲分級
+            List<AdvanceOY15> igs1oyr1_d1report_WhiteCoil_list = combinedData.ToList().
+                Where(r => r.state == "23" || r.state == "24" || r.state == "25" || r.state == "26" || r.order_num.Substring(0, 1) == "T" || r.is_order_finish == "已結案").ToList();
+
+            foreach (AdvanceOY15 tmp_igs1 in igs1oyr1_d1report_WhiteCoil_list)
+            {
+                if (int.Parse(tmp_igs1.width) <= 1700)
+                {
+                    string order_delivery_date_judge = "-GT_30d";
+                    if (tmp_igs1.coil_code == "C10" || tmp_igs1.coil_code == "D10" || tmp_igs1.coil_code == "E10")
+                    {
+                        tmp_igs1.catagory = "LV1-C10/D10/E10" + order_delivery_date_judge;
+                        dataForView.Add(tmp_igs1);
+                    }
+                    if ((tmp_igs1.coil_code == "C13" || tmp_igs1.coil_code == "D13" || tmp_igs1.coil_code == "A13") && int.Parse(tmp_igs1.weight) < 12400)
+                    {
+                        tmp_igs1.catagory = "LV1-C13/D13/A13-weight_LT_12.4t" + order_delivery_date_judge;
+                        dataForView.Add(tmp_igs1);
+                    }
+                    if (tmp_igs1.coil_code == "B10" && int.Parse(tmp_igs1.width) > 1100)
+                    {
+                        tmp_igs1.catagory = "LV1-B10-width_GT_1100mm" + order_delivery_date_judge;
+                        dataForView.Add(tmp_igs1);
+                    }
+                    if ((tmp_igs1.coil_code == "C09" || tmp_igs1.coil_code == "D08") && int.Parse(tmp_igs1.weight) > 9000)
+                    {
+                        tmp_igs1.catagory = "LV2-C09/D08-weight_GT_9t" + order_delivery_date_judge;
+                        dataForView.Add(tmp_igs1);
+                    }
+                }
+
+            }
+            #endregion
+
+            #region 非白色鋼捲分級
+            List<AdvanceOY15> igs1oyr1_d1report_NormalCoil_list = combinedData.ToList().
+                Where(r => r.state != "23" && r.state != "24" && r.state != "25" && r.state != "26" && r.order_num.Substring(0, 1) != "T" && r.is_order_finish != "已結案" && r.bill_of_ladding == "      ").ToList();
+
+            foreach (AdvanceOY15 tmp_igs1 in igs1oyr1_d1report_NormalCoil_list)
             {
                 if (int.Parse(tmp_igs1.width) <= 1700)
                 {
@@ -214,35 +256,10 @@ namespace prjC349WebMVC.Library
                         string order_delivery_date_judge = "-GT_30d";
                         if (tmp_igs1.coil_code == "C10" || tmp_igs1.coil_code == "D10" || tmp_igs1.coil_code == "E10")
                         {
-                            tmp_igs1.catagory = "LV1-C10/D10/E10" + order_delivery_date_judge;
-                            dataForView.Add(tmp_igs1);
-                        }
-                        if (tmp_igs1.coil_code == "C13" || tmp_igs1.coil_code == "D13" || tmp_igs1.coil_code == "A13" && int.Parse(tmp_igs1.weight) < 12400)
-                        {
-                            tmp_igs1.catagory = "LV1-C13/D13/A13-weight_LT_12.4t" + order_delivery_date_judge;
-                            dataForView.Add(tmp_igs1);
-                        }
-                        if (tmp_igs1.coil_code == "B10" && int.Parse(tmp_igs1.width) > 1100)
-                        {
-                            tmp_igs1.catagory = "LV1-B10-width_GT_1100mm" + order_delivery_date_judge;
-                            dataForView.Add(tmp_igs1);
-                        }
-                        if (tmp_igs1.coil_code == "C09" || tmp_igs1.coil_code == "D08" && int.Parse(tmp_igs1.weight) > 9000)
-                        {
-                            tmp_igs1.catagory = "LV2-C09/D08-weight_GT_9t" + order_delivery_date_judge;
-                            dataForView.Add(tmp_igs1);
-                        }
-                    }
-                    else
-                    {
-                        string order_delivery_date_judge = "-LT_30d";
-
-                        if (tmp_igs1.coil_code == "C10" || tmp_igs1.coil_code == "D10" || tmp_igs1.coil_code == "E10")
-                        {
                             tmp_igs1.catagory = "LV3-C10/D10/E10" + order_delivery_date_judge;
                             dataForView.Add(tmp_igs1);
                         }
-                        if (tmp_igs1.coil_code == "C13" || tmp_igs1.coil_code == "D13" || tmp_igs1.coil_code == "A13" && int.Parse(tmp_igs1.weight) < 12400)
+                        if ((tmp_igs1.coil_code == "C13" || tmp_igs1.coil_code == "D13" || tmp_igs1.coil_code == "A13") && int.Parse(tmp_igs1.weight) < 12400)
                         {
                             tmp_igs1.catagory = "LV3-C13/D13/A13-weight_LT_12.4t" + order_delivery_date_judge;
                             dataForView.Add(tmp_igs1);
@@ -252,19 +269,67 @@ namespace prjC349WebMVC.Library
                             tmp_igs1.catagory = "LV3-B10-width_GT_1100mm" + order_delivery_date_judge;
                             dataForView.Add(tmp_igs1);
                         }
-                        if (tmp_igs1.coil_code == "C09" || tmp_igs1.coil_code == "D08" && int.Parse(tmp_igs1.weight) > 9000)
+                        if ((tmp_igs1.coil_code == "C09" || tmp_igs1.coil_code == "D08") && int.Parse(tmp_igs1.weight) > 9000)
                         {
                             tmp_igs1.catagory = "LV4-C09/D08-weight_GT_9t" + order_delivery_date_judge;
                             dataForView.Add(tmp_igs1);
                         }
                     }
+                    else
+                    {
+                        string order_delivery_date_judge = "-LT_30d";
+
+                        if (tmp_igs1.coil_code == "C10" || tmp_igs1.coil_code == "D10" || tmp_igs1.coil_code == "E10")
+                        {
+                            tmp_igs1.catagory = "LV5-C10/D10/E10" + order_delivery_date_judge;
+                            dataForView.Add(tmp_igs1);
+                        }
+                        if ((tmp_igs1.coil_code == "C13" || tmp_igs1.coil_code == "D13" || tmp_igs1.coil_code == "A13") && int.Parse(tmp_igs1.weight) < 12400)
+                        {
+                            tmp_igs1.catagory = "LV5-C13/D13/A13-weight_LT_12.4t" + order_delivery_date_judge;
+                            dataForView.Add(tmp_igs1);
+                        }
+                        if (tmp_igs1.coil_code == "B10" && int.Parse(tmp_igs1.width) > 1100)
+                        {
+                            tmp_igs1.catagory = "LV5-B10-width_GT_1100mm" + order_delivery_date_judge;
+                            dataForView.Add(tmp_igs1);
+                        }
+                        if ((tmp_igs1.coil_code == "C09" || tmp_igs1.coil_code == "D08") && int.Parse(tmp_igs1.weight) > 9000)
+                        {
+                            tmp_igs1.catagory = "LV6-C09/D08-weight_GT_9t" + order_delivery_date_judge;
+                            dataForView.Add(tmp_igs1);
+                        }
+                    }
 
                 }
-
             }
+            #endregion
 
             return dataForView;
         }
+
+
+
+
+        // 將 OYR1D1Report.List 輸出為 CSV 文字檔
+        public void ExportListToCsvFile(OYR1D1Report src_oyr1_d1report, string filePath)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            // 構建 CSV 內容
+            // 寫入標題列
+            sb.AppendLine("Warehouse,Area,Coil Number,Label,Coil Code,Area Code,Position,Length,Width,Thick,Weight,Inner Diameter,Outer Diameter,Red Tag Coil Layer,Area Available Layer,Move Count Oymv");
+
+            // 寫入資料列
+            foreach (var data in src_oyr1_d1report.List)
+            {
+                sb.AppendLine($"{data.warehouse},{data.area},{data.coil_number},{data.label},{data.coil_code},{data.area_code},{data.position},{data.length},{data.width},{data.thick},{data.weight},{data.inner_diameter},{data.outer_diameter},{data.red_tag_coil_layer},{data.area_available_layer},{data.move_count_oymv}");
+            }
+
+            // 寫入文字檔
+            File.WriteAllText(filePath, sb.ToString());
+        }
+
 
         private bool isWhiteItem(string label, List<LiveUpdateOY07> has_ship_num_or_customer_List)
         {
@@ -293,6 +358,10 @@ namespace prjC349WebMVC.Library
             if (yy == 0)
                 return false;
             return true;
+        }
+        private bool isInArea(string area, OYR1_OY01Report.Model coilitem)
+        {
+            return area == (coilitem.area + coilitem.line + coilitem.preserve);
         }
     }
 }

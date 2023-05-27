@@ -9,13 +9,13 @@ using System.Web;
 
 namespace prjC349WebMVC.Library.WebCrawler
 {
-    public class OYR1D1Report
+    public class OYR1_OY01Report
     {
         public EIP eip { get; set; }
         public List<Model> List { get { return _List; } }
-        private List<Model> _List = new List<OYR1D1Report.Model>();
+        private List<Model> _List = new List<OYR1_OY01Report.Model>();
         public string warehouse;
-        public OYR1D1Report(EIP eip, string warehouse)
+        public OYR1_OY01Report(EIP eip, string warehouse)
         {
             this.eip = eip;
             this.warehouse = warehouse;
@@ -27,20 +27,17 @@ namespace prjC349WebMVC.Library.WebCrawler
                 {
                     warehouse = oyr1_d1report_excel.ElementAt(i).ElementAt(0).ToString(),
                     area = oyr1_d1report_excel.ElementAt(i).ElementAt(1).ToString(),
-                    coil_number = oyr1_d1report_excel.ElementAt(i).ElementAt(2).ToString(),
-                    label = oyr1_d1report_excel.ElementAt(i).ElementAt(3).ToString(),
-                    coil_code = oyr1_d1report_excel.ElementAt(i).ElementAt(4).ToString(),
-                    area_code = oyr1_d1report_excel.ElementAt(i).ElementAt(5).ToString(),
-                    position = oyr1_d1report_excel.ElementAt(i).ElementAt(6).ToString(),
-                    length = oyr1_d1report_excel.ElementAt(i).ElementAt(7).ToString(),
-                    width = oyr1_d1report_excel.ElementAt(i).ElementAt(8).ToString().Split('.')[0],
-                    thick = oyr1_d1report_excel.ElementAt(i).ElementAt(9).ToString(),
-                    weight = oyr1_d1report_excel.ElementAt(i).ElementAt(10).ToString().Split('.')[0],
-                    inner_diameter = oyr1_d1report_excel.ElementAt(i).ElementAt(11).ToString(),
-                    outer_diameter = oyr1_d1report_excel.ElementAt(i).ElementAt(12).ToString(),
-                    red_tag_coil_layer = oyr1_d1report_excel.ElementAt(i).ElementAt(13).ToString(),
-                    area_available_layer = oyr1_d1report_excel.ElementAt(i).ElementAt(14).ToString(),
-                    move_count_oymv = oyr1_d1report_excel.ElementAt(i).ElementAt(15).ToString()
+                    line = oyr1_d1report_excel.ElementAt(i).ElementAt(2).ToString(),
+                    preserve = oyr1_d1report_excel.ElementAt(i).ElementAt(3).ToString(),
+                    length = oyr1_d1report_excel.ElementAt(i).ElementAt(4).ToString(),
+                    base_value = oyr1_d1report_excel.ElementAt(i).ElementAt(5).ToString(),
+                    center = oyr1_d1report_excel.ElementAt(i).ElementAt(6).ToString(),
+                    area_code = oyr1_d1report_excel.ElementAt(i).ElementAt(7).ToString(),
+                    area_code_1 = oyr1_d1report_excel.ElementAt(i).ElementAt(8).ToString().Split('.')[0],
+                    layer = oyr1_d1report_excel.ElementAt(i).ElementAt(9).ToString(),
+                    category = oyr1_d1report_excel.ElementAt(i).ElementAt(10).ToString().Split('.')[0],
+                    remain = oyr1_d1report_excel.ElementAt(i).ElementAt(11).ToString(),
+                    total = oyr1_d1report_excel.ElementAt(i).ElementAt(12).ToString(),
                 };
                 _List.Add(tmp_oyr1_d1report);
             }
@@ -49,22 +46,18 @@ namespace prjC349WebMVC.Library.WebCrawler
         {
             public string warehouse { get; set; }
             public string area { get; set; }
-            public string coil_number { get; set; }
-            public string label { get; set; }
-            public string coil_code { get; set; }
-            public string area_code { get; set; }
-            public string position { get; set; }
+            public string line { get; set; }
+            public string preserve { get; set; }
             public string length { get; set; }
-            public string width { get; set; }
-            public string thick { get; set; }
-            public string weight { get; set; }
-            public string inner_diameter { get; set; }
-            public string outer_diameter { get; set; }
-            public string red_tag_coil_layer { get; set; }
-            public string area_available_layer { get; set; }
-            public string move_count_oymv { get; set; }
+            public string base_value { get; set; }
+            public string center { get; set; }
+            public string area_code { get; set; }
+            public string area_code_1 { get; set; }
+            public string layer { get; set; }
+            public string category { get; set; }
+            public string remain { get; set; }
+            public string total { get; set; }
         }
-
 
         public List<List<object>> PostToGetExcel()
         {
@@ -76,7 +69,7 @@ namespace prjC349WebMVC.Library.WebCrawler
             request.Method = "POST";
             request.ContentType = "application/x-www-form-urlencoded";
             string stock = warehouse;
-            string action = "getoyD1Report";
+            string action = "getOY01Report";
 
             string PostData = $"stocks[]={HttpUtility.UrlEncode(stock, Encoding.UTF8)}&_action={HttpUtility.UrlEncode(action, Encoding.UTF8)}";
             byte[] bytes = System.Text.Encoding.UTF8.GetBytes(PostData);
@@ -89,7 +82,7 @@ namespace prjC349WebMVC.Library.WebCrawler
                 dataStream.Close();
             }
 
-            string filePath = $@"D:\C349WebMVC\tmp_OYR1_D1Report_{DateTime.Now.ToString("yyyy-MM-dd_HHmmss")}.xlsx";
+            string filePath = $@"D:\C349WebMVC\tmp_OYR1_OY01Report_{DateTime.Now.ToString("yyyy-MM-dd_HHmmss")}.xlsx";
 
             FileManager.tryDeleteFile(filePath);
             FileStream fileStream = new FileStream(filePath, FileMode.Create);

@@ -12,17 +12,18 @@ namespace prjC349WebMVC.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tMakingCargoPlan
+    public partial class advanceoy15_clearmixarea
     {
         public int id { get; set; }
-        public string warehouse { get; set; }
-        public string label { get; set; }
         public string area { get; set; }
-        public string pos { get; set; }
-        public string order_num { get; set; }
-        public string bill_of_ladding { get; set; }
-        public string ship_num { get; set; }
-        public string making_cargo_plan { get; set; }
-        public Nullable<System.DateTime> update_time { get; set; }
+        public string position { get; set; }
+        public string coil_code { get; set; }
+        public string red_tag_coil_layer { get; set; }
+        public string label { get; set; }
+        public string weight { get; set; }
+        public string src_warehouse { get; set; }
+        public string dst_warehouse { get; set; }
+        public string dst_section { get; set; }
+        public string comment { get; set; }
     }
 }

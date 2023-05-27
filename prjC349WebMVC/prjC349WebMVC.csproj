@@ -625,6 +625,26 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
+    <Content Include="Models\dbAdvanceOY15_ClearMixAreaModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>dbAdvanceOY15_ClearMixAreaModel.edmx</DependentUpon>
+      <LastGenOutput>dbAdvanceOY15_ClearMixAreaModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\dbAdvanceOY15_ClearMixAreaModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>dbAdvanceOY15_ClearMixAreaModel.edmx</DependentUpon>
+      <LastGenOutput>dbAdvanceOY15_ClearMixAreaModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\dbAdvanceOY15_ClearMixAreaModel_Test.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>dbAdvanceOY15_ClearMixAreaModel_Test.edmx</DependentUpon>
+      <LastGenOutput>dbAdvanceOY15_ClearMixAreaModel_Test.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\dbAdvanceOY15_ClearMixAreaModel_Test.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>dbAdvanceOY15_ClearMixAreaModel_Test.edmx</DependentUpon>
+      <LastGenOutput>dbAdvanceOY15_ClearMixAreaModel_Test.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\dbMakingCargoPlanModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>dbMakingCargoPlanModel.Context.cs</LastGenOutput>
@@ -712,6 +732,20 @@
     <Content Include="Models\dbMakingCargoPlanModel.edmx.diagram">
       <DependentUpon>dbMakingCargoPlanModel.edmx</DependentUpon>
     </Content>
+    <EntityDeploy Include="Models\dbAdvanceOY15_ClearMixAreaModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>dbAdvanceOY15_ClearMixAreaModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\dbAdvanceOY15_ClearMixAreaModel.edmx.diagram">
+      <DependentUpon>dbAdvanceOY15_ClearMixAreaModel.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\dbAdvanceOY15_ClearMixAreaModel_Test.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>dbAdvanceOY15_ClearMixAreaModel_Test.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\dbAdvanceOY15_ClearMixAreaModel_Test.edmx.diagram">
+      <DependentUpon>dbAdvanceOY15_ClearMixAreaModel_Test.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.0.0-vsdoc.js" />
     <Content Include="Scripts\jquery-3.0.0.js" />
     <Content Include="Scripts\jquery-3.0.0.min.js" />
@@ -759,11 +793,14 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Scripts\vue.js" />
+    <Content Include="Scripts\vue.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Library\AdvanceOY15_ClearMixArea_Logic.cs" />
     <Compile Include="Library\ChartJsDataSource.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ChartJs1Controller.cs" />
@@ -784,9 +821,43 @@
     <Compile Include="Library\IPAddress.cs" />
     <Compile Include="Library\WebCrawler\IGI1.cs" />
     <Compile Include="Library\WebCrawler\IGS1.cs" />
+    <Compile Include="Library\WebCrawler\OYR1_OY01Report.cs" />
     <Compile Include="Library\WebCrawler\SPB1.cs" />
     <Compile Include="Models\AdvanceOY15.cs" />
+    <Compile Include="Models\advanceoy15_clearmixarea.cs">
+      <DependentUpon>dbAdvanceOY15_ClearMixAreaModel_Test.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ChartJs1.cs" />
+    <Compile Include="Models\dbAdvanceOY15_ClearMixAreaModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbAdvanceOY15_ClearMixAreaModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\dbAdvanceOY15_ClearMixAreaModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbAdvanceOY15_ClearMixAreaModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\dbAdvanceOY15_ClearMixAreaModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbAdvanceOY15_ClearMixAreaModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\dbAdvanceOY15_ClearMixAreaModel_Test.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbAdvanceOY15_ClearMixAreaModel_Test.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\dbAdvanceOY15_ClearMixAreaModel_Test.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbAdvanceOY15_ClearMixAreaModel_Test.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\dbAdvanceOY15_ClearMixAreaModel_Test.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>dbAdvanceOY15_ClearMixAreaModel_Test.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\dbMakingCargoPlanModel.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -804,9 +875,12 @@
     </Compile>
     <Compile Include="Models\LiveUpdateOY07.cs" />
     <Compile Include="Models\ModelChartJs.cs" />
+    <Compile Include="Models\phone_book.cs">
+      <DependentUpon>dbAdvanceOY15_ClearMixAreaModel_Test.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\remote_visual_ inspection.cs" />
     <Compile Include="Models\tMakingCargoPlan.cs">
-      <DependentUpon>dbMakingCargoPlanModel.tt</DependentUpon>
+      <DependentUpon>dbAdvanceOY15_ClearMixAreaModel_Test.tt</DependentUpon>
     </Compile>
     <Compile Include="Library\MySQLHelper.cs" />
     <Compile Include="Library\WebCrawler\OYR1D1Report.cs" />
@@ -848,6 +922,8 @@
     <Content Include="Views\ToolBox\Receieve.cshtml" />
     <Content Include="Views\ToolBox\LiveUpdateOY07_APIView.cshtml" />
     <Content Include="Views\ToolBox\AdvanceOY15.cshtml" />
+    <Content Include="Views\ToolBox\AdvanceOY15ClearMixAreaAdmin.cshtml" />
+    <Content Include="Views\ToolBox\AdvanceOY15ClearMixAreaCraneOperator.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
