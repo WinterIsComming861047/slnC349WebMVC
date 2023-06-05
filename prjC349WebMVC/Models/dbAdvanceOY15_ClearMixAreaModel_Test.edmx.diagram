@@ -8,6 +8,7 @@
         <EntityTypeShape EntityType="c349dbModel_Dev.advanceoy15_clearmixarea" Width="1.5" PointX="1" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="c349dbModel_Dev.phone_book" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="c349dbModel_Dev.tMakingCargoPlan" Width="1.5" PointX="2.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="c349dbModel_Dev.tAdvanceOY15_ClearMixArea" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -879,6 +879,9 @@
       <DependentUpon>dbAdvanceOY15_ClearMixAreaModel_Test.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\remote_visual_ inspection.cs" />
+    <Compile Include="Models\tAdvanceOY15_ClearMixArea.cs">
+      <DependentUpon>dbAdvanceOY15_ClearMixAreaModel_Test.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tMakingCargoPlan.cs">
       <DependentUpon>dbAdvanceOY15_ClearMixAreaModel_Test.tt</DependentUpon>
     </Compile>
@@ -924,6 +927,7 @@
     <Content Include="Views\ToolBox\AdvanceOY15.cshtml" />
     <Content Include="Views\ToolBox\AdvanceOY15ClearMixAreaAdmin.cshtml" />
     <Content Include="Views\ToolBox\AdvanceOY15ClearMixAreaCraneOperator.cshtml" />
+    <Content Include="Views\ToolBox\Y5PIS_Schedule.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

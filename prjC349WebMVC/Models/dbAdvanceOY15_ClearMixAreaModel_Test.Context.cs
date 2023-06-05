@@ -28,5 +28,6 @@ namespace prjC349WebMVC.Models
         public virtual DbSet<advanceoy15_clearmixarea> advanceoy15_clearmixarea { get; set; }
         public virtual DbSet<phone_book> phone_book { get; set; }
         public virtual DbSet<tMakingCargoPlan> tMakingCargoPlan { get; set; }
+        public virtual DbSet<tAdvanceOY15_ClearMixArea> tAdvanceOY15_ClearMixArea { get; set; }
     }
 }

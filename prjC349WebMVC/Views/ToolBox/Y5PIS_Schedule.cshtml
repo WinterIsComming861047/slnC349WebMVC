@@ -1,0 +1,736 @@
+﻿@{
+    ViewBag.Title = "Y5PIS_Schedule";
+}
+
+<h2>產線排程</h2>
+
+<style>
+    /* 设置滚动条的宽度和高度 */
+    ::-webkit-scrollbar {
+        width: 50px;
+        height: 20px;
+    }
+    /* 设置滚动条的背景颜色 */
+    ::-webkit-scrollbar-track {
+        background-color: #f1f1f1;
+    }
+
+    /* 设置滚动条滑块的样式 */
+    ::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 10px;
+    }
+
+        /* 设置滚动条滑块在 hover 状态下的样式 */
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #555;
+        }
+
+    .warning {
+        color: red;
+    }
+
+    .warning {
+        color: red;
+    }
+    /* 1280*1024解析度下的媒體查詢 */
+    /*@@media only screen and (max-width: 1280px) and (max-height: 1024px) {
+        #tb_todolist th:not(:nth-child(1)):not(:nth-child(3)):not(:nth-child(4)):not(:nth-child(5)):not(:nth-child(10)),
+        #tb_todolist td:not(:nth-child(1)):not(:nth-child(3)):not(:nth-child(4)):not(:nth-child(5)):not(:nth-child(10)) {
+            display: none;*/ /* 隱藏非第1、3、4、和第10個欄位 */
+    /*}
+    }*/
+
+    .custom_container {
+        display: flex;
+    }
+
+    .left-div {
+        width: 900px;
+    }
+
+    .float-div {
+        margin-left: 4px;
+        flex-grow: 1;
+    }
+
+    .custom_table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        position: sticky;
+        top: 0;
+        background-color: #f5f5f5;
+        font-weight: bold;
+    }
+
+        th:hover {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer; /* 可選，將滑鼠游標改為手型 */
+        }
+
+    tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    tr:hover {
+        background-color: #ffffcc;
+    }
+
+    th, td {
+        font-size: x-large;
+        border: 1px solid #ddd;
+    }
+</style>
+
+@*<div class="form-group" style="margin:4px">
+        <label>來源庫</label>
+        <div class="btn-group" aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check btnradio" name="srcWarehouse" id="btnradio_86" autocomplete="off" checked value="86">
+            <label class="btn btn-outline-primary" for="btnradio_86">86庫</label>
+
+            <input type="radio" class="btn-check btnradio" name="srcWarehouse" id="btnradio_87" autocomplete="off" value="87">
+            <label class="btn btn-outline-primary" for="btnradio_87">87庫</label>
+        </div>
+    </div>
+
+    <div class="form-group" style="margin:4px">
+        <label>目標庫</label>
+        <div class="btn-group" aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check btnradio" name="dstWarehouse" id="btnradio_82" autocomplete="off" checked value="82">
+            <label class="btn btn-outline-secondary" for="btnradio_82">82庫</label>
+
+            <input type="radio" class="btn-check btnradio" name="dstWarehouse" id="btnradio_83" autocomplete="off" value="83">
+            <label class="btn btn-outline-secondary" for="btnradio_83">83庫</label>
+
+            <input type="radio" class="btn-check btnradio" name="dstWarehouse" id="btnradio_84" autocomplete="off" value="84">
+            <label class="btn btn-outline-secondary" for="btnradio_84">84庫</label>
+
+            <input type="radio" class="btn-check btnradio" name="dstWarehouse" id="btnradio_85" autocomplete="off" value="85">
+            <label class="btn btn-outline-secondary" for="btnradio_85">85庫</label>
+
+            <input type="radio" class="btn-check btnradio" name="dstWarehouse" id="btnradio_81" autocomplete="off" value="81">
+            <label class="btn btn-outline-secondary" for="btnradio_81">81庫</label>
+
+            <input type="radio" class="btn-check btnradio" name="dstWarehouse" id="btnradio_89" autocomplete="off" value="89">
+            <label class="btn btn-outline-secondary" for="btnradio_89">89庫</label>
+
+            <input type="radio" class="btn-check btnradio" name="dstWarehouse" id="btnradio_91" autocomplete="off" value="91">
+            <label class="btn btn-outline-secondary" for="btnradio_91">91庫</label>
+        </div>
+    </div>
+    <div class="form-group" style="margin:4px">
+        <label>目標庫段</label>
+        <div class="btn-group" aria-label="Basic radio toggle button group">
+            <input type="radio" class="btn-check btnradio" name="dstSection" id="btnradio_section_2" autocomplete="off" checked value="2">
+            <label class="btn btn-outline-primary" for="btnradio_section_2">前</label>
+
+            <input type="radio" class="btn-check btnradio" name="dstSection" id="btnradio_section_5" autocomplete="off" value="5">
+            <label class="btn btn-outline-primary" for="btnradio_section_5">後</label>
+
+            <input type="radio" class="btn-check btnradio" name="dstSection" id="btnradio_section_1" autocomplete="off" value="1">
+            <label class="btn btn-outline-primary" for="btnradio_section_1">全</label>
+        </div>
+    </div>*@
+<div class="custom_container">
+    <div class="left-div">
+        <table class="custom_table" id="tb_todolist_1">
+            <thead>
+                <tr>
+                    <th>站點</th>
+                    <th>鋼捲號碼</th>
+                    <th>Label</th>
+                    <th>代碼</th>
+                    <th>訂單號碼</th>
+                    <th>工作</th>
+                </tr>
+            <tbody>
+                <tr v-for="pkl_1_data in pkl_1" :key="pkl_1_data.id">
+                    <td>{{ pkl_1_data.station }}</td>
+                    <td>{{ pkl_1_data.coilId }}</td>
+                    <td>{{ pkl_1_data.labelId }}</td>
+                    <td>{{ pkl_1_data.coil_code }}</td>
+                    <td>{{ pkl_1_data.coil_layer }}</td>
+                    <td>{{ pkl_1_data.orderItem }}</td>
+                    <td>{{ pkl_1_data.description }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="rig-div">
+        <table class="custom_table" id="tb_todolist_2">
+        </table>
+    </div>
+</div>
+
+<script>
+    // 排序表格
+    function sortTable(columnIndex, tableId) {
+        const table = document.getElementById(tableId);
+        const rows = table.rows;
+        const isAscending = table.getAttribute("data-sort-order") === "asc";
+        const compare = (a, b) => {
+            const valueA = a.cells[columnIndex].innerText;
+            const valueB = b.cells[columnIndex].innerText;
+            return isAscending ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+        };
+
+        // 將tbody中的tr轉為array以便排序
+        const arr = Array.from(rows).slice(1);
+        arr.sort(compare);
+
+        // 重新設置tbody中的排序後的tr
+        for (let i = 0; i < arr.length; i++) {
+            table.tBodies[0].appendChild(arr[i]);
+        }
+
+        // 切換排序方式
+        table.setAttribute("data-sort-order", isAscending ? "desc" : "asc");
+    }
+    function bindSortTable() {
+        // 綁定事件
+        //document.querySelectorAll("#tb_todolist th").forEach((th, i) =>
+        //    th.addEventListener("click", () => sortTable(i,"tb_todolist_1"))
+        //);
+        var tableIds = ["tb_todolist_1", "tb_todolist_2"]; // 添加更多的 tableId
+
+        tableIds.forEach(function (tableId) {
+            document.querySelectorAll("#" + tableId + " th").forEach(function (th, i) {
+                th.addEventListener("click", function () {
+                    sortTable(i, tableId);
+                });
+            });
+        });
+    }
+    bindSortTable();
+</script>
+<script>
+    var refreshInterval = 5000; // 5秒
+
+    function refreshPage() {
+        ajax_update();
+    }
+
+    //setInterval(refreshPage, refreshInterval);
+</script>
+<script>
+    //function setCheck() {
+    //    var radioButtons = document.querySelectorAll('.btnradio');
+    //    radioButtons.forEach(function (radioButton) {
+    //        radioButton.addEventListener('click', function () {
+    //            // 在这里添加你的点击事件处理逻辑
+    //            radioButton.checked = true;
+    //        });
+    //        radioButton.addEventListener('click', ajax_update);
+    //    });
+    //};
+
+    var global_data;
+    function ajax_update() {
+        //var selectedSrcWarehouse = document.querySelector('input[name="srcWarehouse"]:checked');
+        //var selectedDstWarehouse = document.querySelector('input[name="dstWarehouse"]:checked');
+        //var selectedDstSection = document.querySelector('input[name="dstSection"]:checked');
+        $.ajax({
+            url: "http://y5pis.crcs.csc.com.tw/api/external/vacss-pkl1/monitor/tracking",
+            type: 'GET',
+            success: function (data) {
+                global_data = data;
+                //// 篩選出重量小於等於輸入重量的資料項目
+                //var filteredData = global_data.filter(function (item) {
+                //    return item.重量 <= selectedWeightLimit;
+                //});
+                updateTableView(data);
+            }
+        });
+    };
+    //ajax_update();
+    /*    setCheck();*/
+</script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            pkl_1: []
+        },
+        methods: {
+            updatePeopleData() {
+                // 使用 AJAX 更新 people 資料
+                // 這裡假設後端 API 的路徑為 /api/people/update
+                $.ajax({
+                    url: 'http://y5pis.crcs.csc.com.tw/api/external/vacss-pkl1/monitor/tracking',
+                    type: 'GET',
+                    data: JSON.stringify(this.convertToBackendFormat(this.pkl_1)),
+                    contentType: 'application/json',
+                    success: () => {
+                        console.log('PKL_1 data updated successfully');
+                    },
+                    error: (xhr, status, error) => {
+                        console.error('Error updating pkl_1 data:', error);
+                    }
+                });
+            },
+            convertToBackendFormat(pkl_1) {
+                return pkl_1.map((pkl_1_data, index) => {
+                    return {
+                        id: index + 1, // 使用索引加1作為id
+                        station: pkl_1_data.skid[i].locationId,
+                        coilId: pkl_1_data.skid[i].coilId,
+                        labelId: pkl_1_data.skid[i].labelId,
+                        coil_code: determine_coil_code(pkl_1_data.skid[i].weight, pkl_1_data.skid[i].width, pkl_1_data.skid[i].innerDiameter),
+                        coil_layer: determine_layer(pkl_1_data.skid[i].labelId, determine_coil_code(pkl_1_data.skid[i].weight, pkl_1_data.skid[i].width, pkl_1_data.skid[i].innerDiameter), pkl_1_data.skid[i].thickness),
+                        orderItem: pkl_1_data.skid[i].orderItem,
+                        description: pkl_1_data.skid[i].description,
+                    };
+                });
+            }
+        }
+    });
+</script>
+<script>
+    function updateTableView(data) {
+        $("#tb_todolist_1").empty();
+        $("#tb_todolist_1").append(
+            "<tbody>" +
+            "<tr>" +
+            "<th>站點</th>" +
+            "<th>鋼捲號碼</th>" +
+            "<th>Label</th>" +
+            "<th>代碼</th>" +
+            "<th>訂單號碼</th>" +
+            "<th>工作</th>" +
+            "</tr>"
+        );
+
+        // 綁定事件
+        bindSortTable();
+
+        for (var i = 0; i < 24; i++) {
+            $("#tb_todolist_1").append(
+                "<tr>" +
+                "<td>" + data.skid[i].locationId + "</td>" +
+                "<td>" + data.skid[i].coilId + "</td>" +
+                "<td>" + data.skid[i].labelId + "</td>" +
+                "<td>" + determine_coil_code(data.skid[i].weight, data.skid[i].width, data.skid[i].innerDiameter) +
+                " - " + determine_layer(data.skid[i].labelId, determine_coil_code(data.skid[i].weight, data.skid[i].width, data.skid[i].innerDiameter), data.skid[i].thickness) +
+                "</td>" +
+                "<td>" + data.skid[i].orderItem + "</td>" +
+                "<td>" + data.skid[i].description + "</td>" +
+                "</tr>" +
+                "</tbody>"
+            )
+        }
+    }
+</script>
+<script>
+    function determine_coil_code(weight, width, innerdiameter) {
+        let weight_error_msg = "重量異常!";
+        let width_error_msg = " ";
+
+        let Weight = weight / 1000;
+        let myWidth = width;
+
+        if (innerdiameter === 610) {
+            Weight = Weight + 1;
+        }
+
+        let coil_code;
+
+        switch (true) {
+            case Weight > 0 && Weight <= 2.999:
+                switch (true) {
+                    case myWidth < 1100:
+                        coil_code = "A02";
+                        break;
+                    case myWidth >= 1100 && myWidth <= 1300:
+                        coil_code = "C02";
+                        break;
+                    case myWidth > 1300:
+                        coil_code = "D02";
+                        break;
+                    default:
+                        coil_code = width_error_msg;
+                        break;
+                }
+                break;
+            case Weight >= 3 && Weight <= 3.999:
+                switch (true) {
+                    case myWidth < 1100:
+                        coil_code = "A03";
+                        break;
+                    case myWidth >= 1100 && myWidth <= 1300:
+                        coil_code = "C03";
+                        break;
+                    case myWidth > 1300:
+                        coil_code = "D02";
+                        break;
+                    default:
+                        coil_code = width_error_msg;
+                        break;
+                }
+                break;
+            case Weight >= 4 && Weight <= 4.999:
+                switch (true) {
+                    case myWidth < 1100:
+                        coil_code = "A04";
+                        break;
+                    case myWidth >= 1100 && myWidth <= 1300:
+                        coil_code = "C04";
+                        break;
+                    case myWidth > 1300:
+                        coil_code = "D04";
+                        break;
+                    default:
+                        coil_code = width_error_msg;
+                        break;
+                }
+                break;
+            case Weight >= 5 && Weight <= 5.999:
+                switch (true) {
+                    case myWidth < 1000:
+                        coil_code = "A05";
+                        break;
+                    case myWidth >= 1000 && myWidth <= 1300:
+                        coil_code = "C05";
+                        break;
+                    case myWidth > 1300:
+                        coil_code = "D05";
+                        break;
+                    default:
+                        coil_code = width_error_msg;
+                        break;
+                }
+                break;
+            case Weight >= 6 && Weight <= 6.999:
+                switch (true) {
+                    case myWidth < 1000:
+                        coil_code = "A06";
+                        break;
+                    case myWidth >= 1000 && myWidth <= 1300:
+                        coil_code = "C06";
+                        break;
+                    case myWidth > 1300:
+                        coil_code = "D06";
+                        break;
+                    default:
+                        coil_code = width_error_msg;
+                        break;
+                }
+                break;
+            case Weight >= 6 && Weight <= 6.999:
+                switch (true) {
+                    case myWidth < 900:
+                        coil_code = "K06";
+                        break;
+                    case myWidth >= 900 && myWidth <= 999.9:
+                        coil_code = "A06";
+                        break;
+                    case myWidth >= 1000 && myWidth <= 1099.9:
+                        coil_code = "B06";
+                        break;
+                    case myWidth >= 1100 && myWidth <= 1299.9:
+                        coil_code = "C06";
+                        break;
+                    case myWidth >= 1300 && myWidth <= 1449.9:
+                        coil_code = "D06";
+                        break;
+                    case myWidth >= 1450:
+                        coil_code = "E06";
+                        break;
+                    default:
+                        coil_code = width_error_msg;
+                        break;
+                }
+                break;
+            case Weight >= 7 && Weight <= 7.499:
+                switch (true) {
+                    case myWidth <= 900:
+                        coil_code = "K06";
+                        break;
+                    case myWidth >= 900 && myWidth <= 999.9:
+                        coil_code = "A07";
+                        break;
+                    case myWidth >= 1000 && myWidth <= 1149.9:
+                        coil_code = "B07";
+                        break;
+                    case myWidth >= 1150 && myWidth <= 1299.9:
+                        coil_code = "C07";
+                        break;
+                    case myWidth >= 1300 && myWidth <= 1449.9:
+                        coil_code = "D06";
+                        break;
+                    case myWidth >= 1450:
+                        coil_code = "E06";
+                        break;
+                    default:
+                        coil_code = width_error_msg;
+                        break;
+                }
+                break;
+            case Weight >= 7.5 && Weight <= 7.999:
+                switch (true) {
+                    case myWidth < 900:
+                        coil_code = "K07";
+                        break;
+                    case myWidth >= 900 && myWidth <= 999.9:
+                        coil_code = "A07";
+                        break;
+                    case myWidth >= 1000 && myWidth <= 1149.9:
+                        coil_code = "B07";
+                        break;
+                    case myWidth >= 1150 && myWidth <= 1299.9:
+                        coil_code = "C07";
+                        break;
+                    case myWidth >= 1300 && myWidth <= 1449.9:
+                        coil_code = "D06";
+                        break;
+                    case myWidth >= 1450:
+                        coil_code = "E06";
+                        break;
+                    default:
+                        coil_code = width_error_msg;
+                        break;
+                }
+                break;
+            case Weight >= 8 && Weight <= 8.999:
+                switch (true) {
+                    case myWidth < 900:
+                        coil_code = "K07";
+                        break;
+                    case myWidth >= 900 && myWidth <= 999.9:
+                        coil_code = "A08";
+                        break;
+                    case myWidth >= 1000 && myWidth <= 1099.9:
+                        coil_code = "B08";
+                        break;
+                    case myWidth >= 1100 && myWidth <= 1299.9:
+                        coil_code = "C08";
+                        break;
+                    case myWidth >= 1300 && myWidth <= 1449.9:
+                        coil_code = "D08";
+                        break;
+                    case myWidth >= 1450:
+                        coil_code = "E08";
+                        break;
+                    default:
+                        coil_code = width_error_msg;
+                        break;
+                }
+                break;
+            case Weight >= 9 && Weight <= 9.999:
+                switch (true) {
+                    case myWidth < 1100:
+                        coil_code = "A09";
+                        break;
+                    case myWidth >= 1100 && myWidth <= 1299.9:
+                        coil_code = "C09";
+                        break;
+                    case myWidth >= 1300 && myWidth <= 1449.9:
+                        coil_code = "D08";
+                        break;
+                    case myWidth >= 1450:
+                        coil_code = "E08";
+                        break;
+                    default:
+                        coil_code = width_error_msg;
+                        break;
+                }
+                break;
+            case Weight >= 10 && Weight <= 11.495:
+                switch (true) {
+                    case myWidth < 1000:
+                        coil_code = "A10";
+                        break;
+                    case myWidth >= 1000 && myWidth <= 1149.9:
+                        coil_code = "B10";
+                        break;
+                    case myWidth >= 1150 && myWidth <= 1299.9:
+                        coil_code = "C10";
+                        break;
+                    case myWidth >= 1300 && myWidth <= 1449.9:
+                        coil_code = "D10";
+                        break;
+                    case myWidth >= 1450:
+                        coil_code = "E10";
+                        break;
+                    default:
+                        coil_code = width_error_msg;
+                        break;
+                }
+                break;
+            case Weight >= 11.5 && Weight <= 12.999:
+                switch (true) {
+                    case myWidth < 1100:
+                        coil_code = "A12";
+                        break;
+                    case myWidth >= 1000 && myWidth <= 1299.9:
+                        coil_code = "C12";
+                        break;
+                    case myWidth >= 1300 && myWidth <= 1449.9:
+                        coil_code = "D10";
+                        break;
+                    case myWidth >= 1450:
+                        coil_code = "E10";
+                        break;
+                    default:
+                        coil_code = width_error_msg;
+                        break;
+                }
+                break;
+            case Weight >= 13 && Weight <= 14.999:
+                switch (true) {
+                    case myWidth < 1100:
+                        coil_code = "A13";
+                        break;
+                    case myWidth >= 1100 && myWidth <= 1299.9:
+                        coil_code = "C13";
+                        break;
+                    case myWidth >= 1300:
+                        coil_code = "D13";
+                        break;
+                    default:
+                        coil_code = width_error_msg;
+                        break;
+                }
+                break;
+            case Weight >= 15 && Weight <= 17.495:
+                switch (true) {
+                    case myWidth < 900:
+                        coil_code = "K15";
+                        break;
+                    case myWidth >= 900 && myWidth <= 999.9:
+                        coil_code = "A15";
+                        break;
+                    case myWidth >= 1000 && myWidth <= 1099.9:
+                        coil_code = "B15";
+                        break;
+                    case myWidth >= 1100 && myWidth <= 1299:
+                        coil_code = "C15";
+                        break;
+                    case myWidth >= 1300:
+                        coil_code = "D15";
+                        break;
+                    default:
+                        coil_code = width_error_msg;
+                        break;
+                }
+                break;
+            case Weight >= 17.5 && Weight <= 18.999:
+                switch (true) {
+                    case myWidth < 1100:
+                        coil_code = "A17";
+                        break;
+                    case myWidth >= 1100 && myWidth <= 1299.9:
+                        coil_code = "C15";
+                        break;
+                    case myWidth >= 1300 && myWidth <= 1449.9:
+                        coil_code = "D15";
+                        break;
+                    case myWidth >= 1450:
+                        coil_code = "E15";
+                        break;
+                    default:
+                        coil_code = width_error_msg;
+                        break;
+                }
+                break;
+            case Weight >= 19 && Weight <= 22.495:
+                switch (true) {
+                    case myWidth < 1100:
+                        coil_code = "A17";
+                        break;
+                    case myWidth >= 1100 && myWidth <= 1299.9:
+                        coil_code = "C19";
+                        break;
+                    case myWidth >= 1300:
+                        coil_code = "D19";
+                        break;
+                    default:
+                        coil_code = width_error_msg;
+                        break;
+                }
+                break;
+            case Weight >= 22.5 && Weight <= 25.999:
+                switch (true) {
+                    case myWidth <= 1100:
+                        coil_code = "A22";
+                        break;
+                    case myWidth >= 1100 && myWidth <= 1299.9:
+                        coil_code = "C22";
+                        break;
+                    case myWidth >= 1300:
+                        coil_code = "D22";
+                        break;
+                    default:
+                        coil_code = width_error_msg;
+                        break;
+                }
+                break;
+            case Weight >= 26:
+                switch (true) {
+                    case myWidth < 1100:
+                        coil_code = "未定義";
+                        break;
+                    case myWidth >= 1100 && myWidth <= 1299.9:
+                        coil_code = "C26";
+                        break;
+                    case myWidth >= 1300:
+                        coil_code = "D26";
+                        break;
+                    default:
+                        coil_code = width_error_msg;
+                        break;
+                }
+                break;
+            default:
+                coil_code = width_error_msg;
+                break;
+        }
+        return coil_code;
+    }
+    function determine_layer(label, code, Thick) {
+        if (label === null) { return ""; }
+        if (label[0] === "J") { return 2; }
+        else {
+            switch (code) {
+                case "A02":
+                case "A03":
+                case "C02":
+                case "C03":
+                case "D02":
+                    var coil_layer = 3;
+                    break;
+                case "A10":
+                case "A12":
+                case "A13":
+                case "A15":
+                case "A17":
+                case "A22":
+                case "B10":
+                case "C13":
+                case "C15":
+                case "C19":
+                case "C22":
+                case "C26":
+                case "D13":
+                case "D15":
+                case "D19":
+                case "D22":
+                case "D26":
+                case "E15":
+                    var coil_layer = 2;
+                    break;
+                default:
+                    if (Thick > 0.4) {
+                        var coil_layer = 3;
+                    } else {
+                        var coil_layer = 2;
+                    }
+            }
+        }
+        return coil_layer;
+    }
+</script>
+

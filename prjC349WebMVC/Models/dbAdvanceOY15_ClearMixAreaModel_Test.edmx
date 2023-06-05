@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="c349dbModel_Dev.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="c349dbModel_Dev.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="advanceoy15_clearmixarea">
           <Key>
             <PropertyRef Name="id" />
@@ -32,10 +32,11 @@ warning 6002: The table/view 'c349db.dbo.phone_book' does not have a primary key
           <Property Name="phone_number" Type="nvarchar" MaxLength="50" />
           <Property Name="remark" Type="nvarchar" MaxLength="50" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'c349db.dbo.tAdvanceOY15_ClearMixArea' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
         <EntityType Name="tAdvanceOY15_ClearMixArea">
-          <Property Name="id" Type="int" />
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="area" Type="nchar" MaxLength="10" />
           <Property Name="position" Type="nchar" MaxLength="10" />
           <Property Name="coil_code" Type="nchar" MaxLength="10" />
@@ -45,7 +46,7 @@ warning 6013: The table/view 'c349db.dbo.tAdvanceOY15_ClearMixArea' does not hav
           <Property Name="src_warehouse" Type="nchar" MaxLength="10" />
           <Property Name="dst_section" Type="nchar" MaxLength="10" />
           <Property Name="comment" Type="nchar" MaxLength="500" />
-        </EntityType>-->
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'c349db.dbo.tMakingCargoPlan' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="tMakingCargoPlan">
@@ -65,6 +66,7 @@ warning 6002: The table/view 'c349db.dbo.tMakingCargoPlan' does not have a prima
         </EntityType>
         <EntityContainer Name="c349dbModel_DevStoreContainer">
           <EntitySet Name="advanceoy15_clearmixarea" EntityType="Self.advanceoy15_clearmixarea" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tAdvanceOY15_ClearMixArea" EntityType="Self.tAdvanceOY15_ClearMixArea" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="phone_book" EntityType="Self.phone_book" store:Type="Tables" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [phone_book].[id] AS [id], 
@@ -88,8 +90,7 @@ warning 6002: The table/view 'c349db.dbo.tMakingCargoPlan' does not have a prima
     FROM [dbo].[tMakingCargoPlan] AS [tMakingCargoPlan]</DefiningQuery>
           </EntitySet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="c349dbModel_Dev" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -137,7 +138,23 @@ warning 6002: The table/view 'c349db.dbo.tMakingCargoPlan' does not have a prima
           <EntitySet Name="advanceoy15_clearmixarea" EntityType="Self.advanceoy15_clearmixarea" />
           <EntitySet Name="phone_book" EntityType="Self.phone_book" />
           <EntitySet Name="tMakingCargoPlan" EntityType="Self.tMakingCargoPlan" />
+          <EntitySet Name="tAdvanceOY15_ClearMixArea" EntityType="c349dbModel_Dev.tAdvanceOY15_ClearMixArea" />
         </EntityContainer>
+        <EntityType Name="tAdvanceOY15_ClearMixArea">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="area" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="position" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="coil_code" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="red_tag_coil_layer" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="label" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="weight" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="src_warehouse" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="dst_section" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="comment" Type="String" MaxLength="500" FixedLength="true" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -184,6 +201,22 @@ warning 6002: The table/view 'c349db.dbo.tMakingCargoPlan' does not have a prima
                 <ScalarProperty Name="ship_num" ColumnName="ship_num" />
                 <ScalarProperty Name="making_cargo_plan" ColumnName="making_cargo_plan" />
                 <ScalarProperty Name="update_time" ColumnName="update_time" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tAdvanceOY15_ClearMixArea">
+            <EntityTypeMapping TypeName="c349dbModel_Dev.tAdvanceOY15_ClearMixArea">
+              <MappingFragment StoreEntitySet="tAdvanceOY15_ClearMixArea">
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="dst_section" ColumnName="dst_section" />
+                <ScalarProperty Name="src_warehouse" ColumnName="src_warehouse" />
+                <ScalarProperty Name="weight" ColumnName="weight" />
+                <ScalarProperty Name="label" ColumnName="label" />
+                <ScalarProperty Name="red_tag_coil_layer" ColumnName="red_tag_coil_layer" />
+                <ScalarProperty Name="coil_code" ColumnName="coil_code" />
+                <ScalarProperty Name="position" ColumnName="position" />
+                <ScalarProperty Name="area" ColumnName="area" />
+                <ScalarProperty Name="id" ColumnName="id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

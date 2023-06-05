@@ -62,7 +62,10 @@ namespace prjC349WebMVC.Controllers
 
             return Json(dataForView);
         }
-
+        public ActionResult Y5PIS_Schedule()
+        {
+            return View();
+        }
         public ActionResult AdvanceOY15(string warehouse)
         {
             if (Session["isLogin"] == null) return View();
