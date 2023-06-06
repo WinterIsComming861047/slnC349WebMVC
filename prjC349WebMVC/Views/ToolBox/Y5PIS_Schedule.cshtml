@@ -46,11 +46,12 @@
     }
 
     .left-div {
-        width: 900px;
+        width: 600px;
     }
 
     .float-div {
         margin-left: 40px;
+        width: 500px;
         flex-grow: 1;
     }
 
@@ -89,10 +90,26 @@
         color: red;
     }
 </style>
-<div id="app">
+<script src="~/Scripts/mermaid.min.js"></script>
+<script>
+    mermaid.initialize({ startOnLoad: true });
+</script>
 
+<div id="app">
+    @*<div class="mermaid">
+            graph LR;
+            3CAL --> O;
+            3CGL --> O;
+            VACSS --> O;
+            O --> PKL2;
+            O --> PKL1;
+            PKL2 --> o;
+            PKL1 --> o;
+            o --> 87庫;
+            o --> 86庫;
+        </div>*@
     <div>
-        <img src="~/Images/Y57toC349_flowchart.png" style="width: 50%" />
+        <img src="~/Images/Y57toC349_flowchart.png" style="width: 1000px" />
     </div>
     <div class="custom_container">
         <div>
@@ -100,7 +117,7 @@
                 {{ tb_1_isCollapsed ? '-' : '+' }}
             </button>
             <label>PKL_1排程</label>
-            <div>
+            <div class="left-div">
                 <label v-for="(count, code) in pkl_1_code_count" v-if="code !== ' -'">
                     [{{ code }}: {{ count }}]&nbsp;
                 </label>
@@ -137,7 +154,7 @@
                 {{ tb_2_isCollapsed ? '-' : '+' }}
             </button>
             <label>PKL_2排程</label>
-            <div style="margin-left:40px">
+            <div style="margin-left:40px" class="float-div">
                 <label v-for="(count, code) in pkl_2_code_count" v-if="code !== ' -'">
                     [{{ code }}: {{ count }}]&nbsp;
                 </label>
@@ -176,33 +193,35 @@
             {{ tb_3_isCollapsed ? '-' : '+' }}
         </button>
         <label>VACSS排程</label>
-        <div>
+        <div class="left-div">
             <label v-for="(count, code) in vacss_code_count" v-if="code !== ' -'">
                 [{{ code }}: {{ count }}]&nbsp;
             </label>
         </div>
         <div v-if="tb_3_isCollapsed">
             <!-- 摺疊的内容 -->
-            <table class="custom_table" id="tb_todolist_3">
-                <thead>
-                    <tr>
-                        <th>順序</th>
-                        <th>鋼捲號碼</th>
-                        <th>Label</th>
-                        <th>代碼</th>
-                        <th>訂單號碼</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="vacss_data in vacss" :key="vacss_data.id">
-                        <td>{{ vacss_data.station }}</td>
-                        <td>{{ vacss_data.coilId }}</td>
-                        <td>{{ vacss_data.labelId }}</td>
-                        <td>{{ vacss_data.coil_code }} - {{ vacss_data.coil_layer }}</td>
-                        <td :class="{'special-color': vacss_data.orderItem && vacss_data.orderItem.startsWith('T')}">{{ vacss_data.orderItem }}</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="left-div">
+                <table class="custom_table" id="tb_todolist_3">
+                    <thead>
+                        <tr>
+                            <th>順序</th>
+                            <th>鋼捲號碼</th>
+                            <th>Label</th>
+                            <th>代碼</th>
+                            <th>訂單號碼</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="vacss_data in vacss" :key="vacss_data.id">
+                            <td>{{ vacss_data.station }}</td>
+                            <td>{{ vacss_data.coilId }}</td>
+                            <td>{{ vacss_data.labelId }}</td>
+                            <td>{{ vacss_data.coil_code }} - {{ vacss_data.coil_layer }}</td>
+                            <td :class="{'special-color': vacss_data.orderItem && vacss_data.orderItem.startsWith('T')}">{{ vacss_data.orderItem }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <div class="custom_container" style="margin-top:40px">
@@ -211,7 +230,7 @@
                 {{ tb_4_isCollapsed ? '-' : '+' }}
             </button>
             <label>3CAL排程</label>
-            <div>
+            <div class="left-div">
                 <label v-for="(count, code) in cal_3_code_count" v-if="code !== ' -'">
                     [{{ code }}: {{ count }}]&nbsp;
                 </label>
@@ -247,7 +266,7 @@
                 {{ tb_5_isCollapsed ? '-' : '+' }}
             </button>
             <label>3CGL排程</label>
-            <div style="margin-left:40px">
+            <div style="margin-left:40px" class="float-div">
                 <label v-for="(count, code) in cgl_3_code_count" v-if="code !== ' -'">
                     [{{ code }}: {{ count }}]&nbsp;
                 </label>
