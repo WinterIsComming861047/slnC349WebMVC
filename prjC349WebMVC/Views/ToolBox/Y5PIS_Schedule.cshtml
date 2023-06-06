@@ -289,11 +289,11 @@
         el: '#app',
         data() {
             return {
-                tb_1_isCollapsed: true, // 默认折叠状态为true
-                tb_2_isCollapsed: true, // 默认折叠状态为true
-                tb_3_isCollapsed: true, // 默认折叠状态为true
-                tb_4_isCollapsed: true, // 默认折叠状态为true
-                tb_5_isCollapsed: true, // 默认折叠状态为true
+                tb_1_isCollapsed: false, // 默认折叠状态为true
+                tb_2_isCollapsed: false, // 默认折叠状态为true
+                tb_3_isCollapsed: false, // 默认折叠状态为true
+                tb_4_isCollapsed: false, // 默认折叠状态为true
+                tb_5_isCollapsed: false, // 默认折叠状态为true
                 pkl_1: [],
                 pkl_2: [],
                 vacss: [],
@@ -545,9 +545,9 @@
                 });
 
                 // 輸出代碼數量統計結果
-                for (const code in codeCount) {
-                    console.log(`${code}: ${codeCount[code]}`);
-                }
+                //for (const code in codeCount) {
+                //    console.log(`${code}: ${codeCount[code]}`);
+                //}
 
                 return codeCount;
             }
@@ -571,8 +571,8 @@
     });
 </script>
 <script>
-
     // 排序表格
+    var globalV;
     function sortTable(columnIndex, tableId) {
         const table = document.getElementById(tableId);
         const rows = table.rows;
@@ -580,7 +580,8 @@
         const compare = (a, b) => {
             const valueA = a.cells[columnIndex].innerText;
             const valueB = b.cells[columnIndex].innerText;
-            return isAscending ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
+            const sortOrder = isAscending ? 1 : -1;
+            return sortOrder * valueA.localeCompare(valueB);
         };
 
         // 將tbody中的tr轉為array以便排序
@@ -593,14 +594,13 @@
         }
 
         // 切換排序方式
-        table.setAttribute("data-sort-order", isAscending ? "desc" : "asc");
+        const newSortOrder = isAscending ? "desc" : "asc";
+        table.setAttribute("data-sort-order", newSortOrder);
     }
+
+    // 綁定事件
     function bindSortTable() {
-        // 綁定事件
-        //document.querySelectorAll("#tb_todolist th").forEach((th, i) =>
-        //    th.addEventListener("click", () => sortTable(i,"tb_todolist_1"))
-        //);
-        var tableIds = ["tb_todolist_1", "tb_todolist_2", "tb_todolist_3"]; // 添加更多的 tableId
+        var tableIds = ["tb_todolist_1", "tb_todolist_2", "tb_todolist_3", "tb_todolist_4", "tb_todolist_5"];
 
         tableIds.forEach(function (tableId) {
             document.querySelectorAll("#" + tableId + " th").forEach(function (th, i) {
@@ -610,7 +610,10 @@
             });
         });
     }
-    bindSortTable();
+    // 在適當的地方呼叫 bindSortTable()，例如在頁面載入完成後
+    document.addEventListener("DOMContentLoaded", function () {
+        bindSortTable();
+    });
 </script>
 <script>
     function determine_coil_code(weight, width, innerdiameter) {
