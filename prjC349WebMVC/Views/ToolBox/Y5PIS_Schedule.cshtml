@@ -66,11 +66,11 @@
         font-weight: bold;
     }
 
-    th:hover {
-        color: blue;
-        text-decoration: underline;
-        cursor: pointer; /* 可選，將滑鼠游標改為手型 */
-    }
+        th:hover {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer; /* 可選，將滑鼠游標改為手型 */
+        }
 
     tr:nth-child(even) {
         background-color: #f9f9f9;
@@ -88,68 +88,244 @@
         /* 添加特殊颜色的样式 */
         color: red;
     }
+
+    .arrow {
+        position: relative;
+        width: 200px;
+        height: 100px;
+    }
 </style>
 
 <div id="app">
     <div class="custom_container">
-        <div class="left-div">
-            <table class="custom_table" id="tb_todolist_1">
-                <thead>
-                    <tr>
-                        <th>站點</th>
-                        <th>鋼捲號碼</th>
-                        <th>Label</th>
-                        <th>代碼</th>
-                        <th>訂單號碼</th>
-                        <th>工作</th>
-                    </tr>
-                <tbody>
-                    <tr v-for="pkl_1_data in pkl_1" :key="pkl_1_data.id">
-                        <td>{{ pkl_1_data.station }}</td>
-                        <td>{{ pkl_1_data.coilId }}</td>
-                        <td>{{ pkl_1_data.labelId }}</td>
-                        <td>{{ pkl_1_data.coil_code }} - {{ pkl_1_data.coil_layer }}</td>
-                        <td :class="{'special-color': pkl_1_data.orderItem && pkl_1_data.orderItem.startsWith('T')}">{{ pkl_1_data.orderItem }}</td>
-                        <td>{{ pkl_1_data.description }}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div>
+            <button @@click="tb_1_toggleCollapse">
+                {{ tb_1_isCollapsed ? '-' : '+' }}
+            </button>
+            <label>PKL_1排程</label>
+            <div>
+                <label v-for="(count, code) in pkl_1_code_count" v-if="code !== ' -'">
+                    [{{ code }}: {{ count }}]&nbsp;
+                </label>
+            </div>
+            <div v-if="tb_1_isCollapsed">
+                <!-- 摺疊的内容 -->
+                <div class="left-div">
+                    <table class="custom_table" id="tb_todolist_1">
+                        <thead>
+                            <tr>
+                                <th>站點</th>
+                                <th>鋼捲號碼</th>
+                                <th>Label</th>
+                                <th>代碼</th>
+                                <th>訂單號碼</th>
+                                <th>工作</th>
+                            </tr>
+                        <tbody>
+                            <tr v-for="pkl_1_data in pkl_1" :key="pkl_1_data.id">
+                                <td>{{ pkl_1_data.station }}</td>
+                                <td>{{ pkl_1_data.coilId }}</td>
+                                <td>{{ pkl_1_data.labelId }}</td>
+                                <td>{{ pkl_1_data.coil_code }} - {{ pkl_1_data.coil_layer }}</td>
+                                <td :class="{'special-color': pkl_1_data.orderItem && pkl_1_data.orderItem.startsWith('T')}">{{ pkl_1_data.orderItem }}</td>
+                                <td>{{ pkl_1_data.description }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-        <div class="float-div">
-            <table class="custom_table" id="tb_todolist_2">
+        <div>
+            <button @@click="tb_2_toggleCollapse" style="margin-left:40px">
+                {{ tb_2_isCollapsed ? '-' : '+' }}
+            </button>
+            <label>PKL_2排程</label>
+            <div style="margin-left:40px">
+                <label v-for="(count, code) in pkl_2_code_count" v-if="code !== ' -'">
+                    [{{ code }}: {{ count }}]&nbsp;
+                </label>
+            </div>
+            <div v-if="tb_2_isCollapsed">
+                <!-- 摺疊的内容 -->
+                <div class="float-div">
+                    <table class="custom_table" id="tb_todolist_2">
+                        <thead>
+                            <tr>
+                                <th>站點</th>
+                                <th>鋼捲號碼</th>
+                                <th>Label</th>
+                                <th>代碼</th>
+                                <th>訂單號碼</th>
+                                <th>工作</th>
+                            </tr>
+                        <tbody>
+                            <tr v-for="pkl_2_data in pkl_2" :key="pkl_2_data.id">
+                                <td>{{ pkl_2_data.station }}</td>
+                                <td>{{ pkl_2_data.coilId }}</td>
+                                <td>{{ pkl_2_data.labelId }}</td>
+                                <td>{{ pkl_2_data.coil_code }} - {{ pkl_2_data.coil_layer }}</td>
+                                <td :class="{'special-color': pkl_2_data.orderItem && pkl_2_data.orderItem.startsWith('T')}">{{ pkl_2_data.orderItem }}</td>
+                                <td>{{ pkl_2_data.description }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top:40px">
+        <button @@click="tb_3_toggleCollapse">
+            {{ tb_3_isCollapsed ? '-' : '+' }}
+        </button>
+        <label>VACSS排程</label>
+        <div>
+            <label v-for="(count, code) in vacss_code_count" v-if="code !== ' -'">
+                [{{ code }}: {{ count }}]&nbsp;
+            </label>
+        </div>
+        <div v-if="tb_3_isCollapsed">
+            <!-- 摺疊的内容 -->
+            <table class="custom_table" id="tb_todolist_3">
                 <thead>
                     <tr>
-                        <th>站點</th>
+                        <th>順序</th>
                         <th>鋼捲號碼</th>
                         <th>Label</th>
                         <th>代碼</th>
                         <th>訂單號碼</th>
-                        <th>工作</th>
                     </tr>
+                </thead>
                 <tbody>
-                    <tr v-for="pkl_2_data in pkl_2" :key="pkl_2_data.id">
-                        <td>{{ pkl_2_data.station }}</td>
-                        <td>{{ pkl_2_data.coilId }}</td>
-                        <td>{{ pkl_2_data.labelId }}</td>
-                        <td>{{ pkl_2_data.coil_code }} - {{ pkl_2_data.coil_layer }}</td>
-                        <td :class="{'special-color': pkl_2_data.orderItem && pkl_2_data.orderItem.startsWith('T')}">{{ pkl_2_data.orderItem }}</td>
-                        <td>{{ pkl_2_data.description }}</td>
+                    <tr v-for="vacss_data in vacss" :key="vacss_data.id">
+                        <td>{{ vacss_data.station }}</td>
+                        <td>{{ vacss_data.coilId }}</td>
+                        <td>{{ vacss_data.labelId }}</td>
+                        <td>{{ vacss_data.coil_code }} - {{ vacss_data.coil_layer }}</td>
+                        <td :class="{'special-color': vacss_data.orderItem && vacss_data.orderItem.startsWith('T')}">{{ vacss_data.orderItem }}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
+    <div class="custom_container" style="margin-top:40px">
+        <div>
+            <button @@click="tb_4_toggleCollapse">
+                {{ tb_4_isCollapsed ? '-' : '+' }}
+            </button>
+            <label>3CAL排程</label>
+            <div>
+                <label v-for="(count, code) in cal_3_code_count" v-if="code !== ' -'">
+                    [{{ code }}: {{ count }}]&nbsp;
+                </label>
+            </div>
+            <div v-if="tb_4_isCollapsed">
+                <!-- 摺疊的内容 -->
+                <div class="left-div">
+                    <table class="custom_table" id="tb_todolist_4">
+                        <thead>
+                            <tr>
+                                <th>順序</th>
+                                <th>鋼捲號碼</th>
+                                <th>分切</th>
+                                <th>代碼</th>
+                                <th>訂單號碼</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="cal_3_data in cal_3" :key="cal_3_data.id">
+                                <td>{{ cal_3_data.station }}</td>
+                                <td>{{ cal_3_data.coilId }}</td>
+                                <td>{{ cal_3_data.dividingNumber }}</td>
+                                <td>{{ cal_3_data.coil_code }} - {{ cal_3_data.coil_layer }}</td>
+                                <td :class="{'special-color': cal_3_data.orderItem && cal_3_data.orderItem.startsWith('T')}">{{ cal_3_data.orderItem }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div>
+            <button @@click="tb_5_toggleCollapse" style="margin-left:40px">
+                {{ tb_5_isCollapsed ? '-' : '+' }}
+            </button>
+            <label>3CGL排程</label>
+            <div style="margin-left:40px">
+                <label v-for="(count, code) in cgl_3_code_count" v-if="code !== ' -'">
+                    [{{ code }}: {{ count }}]&nbsp;
+                </label>
+            </div>
+            <div v-if="tb_5_isCollapsed">
+                <!-- 摺疊的内容 -->
+                <div class="float-div">
+                    <table class="custom_table" id="tb_todolist_5">
+                        <thead>
+                            <tr>
+                                <th>順序</th>
+                                <th>鋼捲號碼</th>
+                                <th>分切</th>
+                                <th>代碼</th>
+                                <th>訂單號碼</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="cgl_3_data in cgl_3" :key="cgl_3_data.id">
+                                <td>{{ cgl_3_data.station }}</td>
+                                <td>{{ cgl_3_data.coilId }}</td>
+                                <td>{{ cgl_3_data.dividingNumber }}</td>
+                                <td>{{ cgl_3_data.coil_code }} - {{ cgl_3_data.coil_layer }}</td>
+                                <td :class="{'special-color': cgl_3_data.orderItem && cgl_3_data.orderItem.startsWith('T')}">{{ cgl_3_data.orderItem }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <script>
     var app = new Vue({
         el: '#app',
         data() {
             return {
+                tb_1_isCollapsed: true, // 默认折叠状态为true
+                tb_2_isCollapsed: true, // 默认折叠状态为true
+                tb_3_isCollapsed: true, // 默认折叠状态为true
+                tb_4_isCollapsed: true, // 默认折叠状态为true
+                tb_5_isCollapsed: true, // 默认折叠状态为true
                 pkl_1: [],
-                pkl_2: []
+                pkl_2: [],
+                vacss: [],
+                cal_3: [],
+                cgl_3: [],
+                pkl_1_code_count: [],
+                pkl_2_code_count: [],
+                vacss_code_count: [],
+                cal_3_code_count: [],
+                cgl_3_code_count: [],
             };
         },
+        updated() {
+            // 在组件重新激活时重新初始化排序功能
+            bindSortTable();
+        },
         methods: {
+            tb_1_toggleCollapse() {
+                this.tb_1_isCollapsed = !this.tb_1_isCollapsed; // 切换折叠状态
+            },
+            tb_2_toggleCollapse() {
+                this.tb_2_isCollapsed = !this.tb_2_isCollapsed; // 切换折叠状态
+            },
+            tb_3_toggleCollapse() {
+                this.tb_3_isCollapsed = !this.tb_3_isCollapsed; // 切换折叠状态
+            },
+            tb_4_toggleCollapse() {
+                this.tb_4_isCollapsed = !this.tb_4_isCollapsed; // 切换折叠状态
+            },
+            tb_5_toggleCollapse() {
+                this.tb_5_isCollapsed = !this.tb_5_isCollapsed; // 切换折叠状态
+            },
             update_PKL_1_Data() {
                 // 使用 AJAX 更新 pkl 資料
                 // 這裡假設後端 API 的路徑為 http://y5pis.crcs.csc.com.tw/api/external/vacss-pkl1/monitor/tracking
@@ -158,8 +334,6 @@
                     type: 'GET',
                     contentType: 'application/json',
                     success: (responseData) => {
-                        global_data = responseData;
-
                         let pkl_1_array = new Array();
                         for (var i = 0; i < responseData.skid.length; i++) {
                             var item = responseData.skid[i];
@@ -168,23 +342,24 @@
                             var coilId = item.coilId;
                             var labelId = item.labelId;
                             var coil_code = determine_coil_code(item.weight, item.width, item.innerDiameter);
-                            var coil_layer = determine_layer(item.labelId, coil_code, item.thickness);
+                            var coil_layer = determine_layer(item.labelId, coil_code, item.thickness / 1000000);
                             var orderItem = item.orderItem;
                             var description = item.description;
 
                             // 將這些值更新到pkl_1的對應位置
                             var tmp_pkl_1_data = {
-                                station : station,
-                                coilId : coilId,
-                                labelId : labelId,
-                                coil_code : coil_code,
-                                coil_layer : coil_layer,
-                                orderItem : orderItem,
-                                description : description,
+                                station: station,
+                                coilId: coilId,
+                                labelId: labelId,
+                                coil_code: coil_code,
+                                coil_layer: coil_layer,
+                                orderItem: orderItem,
+                                description: description,
                             };
                             pkl_1_array.push(tmp_pkl_1_data);
                         }
                         this.pkl_1 = pkl_1_array;
+                        this.pkl_1_code_count = this.count_Code(this.pkl_1);
                         console.log('PKL_1 data updated successfully');
                     },
                     error: (xhr, status, error) => {
@@ -210,7 +385,7 @@
                             var coilId = item.coilId;
                             var labelId = item.labelId;
                             var coil_code = determine_coil_code(item.weight, item.width, item.innerDiameter);
-                            var coil_layer = determine_layer(item.labelId, coil_code, item.thickness);
+                            var coil_layer = determine_layer(item.labelId, coil_code, item.thickness / 1000000);
                             var orderItem = item.orderItem;
                             var description = item.description;
 
@@ -227,27 +402,176 @@
                             pkl_2_array.push(tmp_pkl_2_data);
                         }
                         this.pkl_2 = pkl_2_array;
+                        this.pkl_2_code_count = this.count_Code(this.pkl_2);
                         console.log('PKL_2 data updated successfully');
                     },
                     error: (xhr, status, error) => {
                         console.error('Error updating pkl_2 data:', error);
                     }
                 });
+            },
+            update_VACSS_Data() {
+                // 使用 AJAX 更新 VACSS 資料
+                // 這裡假設後端 API 的路徑為 http://y5pis.crcs.csc.com.tw/api/external/vacss-pkl/monitor/schedule
+                $.ajax({
+                    url: 'http://y5pis.crcs.csc.com.tw/api/external/vacss-pkl/monitor/schedule',
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: (responseData) => {
+                        global_data = responseData;
+
+                        let vacss_array = new Array();
+                        for (var i = 0; i < responseData.list.length; i++) {
+                            var item = responseData.list[i];
+                            var station = item.locationId;
+                            var coilId = item.coilId;
+                            var labelId = item.labelId;
+                            var coil_code = item.productStorageType;
+                            var coil_layer = item.productStorageLayer;
+                            var orderItem = item.orderItem;
+
+                            // 將這些值更新到vacss的對應位置
+                            var tmp_vacss_data = {
+                                station: station,
+                                coilId: coilId,
+                                labelId: labelId,
+                                coil_code: coil_code,
+                                coil_layer: coil_layer,
+                                orderItem: orderItem,
+                            };
+                            vacss_array.push(tmp_vacss_data);
+                        }
+                        this.vacss = vacss_array;
+                        this.vacss_code_count = this.count_Code(this.vacss);
+                        console.log('VACSS data updated successfully');
+                    },
+                    error: (xhr, status, error) => {
+                        console.error('Error updating VACSS data:', error);
+                    }
+                });
+            },
+            update_3CAL_Data() {
+                // 使用 AJAX 更新 3CAL 資料
+                // 這裡假設後端 API 的路徑為 http://y5pis.y6p4.csc.com.tw/api/external/3cal/monitor/schedule
+                $.ajax({
+                    url: 'http://y5pis.y6p4.csc.com.tw/api/external/3cal/monitor/schedule',
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: (responseData) => {
+                        global_data = responseData;
+
+                        let cal_3_array = new Array();
+                        for (var i = 0; i < responseData.list.length; i++) {
+                            var item = responseData.list[i];
+                            var station = item.order;
+                            var coilId = item.coilId;
+                            var dividingNumber = item.dividingNumber;
+                            var weight = item.weight / dividingNumber;
+                            var coil_code = determine_coil_code(weight, item.targetWidth, item.targetInnerDiameter);
+                            var coil_layer = determine_layer("H", coil_code, item.targetThickness / 1000);
+                            var orderItem = item.orderItem;
+
+                            // 將這些值更新到vacss的對應位置
+                            var tmp_cal_3_data = {
+                                station: station,
+                                coilId: coilId,
+                                dividingNumber: dividingNumber,
+                                coil_code: coil_code,
+                                coil_layer: coil_layer,
+                                orderItem: orderItem,
+                            };
+                            cal_3_array.push(tmp_cal_3_data);
+                        }
+                        this.cal_3 = cal_3_array;
+                        this.cal_3_code_count = this.count_Code(this.cal_3);
+                        console.log('3CAL data updated successfully');
+                    },
+                    error: (xhr, status, error) => {
+                        console.error('Error updating 3CAL data:', error);
+                    }
+                });
+            },
+            update_3CGL_Data() {
+                // 使用 AJAX 更新 3CAL 資料
+                // 這裡假設後端 API 的路徑為 http://y5pis.y6p4.csc.com.tw/api/external/3cgl/monitor/schedule
+                $.ajax({
+                    url: 'http://y5pis.y6p4.csc.com.tw/api/external/3cgl/monitor/schedule',
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: (responseData) => {
+                        let cgl_3_array = new Array();
+                        for (var i = 0; i < responseData.list.length; i++) {
+                            var item = responseData.list[i];
+                            var station = item.order;
+                            var coilId = item.coilId;
+                            var dividingNumber = item.dividingNumber;
+                            var weight = item.weight / dividingNumber;
+                            var coil_code = determine_coil_code(weight, item.width, item.innerDiameter);
+                            var coil_layer = determine_layer("H", coil_code, item.thickness / 1000);
+                            var orderItem = item.orderItem;
+
+                            // 將這些值更新到vacss的對應位置
+                            var tmp_cgl_3_data = {
+                                station: station,
+                                coilId: coilId,
+                                dividingNumber: dividingNumber,
+                                coil_code: coil_code,
+                                coil_layer: coil_layer,
+                                orderItem: orderItem,
+                            };
+                            cgl_3_array.push(tmp_cgl_3_data);
+                        }
+                        this.cgl_3 = cgl_3_array;
+                        this.cgl_3_code_count = this.count_Code(this.cgl_3);
+                        console.log('3CGL data updated successfully');
+                    },
+                    error: (xhr, status, error) => {
+                        console.error('Error updating 3CGL data:', error);
+                    }
+                });
+            },
+            count_Code(data) {
+                const codeCount = {}; // 使用物件來紀錄每個代碼的數量
+
+                // 遍歷資料陣列，統計代碼數量
+                data.forEach(item => {
+                    const code = item.coil_code + "-" + item.coil_layer;
+
+                    if (codeCount.hasOwnProperty(code)) {
+                        codeCount[code]++; // 代碼已存在，數量加一
+                    } else {
+                        codeCount[code] = 1; // 新代碼，數量設為一
+                    }
+                });
+
+                // 輸出代碼數量統計結果
+                for (const code in codeCount) {
+                    console.log(`${code}: ${codeCount[code]}`);
+                }
+
+                return codeCount;
             }
         },
         created() {
             this.update_PKL_1_Data();
             this.update_PKL_2_Data();
+            this.update_VACSS_Data();
+            this.update_3CAL_Data();
+            this.update_3CGL_Data();
             // 在 Vue 实例被创建后，每隔一段时间调用 update_PKL_1_Data,update_PKL_2_Data 函数
             setInterval(() => {
                 this.update_PKL_1_Data();
                 this.update_PKL_2_Data();
+                this.update_VACSS_Data();
+                this.update_3CAL_Data();
+                this.update_3CGL_Data();
             }, 60000); // 每 60 秒执行一次，可以根据需求调整时间间隔
         }
 
     });
 </script>
 <script>
+
     // 排序表格
     function sortTable(columnIndex, tableId) {
         const table = document.getElementById(tableId);
@@ -276,7 +600,7 @@
         //document.querySelectorAll("#tb_todolist th").forEach((th, i) =>
         //    th.addEventListener("click", () => sortTable(i,"tb_todolist_1"))
         //);
-        var tableIds = ["tb_todolist_1", "tb_todolist_2"]; // 添加更多的 tableId
+        var tableIds = ["tb_todolist_1", "tb_todolist_2", "tb_todolist_3"]; // 添加更多的 tableId
 
         tableIds.forEach(function (tableId) {
             document.querySelectorAll("#" + tableId + " th").forEach(function (th, i) {
@@ -687,7 +1011,7 @@
                     var coil_layer = 2;
                     break;
                 default:
-                    if (Thick/100000 > 0.4) {
+                    if (Thick > 0.4) {
                         var coil_layer = 3;
                     } else {
                         var coil_layer = 2;
