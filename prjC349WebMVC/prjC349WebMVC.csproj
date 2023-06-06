@@ -625,6 +625,7 @@
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
+    <Content Include="Images\Y57toC349_flowchart.png" />
     <Content Include="Models\dbAdvanceOY15_ClearMixAreaModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>dbAdvanceOY15_ClearMixAreaModel.edmx</DependentUpon>
@@ -937,7 +938,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\" />
     <Folder Include="Views\Admin\" />
   </ItemGroup>
   <ItemGroup>

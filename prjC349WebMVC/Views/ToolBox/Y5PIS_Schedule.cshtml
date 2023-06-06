@@ -88,15 +88,12 @@
         /* 添加特殊颜色的样式 */
         color: red;
     }
-
-    .arrow {
-        position: relative;
-        width: 200px;
-        height: 100px;
-    }
 </style>
-
 <div id="app">
+
+    <div>
+        <img src="~/Images/Y57toC349_flowchart.png" style="width: 50%" />
+    </div>
     <div class="custom_container">
         <div>
             <button @@click="tb_1_toggleCollapse">
@@ -289,11 +286,11 @@
         el: '#app',
         data() {
             return {
-                tb_1_isCollapsed: false, // 默认折叠状态为true
-                tb_2_isCollapsed: false, // 默认折叠状态为true
-                tb_3_isCollapsed: false, // 默认折叠状态为true
-                tb_4_isCollapsed: false, // 默认折叠状态为true
-                tb_5_isCollapsed: false, // 默认折叠状态为true
+                tb_1_isCollapsed: false, // 預設摺疊狀態為true
+                tb_2_isCollapsed: false, // 預設摺疊狀態為true
+                tb_3_isCollapsed: false, // 預設摺疊狀態為true
+                tb_4_isCollapsed: false, // 預設摺疊狀態為true
+                tb_5_isCollapsed: false, // 預設摺疊狀態為true
                 pkl_1: [],
                 pkl_2: [],
                 vacss: [],
