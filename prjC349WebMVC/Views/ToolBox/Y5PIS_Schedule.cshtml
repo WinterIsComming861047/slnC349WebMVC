@@ -50,7 +50,7 @@
     }
 
     .float-div {
-        margin-left: 4px;
+        margin-left: 40px;
         flex-grow: 1;
     }
 
@@ -66,11 +66,11 @@
         font-weight: bold;
     }
 
-        th:hover {
-            color: blue;
-            text-decoration: underline;
-            cursor: pointer; /* 可選，將滑鼠游標改為手型 */
-        }
+    th:hover {
+        color: blue;
+        text-decoration: underline;
+        cursor: pointer; /* 可選，將滑鼠游標改為手型 */
+    }
 
     tr:nth-child(even) {
         background-color: #f9f9f9;
@@ -81,91 +81,172 @@
     }
 
     th, td {
-        font-size: x-large;
         border: 1px solid #ddd;
+    }
+
+    .special-color {
+        /* 添加特殊颜色的样式 */
+        color: red;
     }
 </style>
 
-@*<div class="form-group" style="margin:4px">
-        <label>來源庫</label>
-        <div class="btn-group" aria-label="Basic radio toggle button group">
-            <input type="radio" class="btn-check btnradio" name="srcWarehouse" id="btnradio_86" autocomplete="off" checked value="86">
-            <label class="btn btn-outline-primary" for="btnradio_86">86庫</label>
-
-            <input type="radio" class="btn-check btnradio" name="srcWarehouse" id="btnradio_87" autocomplete="off" value="87">
-            <label class="btn btn-outline-primary" for="btnradio_87">87庫</label>
+<div id="app">
+    <div class="custom_container">
+        <div class="left-div">
+            <table class="custom_table" id="tb_todolist_1">
+                <thead>
+                    <tr>
+                        <th>站點</th>
+                        <th>鋼捲號碼</th>
+                        <th>Label</th>
+                        <th>代碼</th>
+                        <th>訂單號碼</th>
+                        <th>工作</th>
+                    </tr>
+                <tbody>
+                    <tr v-for="pkl_1_data in pkl_1" :key="pkl_1_data.id">
+                        <td>{{ pkl_1_data.station }}</td>
+                        <td>{{ pkl_1_data.coilId }}</td>
+                        <td>{{ pkl_1_data.labelId }}</td>
+                        <td>{{ pkl_1_data.coil_code }} - {{ pkl_1_data.coil_layer }}</td>
+                        <td :class="{'special-color': pkl_1_data.orderItem && pkl_1_data.orderItem.startsWith('T')}">{{ pkl_1_data.orderItem }}</td>
+                        <td>{{ pkl_1_data.description }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </div>
-
-    <div class="form-group" style="margin:4px">
-        <label>目標庫</label>
-        <div class="btn-group" aria-label="Basic radio toggle button group">
-            <input type="radio" class="btn-check btnradio" name="dstWarehouse" id="btnradio_82" autocomplete="off" checked value="82">
-            <label class="btn btn-outline-secondary" for="btnradio_82">82庫</label>
-
-            <input type="radio" class="btn-check btnradio" name="dstWarehouse" id="btnradio_83" autocomplete="off" value="83">
-            <label class="btn btn-outline-secondary" for="btnradio_83">83庫</label>
-
-            <input type="radio" class="btn-check btnradio" name="dstWarehouse" id="btnradio_84" autocomplete="off" value="84">
-            <label class="btn btn-outline-secondary" for="btnradio_84">84庫</label>
-
-            <input type="radio" class="btn-check btnradio" name="dstWarehouse" id="btnradio_85" autocomplete="off" value="85">
-            <label class="btn btn-outline-secondary" for="btnradio_85">85庫</label>
-
-            <input type="radio" class="btn-check btnradio" name="dstWarehouse" id="btnradio_81" autocomplete="off" value="81">
-            <label class="btn btn-outline-secondary" for="btnradio_81">81庫</label>
-
-            <input type="radio" class="btn-check btnradio" name="dstWarehouse" id="btnradio_89" autocomplete="off" value="89">
-            <label class="btn btn-outline-secondary" for="btnradio_89">89庫</label>
-
-            <input type="radio" class="btn-check btnradio" name="dstWarehouse" id="btnradio_91" autocomplete="off" value="91">
-            <label class="btn btn-outline-secondary" for="btnradio_91">91庫</label>
+        <div class="float-div">
+            <table class="custom_table" id="tb_todolist_2">
+                <thead>
+                    <tr>
+                        <th>站點</th>
+                        <th>鋼捲號碼</th>
+                        <th>Label</th>
+                        <th>代碼</th>
+                        <th>訂單號碼</th>
+                        <th>工作</th>
+                    </tr>
+                <tbody>
+                    <tr v-for="pkl_2_data in pkl_2" :key="pkl_2_data.id">
+                        <td>{{ pkl_2_data.station }}</td>
+                        <td>{{ pkl_2_data.coilId }}</td>
+                        <td>{{ pkl_2_data.labelId }}</td>
+                        <td>{{ pkl_2_data.coil_code }} - {{ pkl_2_data.coil_layer }}</td>
+                        <td :class="{'special-color': pkl_2_data.orderItem && pkl_2_data.orderItem.startsWith('T')}">{{ pkl_2_data.orderItem }}</td>
+                        <td>{{ pkl_2_data.description }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </div>
-    <div class="form-group" style="margin:4px">
-        <label>目標庫段</label>
-        <div class="btn-group" aria-label="Basic radio toggle button group">
-            <input type="radio" class="btn-check btnradio" name="dstSection" id="btnradio_section_2" autocomplete="off" checked value="2">
-            <label class="btn btn-outline-primary" for="btnradio_section_2">前</label>
-
-            <input type="radio" class="btn-check btnradio" name="dstSection" id="btnradio_section_5" autocomplete="off" value="5">
-            <label class="btn btn-outline-primary" for="btnradio_section_5">後</label>
-
-            <input type="radio" class="btn-check btnradio" name="dstSection" id="btnradio_section_1" autocomplete="off" value="1">
-            <label class="btn btn-outline-primary" for="btnradio_section_1">全</label>
-        </div>
-    </div>*@
-<div class="custom_container">
-    <div class="left-div">
-        <table class="custom_table" id="tb_todolist_1">
-            <thead>
-                <tr>
-                    <th>站點</th>
-                    <th>鋼捲號碼</th>
-                    <th>Label</th>
-                    <th>代碼</th>
-                    <th>訂單號碼</th>
-                    <th>工作</th>
-                </tr>
-            <tbody>
-                <tr v-for="pkl_1_data in pkl_1" :key="pkl_1_data.id">
-                    <td>{{ pkl_1_data.station }}</td>
-                    <td>{{ pkl_1_data.coilId }}</td>
-                    <td>{{ pkl_1_data.labelId }}</td>
-                    <td>{{ pkl_1_data.coil_code }}</td>
-                    <td>{{ pkl_1_data.coil_layer }}</td>
-                    <td>{{ pkl_1_data.orderItem }}</td>
-                    <td>{{ pkl_1_data.description }}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="rig-div">
-        <table class="custom_table" id="tb_todolist_2">
-        </table>
     </div>
 </div>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data() {
+            return {
+                pkl_1: [],
+                pkl_2: []
+            };
+        },
+        methods: {
+            update_PKL_1_Data() {
+                // 使用 AJAX 更新 pkl 資料
+                // 這裡假設後端 API 的路徑為 http://y5pis.crcs.csc.com.tw/api/external/vacss-pkl1/monitor/tracking
+                $.ajax({
+                    url: 'http://y5pis.crcs.csc.com.tw/api/external/vacss-pkl1/monitor/tracking',
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: (responseData) => {
+                        global_data = responseData;
 
+                        let pkl_1_array = new Array();
+                        for (var i = 0; i < responseData.skid.length; i++) {
+                            var item = responseData.skid[i];
+                            var id = i;
+                            var station = item.locationId;
+                            var coilId = item.coilId;
+                            var labelId = item.labelId;
+                            var coil_code = determine_coil_code(item.weight, item.width, item.innerDiameter);
+                            var coil_layer = determine_layer(item.labelId, coil_code, item.thickness);
+                            var orderItem = item.orderItem;
+                            var description = item.description;
+
+                            // 將這些值更新到pkl_1的對應位置
+                            var tmp_pkl_1_data = {
+                                station : station,
+                                coilId : coilId,
+                                labelId : labelId,
+                                coil_code : coil_code,
+                                coil_layer : coil_layer,
+                                orderItem : orderItem,
+                                description : description,
+                            };
+                            pkl_1_array.push(tmp_pkl_1_data);
+                        }
+                        this.pkl_1 = pkl_1_array;
+                        console.log('PKL_1 data updated successfully');
+                    },
+                    error: (xhr, status, error) => {
+                        console.error('Error updating pkl_1 data:', error);
+                    }
+                });
+            },
+            update_PKL_2_Data() {
+                // 使用 AJAX 更新 pkl 資料
+                // 這裡假設後端 API 的路徑為 http://y5pis.crcs.csc.com.tw/api/external/vacss-pkl2/monitor/tracking
+                $.ajax({
+                    url: 'http://y5pis.crcs.csc.com.tw/api/external/vacss-pkl2/monitor/tracking',
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: (responseData) => {
+                        global_data = responseData;
+
+                        let pkl_2_array = new Array();
+                        for (var i = 0; i < responseData.skid.length; i++) {
+                            var item = responseData.skid[i];
+                            var id = i;
+                            var station = item.locationId;
+                            var coilId = item.coilId;
+                            var labelId = item.labelId;
+                            var coil_code = determine_coil_code(item.weight, item.width, item.innerDiameter);
+                            var coil_layer = determine_layer(item.labelId, coil_code, item.thickness);
+                            var orderItem = item.orderItem;
+                            var description = item.description;
+
+                            // 將這些值更新到pkl_1的對應位置
+                            var tmp_pkl_2_data = {
+                                station: station,
+                                coilId: coilId,
+                                labelId: labelId,
+                                coil_code: coil_code,
+                                coil_layer: coil_layer,
+                                orderItem: orderItem,
+                                description: description,
+                            };
+                            pkl_2_array.push(tmp_pkl_2_data);
+                        }
+                        this.pkl_2 = pkl_2_array;
+                        console.log('PKL_2 data updated successfully');
+                    },
+                    error: (xhr, status, error) => {
+                        console.error('Error updating pkl_2 data:', error);
+                    }
+                });
+            }
+        },
+        created() {
+            this.update_PKL_1_Data();
+            this.update_PKL_2_Data();
+            // 在 Vue 实例被创建后，每隔一段时间调用 update_PKL_1_Data,update_PKL_2_Data 函数
+            setInterval(() => {
+                this.update_PKL_1_Data();
+                this.update_PKL_2_Data();
+            }, 60000); // 每 60 秒执行一次，可以根据需求调整时间间隔
+        }
+
+    });
+</script>
 <script>
     // 排序表格
     function sortTable(columnIndex, tableId) {
@@ -206,123 +287,6 @@
         });
     }
     bindSortTable();
-</script>
-<script>
-    var refreshInterval = 5000; // 5秒
-
-    function refreshPage() {
-        ajax_update();
-    }
-
-    //setInterval(refreshPage, refreshInterval);
-</script>
-<script>
-    //function setCheck() {
-    //    var radioButtons = document.querySelectorAll('.btnradio');
-    //    radioButtons.forEach(function (radioButton) {
-    //        radioButton.addEventListener('click', function () {
-    //            // 在这里添加你的点击事件处理逻辑
-    //            radioButton.checked = true;
-    //        });
-    //        radioButton.addEventListener('click', ajax_update);
-    //    });
-    //};
-
-    var global_data;
-    function ajax_update() {
-        //var selectedSrcWarehouse = document.querySelector('input[name="srcWarehouse"]:checked');
-        //var selectedDstWarehouse = document.querySelector('input[name="dstWarehouse"]:checked');
-        //var selectedDstSection = document.querySelector('input[name="dstSection"]:checked');
-        $.ajax({
-            url: "http://y5pis.crcs.csc.com.tw/api/external/vacss-pkl1/monitor/tracking",
-            type: 'GET',
-            success: function (data) {
-                global_data = data;
-                //// 篩選出重量小於等於輸入重量的資料項目
-                //var filteredData = global_data.filter(function (item) {
-                //    return item.重量 <= selectedWeightLimit;
-                //});
-                updateTableView(data);
-            }
-        });
-    };
-    //ajax_update();
-    /*    setCheck();*/
-</script>
-<script>
-    var app = new Vue({
-        el: '#app',
-        data: {
-            pkl_1: []
-        },
-        methods: {
-            updatePeopleData() {
-                // 使用 AJAX 更新 people 資料
-                // 這裡假設後端 API 的路徑為 /api/people/update
-                $.ajax({
-                    url: 'http://y5pis.crcs.csc.com.tw/api/external/vacss-pkl1/monitor/tracking',
-                    type: 'GET',
-                    data: JSON.stringify(this.convertToBackendFormat(this.pkl_1)),
-                    contentType: 'application/json',
-                    success: () => {
-                        console.log('PKL_1 data updated successfully');
-                    },
-                    error: (xhr, status, error) => {
-                        console.error('Error updating pkl_1 data:', error);
-                    }
-                });
-            },
-            convertToBackendFormat(pkl_1) {
-                return pkl_1.map((pkl_1_data, index) => {
-                    return {
-                        id: index + 1, // 使用索引加1作為id
-                        station: pkl_1_data.skid[i].locationId,
-                        coilId: pkl_1_data.skid[i].coilId,
-                        labelId: pkl_1_data.skid[i].labelId,
-                        coil_code: determine_coil_code(pkl_1_data.skid[i].weight, pkl_1_data.skid[i].width, pkl_1_data.skid[i].innerDiameter),
-                        coil_layer: determine_layer(pkl_1_data.skid[i].labelId, determine_coil_code(pkl_1_data.skid[i].weight, pkl_1_data.skid[i].width, pkl_1_data.skid[i].innerDiameter), pkl_1_data.skid[i].thickness),
-                        orderItem: pkl_1_data.skid[i].orderItem,
-                        description: pkl_1_data.skid[i].description,
-                    };
-                });
-            }
-        }
-    });
-</script>
-<script>
-    function updateTableView(data) {
-        $("#tb_todolist_1").empty();
-        $("#tb_todolist_1").append(
-            "<tbody>" +
-            "<tr>" +
-            "<th>站點</th>" +
-            "<th>鋼捲號碼</th>" +
-            "<th>Label</th>" +
-            "<th>代碼</th>" +
-            "<th>訂單號碼</th>" +
-            "<th>工作</th>" +
-            "</tr>"
-        );
-
-        // 綁定事件
-        bindSortTable();
-
-        for (var i = 0; i < 24; i++) {
-            $("#tb_todolist_1").append(
-                "<tr>" +
-                "<td>" + data.skid[i].locationId + "</td>" +
-                "<td>" + data.skid[i].coilId + "</td>" +
-                "<td>" + data.skid[i].labelId + "</td>" +
-                "<td>" + determine_coil_code(data.skid[i].weight, data.skid[i].width, data.skid[i].innerDiameter) +
-                " - " + determine_layer(data.skid[i].labelId, determine_coil_code(data.skid[i].weight, data.skid[i].width, data.skid[i].innerDiameter), data.skid[i].thickness) +
-                "</td>" +
-                "<td>" + data.skid[i].orderItem + "</td>" +
-                "<td>" + data.skid[i].description + "</td>" +
-                "</tr>" +
-                "</tbody>"
-            )
-        }
-    }
 </script>
 <script>
     function determine_coil_code(weight, width, innerdiameter) {
@@ -723,7 +687,7 @@
                     var coil_layer = 2;
                     break;
                 default:
-                    if (Thick > 0.4) {
+                    if (Thick/100000 > 0.4) {
                         var coil_layer = 3;
                     } else {
                         var coil_layer = 2;
