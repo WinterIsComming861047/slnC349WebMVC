@@ -366,8 +366,10 @@
 
 </div>
 <script>
-    var global_pkl1_data;
-    var global_pkl2_data;
+    var origin_pkl1_data;
+    var prun_pkl1_data;
+    var origin_pkl2_data;
+    var prun_pkl2_data;
     var global_vacss_data;
     var global_3cal_data;
     var global_3cgl_data;
@@ -420,7 +422,7 @@
                     type: 'GET',
                     contentType: 'application/json',
                     success: (responseData) => {
-                        global_pkl1_data = responseData;
+                        origin_pkl1_data = responseData;
 
                         let pkl_1_array = new Array();
                         for (var i = 0; i < responseData.skid.length; i++) {
@@ -446,8 +448,20 @@
                             };
                             pkl_1_array.push(tmp_pkl_1_data);
                         }
-                        this.pkl_1 = pkl_1_array;
+
+                        const uniqueArray = [];
+                        const uniqueIds = [];
+
+                        pkl_1_array.forEach((obj) => {
+                            if (!uniqueIds.includes(obj.labelId)) {
+                                uniqueArray.push(obj);
+                                uniqueIds.push(obj.labelId);
+                            }
+                        });
+
+                        this.pkl_1 = uniqueArray.slice(0,22);
                         this.pkl_1_code_count = this.count_Code(this.pkl_1);
+                        prun_pkl1_data = this.pkl_1;
                         console.log('PKL_1 data updated successfully');
                     },
                     error: (xhr, status, error) => {
@@ -477,7 +491,7 @@
                             var orderItem = item.orderItem;
                             var description = item.description;
 
-                            // 將這些值更新到pkl_1的對應位置
+                            // 將這些值更新到pkl_2的對應位置
                             var tmp_pkl_2_data = {
                                 station: station,
                                 coilId: coilId,
@@ -496,12 +510,13 @@
                         pkl_2_array.forEach((obj) => {
                             if (!uniqueIds.includes(obj.labelId)) {
                                 uniqueArray.push(obj);
-                                uniqueIds.push(obj.label);
+                                uniqueIds.push(obj.labelId);
                             }
                         });
 
-                        this.pkl_2 = uniqueArray;
+                        this.pkl_2 = uniqueArray.slice(0,22);
                         this.pkl_2_code_count = this.count_Code(this.pkl_2);
+                        prun_pkl2_data = this.pkl_2;
                         console.log('PKL_2 data updated successfully');
                     },
                     error: (xhr, status, error) => {
