@@ -38,118 +38,107 @@
                     @{
                         try
                         {
-                            if (Request.Cookies["dept"].Value == "C349" && Request.Cookies["uid"].Value != "213298")
-                            {
-
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        C34工廠日誌
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li class="nav-item">
-                                            <a href="http://dept.csc.com.tw/MIS/C34/C34Web/C34X.aspx" target="_blank" class="dropdown-item">C34工廠日誌</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        LiveUpdateOY07
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li class="nav-item">@Html.ActionLink("LiveUpdateOY07", "LiveUpdateOY07", "Toolbox", new { }, new { @class = "dropdown-item" })</li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        AdvanceOY15
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li class="nav-item">@Html.ActionLink("包裝線排程", "Y5PIS_Schedule", "Toolbox", new { }, new { @class = "dropdown-item" })</li>
-                                        <li class="nav-item">@Html.ActionLink("AdvanceOY15", "AdvanceOY15", "Toolbox", new { }, new { @class = "dropdown-item" })</li>
-                                        <li class="nav-item">@Html.ActionLink("清雜區_中控", "AdvanceOY15ClearMixAreaAdmin", "Toolbox", new { }, new { @class = "dropdown-item" })</li>
-                                        <li class="nav-item">@Html.ActionLink("清雜區_天車手", "AdvanceOY15ClearMixAreaCraneOperator", "Toolbox", new { }, new { @class = "dropdown-item" })</li>
-                                    </ul>
-                                </li>
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                        遠端檢放
-                                    </a>
-                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li class="nav-item">@Html.ActionLink("遠端檢放", "Index", "RVI_CreateWithEPSLOG", new { }, new { @class = "dropdown-item" })</li>
-                                    </ul>
-                                </li>
-
-
-
-
-
-
-
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    C34工廠日誌
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li class="nav-item">
+                                        <a href="http://dept.csc.com.tw/MIS/C34/C34Web/C34X.aspx" target="_blank" class="dropdown-item">C34工廠日誌</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    LiveUpdateOY07
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li class="nav-item">@Html.ActionLink("LiveUpdateOY07", "LiveUpdateOY07", "Toolbox", new { }, new { @class = "dropdown-item" })</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    AdvanceOY15
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li class="nav-item">@Html.ActionLink("包裝線排程", "Y5PIS_Schedule", "Toolbox", new { }, new { @class = "dropdown-item" })</li>
+                                    <li class="nav-item">@Html.ActionLink("AdvanceOY15", "AdvanceOY15", "Toolbox", new { }, new { @class = "dropdown-item" })</li>
+                                    <li class="nav-item">@Html.ActionLink("清雜區_中控", "AdvanceOY15ClearMixAreaAdmin", "Toolbox", new { }, new { @class = "dropdown-item" })</li>
+                                    <li class="nav-item">@Html.ActionLink("清雜區_天車手", "AdvanceOY15ClearMixAreaCraneOperator", "Toolbox", new { }, new { @class = "dropdown-item" })</li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    遠端檢放
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li class="nav-item">@Html.ActionLink("遠端檢放", "Index", "RVI_CreateWithEPSLOG", new { }, new { @class = "dropdown-item" })</li>
+                                </ul>
+                            </li>
                         }
+                        catch { }
                     }
-                    catch { }
-                }
 
 
 
-                <!--<li class="nav-item">
-        @*<a class="nav-link active" aria-current="page" href="#">Article</a>*@
-    <!--</li>-->
-                @*<li class="nav-item">
-            @Html.ActionLink("員工管理", "Index", "Home", "", new { @class = "av-link active" })
-        </li>
-        <li class="nav-item">
-            @Html.ActionLink("文章管理", "Index", "Article", "", new { @class = "av-link active" })
-        </li>*@
-                @*<li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                員工管理
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>@Html.ActionLink("員工管理", "Index", "Home", new { }, new { @class = "dropdown-item" })</li>
-                <li>@Html.ActionLink("員工新增", "Create", "Home", new { }, new { @class = "dropdown-item" })</li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-        </li>*@
-                @*<li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                文章管理
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <li>@Html.ActionLink("文章管理", "Index", "Article", new { }, new { @class = "dropdown-item" })</li>
-                <li>@Html.ActionLink("文章新增", "Create", "Article", new { }, new { @class = "dropdown-item" })</li>
-                <li><hr class="dropdown-divider"></li>
-                <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-        </li>*@
-                @*<li class="nav-item">
-            <a class="nav-link disabled">Disabled</a>
-        </li>*@
+                    <!--<li class="nav-item">
+                        @*<a class="nav-link active" aria-current="page" href="#">Article</a>*@
+                    <!--</li>-->
+                    @*<li class="nav-item">
+                            @Html.ActionLink("員工管理", "Index", "Home", "", new { @class = "av-link active" })
+                        </li>
+                        <li class="nav-item">
+                            @Html.ActionLink("文章管理", "Index", "Article", "", new { @class = "av-link active" })
+                        </li>*@
+                    @*<li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                員工管理
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>@Html.ActionLink("員工管理", "Index", "Home", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("員工新增", "Create", "Home", new { }, new { @class = "dropdown-item" })</li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
                             </ul>
+                        </li>*@
+                    @*<li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                文章管理
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li>@Html.ActionLink("文章管理", "Index", "Article", new { }, new { @class = "dropdown-item" })</li>
+                                <li>@Html.ActionLink("文章新增", "Create", "Article", new { }, new { @class = "dropdown-item" })</li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </li>*@
+                    @*<li class="nav-item">
+                            <a class="nav-link disabled">Disabled</a>
+                        </li>*@
+                </ul>
 
-                            @*<form class="d-flex">
-                                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                                    <button class="btn btn-outline-success" type="submit">Search</button>
-                                </form>*@
+                @*<form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>*@
 
-                        </div>
-                    </div>
-                </nav>
+            </div>
+        </div>
+    </nav>
 
-                <div class="body-content">
+    <div class="body-content">
 
-                    @RenderBody()
-                    @*@RenderSection("Validation", false)*@
-                    <hr />
-                    <footer>
-                        <p>&copy; @DateTime.Now.Year - C349WebMVC</p>
-                    </footer>
-                </div>
-
-
-                @RenderSection("scripts", false)
+        @RenderBody()
+        @*@RenderSection("Validation", false)*@
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - C349WebMVC</p>
+        </footer>
+    </div>
 
 
-            </body>
-        </html>
+    @RenderSection("scripts", false)
+
+
+</body>
+</html>
