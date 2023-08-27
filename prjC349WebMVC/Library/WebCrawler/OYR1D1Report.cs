@@ -40,7 +40,10 @@ namespace prjC349WebMVC.Library.WebCrawler
                     outer_diameter = oyr1_d1report_excel.ElementAt(i).ElementAt(12).ToString(),
                     red_tag_coil_layer = oyr1_d1report_excel.ElementAt(i).ElementAt(13).ToString(),
                     area_available_layer = oyr1_d1report_excel.ElementAt(i).ElementAt(14).ToString(),
-                    move_count_oymv = oyr1_d1report_excel.ElementAt(i).ElementAt(15).ToString()
+                    move_count_oymv = oyr1_d1report_excel.ElementAt(i).ElementAt(15).ToString(),
+                    state = oyr1_d1report_excel.ElementAt(i).ElementAt(16).ToString(),
+                    red_tag = oyr1_d1report_excel.ElementAt(i).ElementAt(17).ToString(),
+                    bill_of_ladding = oyr1_d1report_excel.ElementAt(i).ElementAt(18).ToString()
                 };
                 _List.Add(tmp_oyr1_d1report);
             }
@@ -63,6 +66,9 @@ namespace prjC349WebMVC.Library.WebCrawler
             public string red_tag_coil_layer { get; set; }
             public string area_available_layer { get; set; }
             public string move_count_oymv { get; set; }
+            public string state { get; set; }
+            public string red_tag { get; set; }
+            public string bill_of_ladding { get; set; }
         }
 
 

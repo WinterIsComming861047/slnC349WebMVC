@@ -75,6 +75,7 @@ namespace prjC349WebMVC.Library
                     //重量小於5000、寬度小於1700的鋼捲儲存至 checkCoilInMixArea
                     var checkCoilInMixArea = from c in src_oyr1_d1report.List
                                              where isInArea(c.area, areaItem) && int.Parse(c.weight) < 5000 && int.Parse(c.width) < 1700
+                                             && (c.state == "39" || c.state == "23") && c.bill_of_ladding == ""
                                              select c;
 
                     if (checkCoilInMixArea.Count() != 0)
@@ -187,8 +188,6 @@ namespace prjC349WebMVC.Library
             }
 
         }
-
-
 
         private string determine_dst_warehouse_section(string dst_warehouse, string dst_area)
         {
