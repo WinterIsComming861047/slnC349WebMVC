@@ -87,9 +87,9 @@
             cursor: pointer; /* 可選，將滑鼠游標改為手型 */
         }
 
-    tr:nth-child(even) {
+/*    tr:nth-child(even) {
         background-color: #f9f9f9;
-    }
+    }*/
 
     tr:hover {
         background-color: #ffffcc;
@@ -102,6 +102,12 @@
     .special-color {
         /* 添加特殊颜色的样式 */
         color: red;
+    }
+    .level-is-2 {
+        background-color: yellow;
+    }
+    .level-is-3 {
+        background-color: lightgreen;
     }
 </style>
 <script src="~/Scripts/mermaid.min.js"></script>
@@ -133,7 +139,8 @@
             <label>PKL_1排程</label>
             <div style="width:100px">
                 <table class="custom_table">
-                    <tr v-for="(count, code) in pkl_1_code_count" v-if="code !== ' -'">
+                    <tr v-for="(count, code) in pkl_1_code_count" v-if="code !== ' -'" 
+                        v-bind:class="{'level-is-2': code.includes('-2'), 'level-is-3': code.includes('-3')}">
                         <td>{{ code }}</td>
                         <td>{{ count }}</td>
                     </tr>
@@ -153,7 +160,8 @@
                                 <th>工作</th>
                             </tr>
                         <tbody>
-                            <tr v-for="pkl_1_data in pkl_1" :key="pkl_1_data.id">
+                            <tr v-for="pkl_1_data in pkl_1" :key="pkl_1_data.id"
+                                v-bind:class="{'level-is-2': JSON.stringify(pkl_1_data.coil_layer).includes('2'), 'level-is-3': JSON.stringify(pkl_1_data.coil_layer).includes('3')}">
                                 <td>{{ pkl_1_data.station }}</td>
                                 <td>{{ pkl_1_data.coilId }}</td>
                                 <td>{{ pkl_1_data.labelId }}</td>
@@ -173,7 +181,8 @@
             <label>PKL_2排程</label>
             <div style="margin-left:40px;width:100px">
                 <table class="custom_table">
-                    <tr v-for="(count, code) in pkl_2_code_count" v-if="code !== ' -'">
+                    <tr v-for="(count, code) in pkl_2_code_count" v-if="code !== ' -'"
+                        v-bind:class="{'level-is-2': code.includes('-2'), 'level-is-3': code.includes('-3')}">
                         <td>{{ code }}</td>
                         <td>{{ count }}</td>
                     </tr>
@@ -193,7 +202,8 @@
                                 <th>工作</th>
                             </tr>
                         <tbody>
-                            <tr v-for="pkl_2_data in pkl_2" :key="pkl_2_data.id">
+                            <tr v-for="pkl_2_data in pkl_2" :key="pkl_2_data.id"
+                                v-bind:class="{'level-is-2': JSON.stringify(pkl_2_data.coil_layer).includes('2'), 'level-is-3': JSON.stringify(pkl_2_data.coil_layer).includes('3')}">
                                 <td>{{ pkl_2_data.station }}</td>
                                 <td>{{ pkl_2_data.coilId }}</td>
                                 <td>{{ pkl_2_data.labelId }}</td>
@@ -217,7 +227,8 @@
             <div class="left-100-div">
                 <label>1-10</label>
                 <table>
-                    <tr v-for="(count, code,index) in vacss_code_count" v-if="code !== ' -' && index < 10">
+                    <tr v-for="(count, code,index) in vacss_code_count" v-if="code !== ' -' && index < 10"
+                        v-bind:class="{'level-is-2': code.includes('-2'), 'level-is-3': code.includes('-3')}">
                         <td>{{ code }}</td>
                         <td>{{ count }}</td>
                     </tr>
@@ -247,7 +258,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="vacss_data in vacss" :key="vacss_data.id">
+                        <tr v-for="vacss_data in vacss" :key="vacss_data.id"
+                            v-bind:class="{'level-is-2': JSON.stringify(vacss_data.coil_layer).includes('2'), 'level-is-3': JSON.stringify(vacss_data.coil_layer).includes('3')}">
                             <td>{{ vacss_data.station }}</td>
                             <td>{{ vacss_data.coilId }}</td>
                             <td>{{ vacss_data.labelId }}</td>
@@ -269,7 +281,8 @@
                 <div class="left-100-div">
                     <label>1-10</label>
                     <table>
-                        <tr v-for="(count, code,index) in cal_3_code_count" v-if="code !== ' -' && index < 10">
+                        <tr v-for="(count, code,index) in cal_3_code_count" v-if="code !== ' -' && index < 10"
+                            v-bind:class="{'level-is-2': code.includes('-2'), 'level-is-3': code.includes('-3')}">
                             <td>{{ code }}</td>
                             <td>{{ count }}</td>
                         </tr>
@@ -278,7 +291,8 @@
                 <div class="float-100-div">
                     <label>11-20</label>
                     <table>
-                        <tr v-for="(count, code,index) in cal_3_code_count" v-if="code !== ' -' && index >= 10 && index < 20">
+                        <tr v-for="(count, code,index) in cal_3_code_count" v-if="code !== ' -' && index >= 10 && index < 20"
+                            v-bind:class="{'level-is-2': code.includes('-2'), 'level-is-3': code.includes('-3')}">
                             <td>{{ code }}</td>
                             <td>{{ count }}</td>
                         </tr>
@@ -299,7 +313,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="cal_3_data in cal_3" :key="cal_3_data.id">
+                            <tr v-for="cal_3_data in cal_3" :key="cal_3_data.id"
+                                v-bind:class="{'level-is-2': JSON.stringify(cal_3_data.coil_layer).includes('2'), 'level-is-3': JSON.stringify(cal_3_data.coil_layer).includes('3')}">
                                 <td>{{ cal_3_data.station }}</td>
                                 <td>{{ cal_3_data.coilId }}</td>
                                 <td>{{ cal_3_data.dividingNumber }}</td>
@@ -320,7 +335,8 @@
                 <div class="left-100-div">
                     <label>1-10</label>
                     <table>
-                        <tr v-for="(count, code,index) in cgl_3_code_count" v-if="code !== ' -' && index < 10">
+                        <tr v-for="(count, code,index) in cgl_3_code_count" v-if="code !== ' -' && index < 10"
+                            v-bind:class="{'level-is-2': code.includes('-2'), 'level-is-3': code.includes('-3')}">
                             <td>{{ code }}</td>
                             <td>{{ count }}</td>
                         </tr>
@@ -329,7 +345,8 @@
                 <div class="float-100-div">
                     <label>11-20</label>
                     <table>
-                        <tr v-for="(count, code,index) in cgl_3_code_count" v-if="code !== ' -' && index >= 10 && index < 20">
+                        <tr v-for="(count, code,index) in cgl_3_code_count" v-if="code !== ' -' && index >= 10 && index < 20"
+                            v-bind:class="{'level-is-2': code.includes('-2'), 'level-is-3': code.includes('-3')}">
                             <td>{{ code }}</td>
                             <td>{{ count }}</td>
                         </tr>
@@ -350,7 +367,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="cgl_3_data in cgl_3" :key="cgl_3_data.id">
+                            <tr v-for="cgl_3_data in cgl_3" :key="cgl_3_data.id"
+                                v-bind:class="{'level-is-2': JSON.stringify(cgl_3_data.coil_layer).includes('2'), 'level-is-3': JSON.stringify(cgl_3_data.coil_layer).includes('3')}">
                                 <td>{{ cgl_3_data.station }}</td>
                                 <td>{{ cgl_3_data.coilId }}</td>
                                 <td>{{ cgl_3_data.dividingNumber }}</td>
