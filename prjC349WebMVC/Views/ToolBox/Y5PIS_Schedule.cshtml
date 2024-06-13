@@ -104,10 +104,10 @@
         color: red;
     }
     .level-is-2 {
-        background-color: yellow;
+        background-color: lightgreen;
     }
     .level-is-3 {
-        background-color: lightgreen;
+        background-color: yellow;
     }
 </style>
 <script src="~/Scripts/mermaid.min.js"></script>
@@ -597,8 +597,12 @@
                             var item = responseData.list[i];
                             var station = item.order;
                             var coilId = item.coilId;
+
                             var dividingNumber = item.dividingNumber;
+                            if (dividingNumber == null) dividingNumber = 1;
+                            
                             var weight = item.weight / dividingNumber;
+
                             var coil_code = determine_coil_code(weight, item.targetWidth, item.targetInnerDiameter);
                             var coil_layer = determine_layer("H", coil_code, item.targetThickness / 1000);
                             var orderItem = item.orderItem;
@@ -638,7 +642,10 @@
                             var item = responseData.list[i];
                             var station = item.order;
                             var coilId = item.coilId;
+
                             var dividingNumber = item.dividingNumber;
+                            if (dividingNumber == null) dividingNumber = 1;
+
                             var weight = item.weight / dividingNumber;
                             var coil_code = determine_coil_code(weight, item.width, item.innerDiameter);
                             var coil_layer = determine_layer("H", coil_code, item.thickness / 1000);
