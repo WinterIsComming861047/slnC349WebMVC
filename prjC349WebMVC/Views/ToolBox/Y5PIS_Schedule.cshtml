@@ -87,7 +87,7 @@
             cursor: pointer; /* 可選，將滑鼠游標改為手型 */
         }
 
-/*    tr:nth-child(even) {
+    /*    tr:nth-child(even) {
         background-color: #f9f9f9;
     }*/
 
@@ -103,9 +103,11 @@
         /* 添加特殊颜色的样式 */
         color: red;
     }
+
     .level-is-2 {
         background-color: lightgreen;
     }
+
     .level-is-3 {
         background-color: yellow;
     }
@@ -139,7 +141,7 @@
             <label>PKL_1排程</label>
             <div style="width:100px">
                 <table class="custom_table">
-                    <tr v-for="(count, code) in pkl_1_code_count" v-if="code !== ' -'" 
+                    <tr v-for="(count, code) in pkl_1_code_count" v-if="code !== ' -'"
                         v-bind:class="{'level-is-2': code.includes('-2'), 'level-is-3': code.includes('-3')}">
                         <td>{{ code }}</td>
                         <td>{{ count }}</td>
@@ -477,7 +479,7 @@
                             }
                         });
 
-                        this.pkl_1 = uniqueArray.slice(0,24);
+                        this.pkl_1 = uniqueArray.slice(0, 24);
                         this.pkl_1_code_count = this.count_Code(this.pkl_1);
                         prun_pkl1_data = this.pkl_1;
                         console.log('PKL_1 data updated successfully');
@@ -532,7 +534,7 @@
                             }
                         });
 
-                        this.pkl_2 = uniqueArray.slice(0,24);
+                        this.pkl_2 = uniqueArray.slice(0, 24);
                         this.pkl_2_code_count = this.count_Code(this.pkl_2);
                         prun_pkl2_data = this.pkl_2;
                         console.log('PKL_2 data updated successfully');
@@ -600,7 +602,7 @@
 
                             var dividingNumber = item.dividingNumber;
                             if (dividingNumber == null) dividingNumber = 1;
-                            
+
                             var weight = item.weight / dividingNumber;
 
                             var coil_code = determine_coil_code(weight, item.targetWidth, item.targetInnerDiameter);
@@ -619,7 +621,7 @@
                             cal_3_array.push(tmp_cal_3_data);
                         }
                         this.cal_3 = cal_3_array;
-                        this.cal_3_code_count = this.count_Code(this.cal_3.slice(0,100));
+                        this.cal_3_code_count = this.count_Code(this.cal_3.slice(0, 100));
                         console.log('3CAL data updated successfully');
                     },
                     error: (xhr, status, error) => {
@@ -648,7 +650,7 @@
 
                             var weight = item.weight / dividingNumber;
                             var coil_code = determine_coil_code(weight, item.width, item.innerDiameter);
-                            var coil_layer = determine_layer("H", coil_code, item.thickness / 1000);
+                            var coil_layer = determine_layer("J", coil_code, item.thickness / 1000);
                             var orderItem = item.orderItem;
 
                             // 將這些值更新到vacss的對應位置
@@ -663,7 +665,7 @@
                             cgl_3_array.push(tmp_cgl_3_data);
                         }
                         this.cgl_3 = cgl_3_array;
-                        this.cgl_3_code_count = this.count_Code(this.cgl_3.slice(0,100));
+                        this.cgl_3_code_count = this.count_Code(this.cgl_3.slice(0, 100));
                         console.log('3CGL data updated successfully');
                     },
                     error: (xhr, status, error) => {
@@ -837,22 +839,6 @@
                 break;
             case Weight >= 6 && Weight <= 6.999:
                 switch (true) {
-                    case myWidth < 1000:
-                        coil_code = "A06";
-                        break;
-                    case myWidth >= 1000 && myWidth <= 1300:
-                        coil_code = "C06";
-                        break;
-                    case myWidth > 1300:
-                        coil_code = "D06";
-                        break;
-                    default:
-                        coil_code = width_error_msg;
-                        break;
-                }
-                break;
-            case Weight >= 6 && Weight <= 6.999:
-                switch (true) {
                     case myWidth < 900:
                         coil_code = "K06";
                         break;
@@ -875,36 +861,15 @@
                         coil_code = width_error_msg;
                         break;
                 }
-                break;
-            case Weight >= 7 && Weight <= 7.499:
-                switch (true) {
-                    case myWidth <= 900:
-                        coil_code = "K06";
-                        break;
-                    case myWidth >= 900 && myWidth <= 999.9:
-                        coil_code = "A07";
-                        break;
-                    case myWidth >= 1000 && myWidth <= 1149.9:
-                        coil_code = "B07";
-                        break;
-                    case myWidth >= 1150 && myWidth <= 1299.9:
-                        coil_code = "C07";
-                        break;
-                    case myWidth >= 1300 && myWidth <= 1449.9:
-                        coil_code = "D06";
-                        break;
-                    case myWidth >= 1450:
-                        coil_code = "E06";
-                        break;
-                    default:
-                        coil_code = width_error_msg;
-                        break;
-                }
-                break;
-            case Weight >= 7.5 && Weight <= 7.999:
+            case Weight >= 7 && Weight <= 7.999:
                 switch (true) {
                     case myWidth < 900:
-                        coil_code = "K07";
+                        if (Weight < 7.5) {
+                            coil_code = "K06";
+                        }
+                        else {
+                            coil_code = "K07";
+                        }
                         break;
                     case myWidth >= 900 && myWidth <= 999.9:
                         coil_code = "A07";
@@ -926,6 +891,7 @@
                         break;
                 }
                 break;
+
             case Weight >= 8 && Weight <= 8.999:
                 switch (true) {
                     case myWidth < 900:
