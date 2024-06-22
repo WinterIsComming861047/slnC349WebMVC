@@ -315,9 +315,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="cal_3_data in cal_3" :key="cal_3_data.id"
+                            <tr v-for="(cal_3_data, index) in cal_3" :key="cal_3_data.id"
                                 v-bind:class="{'level-is-2': JSON.stringify(cal_3_data.coil_layer).includes('2'), 'level-is-3': JSON.stringify(cal_3_data.coil_layer).includes('3')}">
-                                <td>{{ cal_3_data.station }}</td>
+                                <td>{{ index + 1 }}</td>
                                 <td>{{ cal_3_data.coilId }}</td>
                                 <td>{{ cal_3_data.dividingNumber }}</td>
                                 <td>{{ cal_3_data.coil_code }} - {{ cal_3_data.coil_layer }}</td>
@@ -369,9 +369,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="cgl_3_data in cgl_3" :key="cgl_3_data.id"
+                            <tr v-for="(cgl_3_data,index) in cgl_3" :key="cgl_3_data.id"
                                 v-bind:class="{'level-is-2': JSON.stringify(cgl_3_data.coil_layer).includes('2'), 'level-is-3': JSON.stringify(cgl_3_data.coil_layer).includes('3')}">
-                                <td>{{ cgl_3_data.station }}</td>
+                                <td>{{ index + 1 }}</td>
                                 <td>{{ cgl_3_data.coilId }}</td>
                                 <td>{{ cgl_3_data.dividingNumber }}</td>
                                 <td>{{ cgl_3_data.coil_code }} - {{ cgl_3_data.coil_layer }}</td>
@@ -480,7 +480,7 @@
                         });
 
                         this.pkl_1 = uniqueArray.slice(0, 24);
-                        this.pkl_1_code_count = this.count_Code(this.pkl_1);
+                        this.pkl_1_code_count = this.count_Code_AfterDevide(this.pkl_1);
                         prun_pkl1_data = this.pkl_1;
                         console.log('PKL_1 data updated successfully');
                     },
@@ -535,7 +535,7 @@
                         });
 
                         this.pkl_2 = uniqueArray.slice(0, 24);
-                        this.pkl_2_code_count = this.count_Code(this.pkl_2);
+                        this.pkl_2_code_count = this.count_Code_AfterDevide(this.pkl_2);
                         prun_pkl2_data = this.pkl_2;
                         console.log('PKL_2 data updated successfully');
                     },
@@ -576,7 +576,7 @@
                             vacss_array.push(tmp_vacss_data);
                         }
                         this.vacss = vacss_array;
-                        this.vacss_code_count = this.count_Code(this.vacss.slice(0, 100));
+                        this.vacss_code_count = this.count_Code_AfterDevide(this.vacss.slice(0, 100));
                         console.log('VACSS data updated successfully');
                     },
                     error: (xhr, status, error) => {
@@ -621,7 +621,7 @@
                             cal_3_array.push(tmp_cal_3_data);
                         }
                         this.cal_3 = cal_3_array;
-                        this.cal_3_code_count = this.count_Code(this.cal_3.slice(0, 100));
+                        this.cal_3_code_count = this.count_Code_BeforeDevide(this.cal_3.slice(0, 100));
                         console.log('3CAL data updated successfully');
                     },
                     error: (xhr, status, error) => {
@@ -665,7 +665,7 @@
                             cgl_3_array.push(tmp_cgl_3_data);
                         }
                         this.cgl_3 = cgl_3_array;
-                        this.cgl_3_code_count = this.count_Code(this.cgl_3.slice(0, 100));
+                        this.cgl_3_code_count = this.count_Code_BeforeDevide(this.cgl_3.slice(0, 100));
                         console.log('3CGL data updated successfully');
                     },
                     error: (xhr, status, error) => {
@@ -673,7 +673,28 @@
                     }
                 });
             },
-            count_Code(data) {
+            count_Code_BeforeDevide(data) {
+                const codeCount = {}; // 使用物件來紀錄每個代碼的數量
+
+                // 遍歷資料陣列，統計代碼數量
+                data.forEach(item => {
+                    const code = item.coil_code + "-" + item.coil_layer;
+
+                    if (codeCount.hasOwnProperty(code)) {
+                        codeCount[code] = codeCount[code] + item.dividingNumber; // 代碼已存在，數量加一
+                    } else {
+                        codeCount[code] = 1; // 新代碼，數量設為一
+                    }
+                });
+
+                // 輸出代碼數量統計結果
+                //for (const code in codeCount) {
+                //    console.log(`${code}: ${codeCount[code]}`);
+                //}
+
+                return codeCount;
+            },
+            count_Code_AfterDevide(data) {
                 const codeCount = {}; // 使用物件來紀錄每個代碼的數量
 
                 // 遍歷資料陣列，統計代碼數量
